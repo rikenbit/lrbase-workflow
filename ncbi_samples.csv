@@ -1,0 +1,21 @@
+Common name,Scientific name,Abbreviation,Taxon ID,Dataset name,Database
+African malaria mosquito,Anopheles gambiae,Aga,7165,homologene.data,NCBI
+Thale cress,Arabidopsis thaliana,Ath,3702,homologene.data,NCBI
+Cow,Bos taurus,Bta,9913,homologene.data,NCBI
+Worm,Caenorhabditis elegans,Cel,6239,homologene.data,NCBI
+Dog,Canis lupus familiaris,Cfa,9615,homologene.data,NCBI
+Zebrafish,Danio rerio,Dre,7955,homologene.data,NCBI
+D. melanogaster,Drosophila melanogaster,Dme,7227,homologene.data,NCBI
+Budding yeasts,Eremothecium gossypii,Ego,33169,homologene.data,NCBI
+Chicken,Gallus gallus,Gga,9031,homologene.data,NCBI
+Budding yeasts,Kluyveromyces lactis,Kla,28985,homologene.data,NCBI
+Rhesus monkey,Macaca mulatta,Mml,9544,homologene.data,NCBI
+Mouse,Mus musculus,Mmu,10090,homologene.data,NCBI
+Neurospora crassa,Neurospora crassa,Ncr,5141,homologene.data,NCBI
+Rice,Oryza sativa,Osa,4530,homologene.data,NCBI
+Chimpanzee,Pan troglodytes,Pto,9598,homologene.data,NCBI
+Pyricularia oryzae,Pyricularia oryzae,Por,318829,homologene.data,NCBI
+Rat,Rattus norvegicus,Rno,10116,homologene.data,NCBI
+Baker's yeast,Saccharomyces cerevisiae,Sce,4932,homologene.data,NCBI
+Fission yeast,Schizosaccharomyces pombe,Spo,4896,homologene.data,NCBI
+Tropical clawed frog,Xenopus tropicalis,Xtr,8364,homologene.data,NCBI

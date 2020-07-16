@@ -1,0 +1,77 @@
+Name,Percentage,Type
+Aotus nancymaae,85.7796067672611,Ensembl_IUPHAR
+Betta splendens,57.1101966163695,Ensembl_IUPHAR
+Bison bison bison,59.8079561042524,Ensembl_IUPHAR
+Bos indicus x Bos taurus,77.0461819844536,Ensembl_IUPHAR
+Bos mutus,65.4778235025149,Ensembl_IUPHAR
+Bos taurus,85.0937357110197,Ensembl_IUPHAR
+Canis lupus dingo,77.549154092364,Ensembl_IUPHAR
+Canis lupus familiaris,77.4577046181984,Ensembl_IUPHAR
+Capra hircus,82.1216278006401,Ensembl_IUPHAR
+Carlito syrichta,57.9789666209419,Ensembl_IUPHAR
+Castor canadensis,82.8989483310471,Ensembl_IUPHAR
+Cebus capucinus imitator,82.1216278006401,Ensembl_IUPHAR
+Chinchilla lanigera,66.7581161408322,Ensembl_IUPHAR
+Colobus angolensis palliatus,83.0361225422954,Ensembl_IUPHAR
+Cottoperca gobio,50.5258344764518,Ensembl_IUPHAR
+Coturnix japonica,54.0923639689072,Ensembl_IUPHAR
+Cyprinodon variegatus,50.2057613168724,Ensembl_IUPHAR
+Danio rerio,58.161865569273,Ensembl_IUPHAR
+Denticeps clupeoides,54.7782350251486,Ensembl_IUPHAR
+Dipodomys ordii,63.0086877000457,Ensembl_IUPHAR
+Equus caballus,87.7000457247371,Ensembl_IUPHAR
+Erpetoichthys calabaricus,52.9492455418381,Ensembl_IUPHAR
+Felis catus,82.9446730681299,Ensembl_IUPHAR
+Fukomys damarensis,57.6131687242798,Ensembl_IUPHAR
+Fundulus heteroclitus,52.8120713305899,Ensembl_IUPHAR
+Gallus gallus,60.8596250571559,Ensembl_IUPHAR
+Gouania willdenowi,50.3886602652035,Ensembl_IUPHAR
+Haplochromis burtoni,54.2295381801555,Ensembl_IUPHAR
+Heterocephalus glaber,69.5473251028807,Ensembl_IUPHAR
+Hippocampus comes,51.1659807956104,Ensembl_IUPHAR
+Ictalurus punctatus,54.0923639689072,Ensembl_IUPHAR
+Ictidomys tridecemlineatus,76.1316872427983,Ensembl_IUPHAR
+Jaculus jaculus,72.0164609053498,Ensembl_IUPHAR
+Labrus bergylta,52.6291723822588,Ensembl_IUPHAR
+Larimichthys crocea,57.2473708276177,Ensembl_IUPHAR
+Lonchura striata domestica,52.5377229080933,Ensembl_IUPHAR
+Lynx canadensis,59.304983996342,Ensembl_IUPHAR
+Macaca fascicularis,86.8312757201646,Ensembl_IUPHAR
+Macaca mulatta,89.9405578417924,Ensembl_IUPHAR
+Macaca nemestrina,82.3959762231367,Ensembl_IUPHAR
+Mandrillus leucophaeus,74.8971193415638,Ensembl_IUPHAR
+Marmota marmota marmota,67.1239140374943,Ensembl_IUPHAR
+Maylandia zebra,54.3667123914038,Ensembl_IUPHAR
+Meriones unguiculatus,81.7558299039781,Ensembl_IUPHAR
+Mesocricetus auratus,61.8198445358939,Ensembl_IUPHAR
+Microcebus murinus,83.7677183356196,Ensembl_IUPHAR
+Microtus ochrogaster,83.5848193872885,Ensembl_IUPHAR
+Monopterus albus,53.4522176497485,Ensembl_IUPHAR
+Mus musculus,90.0320073159579,Ensembl_IUPHAR
+Mus pahari,65.843621399177,Ensembl_IUPHAR
+Nannospalax galili,71.8792866941015,Ensembl_IUPHAR
+Nomascus leucogenys,56.6986739826246,Ensembl_IUPHAR
+Octodon degus,53.7265660722451,Ensembl_IUPHAR
+Pan paniscus,84.4993141289438,Ensembl_IUPHAR
+Pan troglodytes,92.5011431184271,Ensembl_IUPHAR
+Panthera pardus,87.4714220393233,Ensembl_IUPHAR
+Panthera tigris altaica,59.0306355738455,Ensembl_IUPHAR
+Papio anubis,77.1376314586191,Ensembl_IUPHAR
+Parambassis ranga,52.3548239597622,Ensembl_IUPHAR
+Paramormyrops kingsleyae,54.4124371284865,Ensembl_IUPHAR
+Piliocolobus tephrosceles,62.2313671696388,Ensembl_IUPHAR
+Poecilia mexicana,52.8577960676726,Ensembl_IUPHAR
+Propithecus coquereli,70.0960219478738,Ensembl_IUPHAR
+Pygocentrus nattereri,58.2075903063557,Ensembl_IUPHAR
+Rattus norvegicus,86.5112025605853,Ensembl_IUPHAR
+Rhinopithecus bieti,81.3443072702332,Ensembl_IUPHAR
+Rhinopithecus roxellana,61.8655692729767,Ensembl_IUPHAR
+Salmo salar,58.8020118884316,Ensembl_IUPHAR
+Seriola dumerili,54.6410608139003,Ensembl_IUPHAR
+Seriola lalandi dorsalis,52.1262002743484,Ensembl_IUPHAR
+Sus scrofa,84.3621399176955,Ensembl_IUPHAR
+Theropithecus gelada,61.6369455875629,Ensembl_IUPHAR
+Ursus maritimus,58.161865569273,Ensembl_IUPHAR
+Vulpes vulpes,62.3228166438043,Ensembl_IUPHAR
+Xenopus tropicalis,52.7206218564243,Ensembl_IUPHAR
+Xiphophorus maculatus,54.6410608139003,Ensembl_IUPHAR

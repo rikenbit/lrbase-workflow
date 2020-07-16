@@ -1,0 +1,5 @@
+8010 data/biomart/8010.csv
+Error in curl::curl_fetch_memory(url, handle = handle) : 
+  Timeout was reached: [www.ensembl.org:80] Operation timed out after 300000 milliseconds with 78311831 out of -1 bytes received
+Calls: getBM ... request_fetch -> request_fetch.write_memory -> <Anonymous>
+Execution halted
