@@ -1,4 +1,0 @@
-4530 data/homologene/4530.csv
-Warning message:
-In write.csv(res, outfile, quote = FALSE, col.names = FALSE, row.names = FALSE) :
-  attempt to set 'col.names' ignored

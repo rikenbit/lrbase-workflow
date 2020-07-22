@@ -1,32 +1,44 @@
 # Firstly, we manually downloaded following files
-# 1. Species.csv: https://asia.ensembl.org/info/about/species.html (Download whole table)
-# 2. homologene.data: https://ftp.ncbi.nih.gov/pub/HomoloGene/current/homologene.data
+# 1. id/ensembl/Species.csv: https://asia.ensembl.org/info/about/species.html (Download whole table)
+# 2. id/ncbi/homologene.data: https://ftp.ncbi.nih.gov/pub/HomoloGene/current/homologene.data
+# 3. id/mesh/{threename.txt,name.txt,taxid.txt} from XXX
 
-# Next, we manually created ensembl_samples.csv and _samples.csv file about the taxonomy IDs below
+# Next, we manually created id/ensembl/ensembl_samples.csv and id/ncbi/ncbi_samples.csv file from the files above.
+
+# Finally, we manually downloaded the results of Reciprocal Blast Best Hit (RRBH) from XXX and put them into data/rbbh.
 
 import pandas as pd
 
-TAXID_ENSEMBL = pd.read_csv('ensembl_samples.csv', dtype='string')
+TAXID_ENSEMBL = pd.read_csv('id/ensembl/ensembl_samples.csv', dtype='string')
 TAXID_ENSEMBL = TAXID_ENSEMBL['Taxon ID'].unique()
 
-DATASET_ENSEMBL = pd.read_csv('ensembl_samples.csv', dtype='string')
+DATASET_ENSEMBL = pd.read_csv('id/ensembl/ensembl_samples.csv', dtype='string')
 DATASET_ENSEMBL = DATASET_ENSEMBL['Dataset name'].unique()
 
-TAXID_NCBI = pd.read_csv('ncbi_samples.csv', dtype='string')
+TAXID_NCBI = pd.read_csv('id/ncbi/ncbi_samples.csv', dtype='string')
 TAXID_NCBI = TAXID_NCBI['Taxon ID'].unique()
 
-TAXID = set(TAXID_ENSEMBL) | set(TAXID_NCBI)
+TAXID_MESH = pd.read_csv('id/mesh/taxid.txt', dtype='string', header=None)[0]
+TAXID_MESH = TAXID_MESH.unique()
+
+THREENAME_MESH = pd.read_csv('id/mesh/threename.txt', dtype='string', header=None)[0]
+THREENAME_MESH = THREENAME_MESH.unique()
+
+TAXID = set(TAXID_ENSEMBL) | set(TAXID_NCBI) | set(TAXID_MESH)
+
 
 
 rule all:
 	input:
 		'plot/coverage.png',
 		'plot/percentage.png',
-		'sample_sheet.csv'
+		'id/lrbase/sample_sheet.csv'
 
 rule biomart_human:
 	output:
 		touch('data/biomart/9606.csv')
+	conda:
+		'envs/myenv.yaml'
 	benchmark:
 		'benchmarks/biomart_9606.txt'
 	log:
@@ -39,6 +51,10 @@ rule biomart:
 		'data/biomart/9606.csv'
 	output:
 		touch('data/biomart/{taxid_ensembl}.csv')
+	wildcard_constraints:
+		taxid_ensembl='|'.join([re.escape(x) for x in TAXID_ENSEMBL])
+	conda:
+		'envs/myenv.yaml'
 	benchmark:
 		'benchmarks/biomart_{taxid_ensembl}.txt'
 	log:
@@ -49,6 +65,10 @@ rule biomart:
 rule homologene:
 	output:
 		touch('data/homologene/{taxid_ncbi}.csv')
+	wildcard_constraints:
+		taxid_ncbi='|'.join([re.escape(x) for x in TAXID_NCBI])
+	conda:
+		'envs/myenv.yaml'
 	benchmark:
 		'benchmarks/homologene_{taxid_ncbi}.txt'
 	log:
@@ -56,65 +76,99 @@ rule homologene:
 	shell:
 		'src/homologene.sh {wildcards.taxid_ncbi} {output} >& {log}'
 
-rule coveage_summary:
+def mesh_file(wld):
+	idx=TAXID_MESH.to_numpy().tolist().index(wld.taxid_mesh)
+	return('data/rbbh/' + THREENAME_MESH[idx] + '.txt')
+
+rule rbbh:
+	input:
+		mesh_file
+	output:
+		touch('data/rbbh/{taxid_mesh}.csv')
+	wildcard_constraints:
+		taxid_mesh='|'.join([re.escape(x) for x in TAXID_MESH])
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/rbbh_{taxid_mesh}.txt'
+	log:
+		'logs/rbbh_{taxid_mesh}.log'
+	shell:
+		'src/rbbh.sh {input} {output} >& {log}'
+
+rule coverage_summary:
 	input:
 		expand('data/biomart/{taxid_ensembl}.csv',
 			taxid_ensembl=TAXID_ENSEMBL),
 		expand('data/homologene/{taxid_ncbi}.csv',
-			taxid_ncbi=TAXID_NCBI)
+			taxid_ncbi=TAXID_NCBI),
+		expand('data/rbbh/{taxid_mesh}.csv',
+			taxid_mesh=TAXID_MESH)
 	output:
-		'data/coveage_summary.RData'
+		'data/coverage_summary.RData'
+	conda:
+		'envs/myenv.yaml'
 	benchmark:
-		'benchmark/coveage_summary.txt'
+		'benchmarks/coverage_summary.txt'
 	log:
-		'log/coveage_summary.log'
+		'logs/coverage_summary.log'
 	shell:
-		'src/coveage_summary.sh >& {log}'
+		'src/coverage_summary.sh >& {log}'
 
 rule percentage_summary:
 	input:
 		expand('data/biomart/{taxid_ensembl}.csv',
 			taxid_ensembl=TAXID_ENSEMBL),
 		expand('data/homologene/{taxid_ncbi}.csv',
-			taxid_ncbi=TAXID_NCBI)
+			taxid_ncbi=TAXID_NCBI),
+		expand('data/rbbh/{taxid_mesh}.csv',
+			taxid_mesh=TAXID_MESH)
 	output:
 		'data/percentage_summary.RData'
+	conda:
+		'envs/myenv.yaml'
 	benchmark:
-		'benchmark/percentage_summary.txt'
+		'benchmarks/percentage_summary.txt'
 	log:
-		'log/percentage_summary.log'
+		'logs/percentage_summary.log'
 	shell:
 		'src/percentage_summary.sh >& {log}'
 
-rule coverage:
+rule plot_coverage:
 	input:
-		'data/coveage_summary.RData'
+		'data/coverage_summary.RData'
 	output:
 		'plot/coverage.png'
+	conda:
+		'envs/myenv.yaml'
 	benchmark:
-		'benchmarks/coverage.txt'
+		'benchmarks/plot_coverage.txt'
 	log:
-		'logs/coverage.log'
+		'logs/plot_coverage.log'
 	shell:
-		'src/coverage.sh >& {log}'
+		'src/plot_coverage.sh >& {log}'
 
-rule percentage:
+rule plot_percentage:
 	input:
 		'data/percentage_summary.RData'
 	output:
 		'plot/percentage.png'
+	conda:
+		'envs/myenv.yaml'
 	benchmark:
-		'benchmarks/percentage.txt'
+		'benchmarks/plot_percentage.txt'
 	log:
-		'logs/percentage.log'
+		'logs/plot_percentage.log'
 	shell:
-		'src/percentage.sh >& {log}'
+		'src/plot_percentage.sh >& {log}'
 
 rule sample_sheet:
 	input:
 		'data/percentage_summary.RData'
 	output:
-		'sample_sheet.csv'
+		'id/lrbase/sample_sheet.csv'
+	conda:
+		'envs/myenv.yaml'
 	benchmark:
 		'benchmarks/sample_sheet.txt'
 	log:

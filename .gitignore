@@ -1,0 +1,7 @@
+.snakemake*
+*.sh.*
+*.out
+benchmarks/*
+logs/*
+data/*
+envs/*

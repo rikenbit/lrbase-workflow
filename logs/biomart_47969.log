@@ -1,5 +1,0 @@
-47969 data/biomart/47969.csv
-Error in getBM(attributes = c("ensembl_gene_id", "entrezgene_id"), mart = ds) : 
-  Invalid attribute(s): entrezgene_id 
-Please use the function 'listAttributes' to get valid attribute names
-Execution halted
