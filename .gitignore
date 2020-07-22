@@ -5,3 +5,8 @@ benchmarks/*
 logs/*
 data/*
 envs/*
+._*
+*/._*
+*/*/._*
+*/*/*/._*
+.DS_Store
