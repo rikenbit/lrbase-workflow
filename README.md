@@ -1,6 +1,22 @@
 # lrbase-workflow
-Workflow to construct LRBase.XXX.eg.db-type packages.
+Workflow to construct [LRBase.XXX.eg.db-type](https://bioconductor.org/packages/release/data/annotation/html/LRBase.Hsa.eg.db.html) packages.
 
+# Evidence code
+## Known Ligand-Receptor
+DLRP (only Human): XXXXX
+IUPHAR (only Human): XXXXX
+Ensembl_DLRP: XXXXX
+Ensembl_IUPHAR: XXXXX
+NCBI_DLRP: XXXXX
+NCBI_IUPHAR: XXXXX
+MeSH_DLRP: XXXXX
+MeSH_IUPHAR: XXXXX
+
+## Putative Ligand-Receptor
+SPRING_SWISSPROT: XXXXX
+SPRING_TrEMBL: XXXXX
+
+# Summary
 ![](https://github.com/rikenbit/lrbase-workflow/blob/master/plot/coverage.png)
 
 ![](https://github.com/rikenbit/lrbase-workflow/blob/master/plot/percentage.png)
