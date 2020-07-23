@@ -26,7 +26,11 @@ Workflow to construct [LRBase.XXX.eg.db-type](https://bioconductor.org/packages/
 
 ![](https://github.com/rikenbit/lrbase-workflow/blob/master/plot/percentage.png)
 
-# How to perform this workflow
+# How to reproduce this workflow
+## 1. Prepare following datasets
+- data/rbbh/*.txt: Download from [meshr-pipeline/data/RBBH/*.txt](https://github.com/rikenbit/meshr-pipeline)
+
+## 2. Perform snakemake command
 
 In local machine:
 ```

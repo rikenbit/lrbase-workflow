@@ -1,12 +1,3 @@
-# Firstly, we manually downloaded following files
-# 1. id/ensembl/Species.csv: https://asia.ensembl.org/info/about/species.html (Download whole table)
-# 2. id/ncbi/homologene.data: https://ftp.ncbi.nih.gov/pub/HomoloGene/current/homologene.data
-# 3. id/mesh/{threename.txt,name.txt,taxid.txt} from XXX
-
-# Next, we manually created id/ensembl/ensembl_samples.csv and id/ncbi/ncbi_samples.csv file from the files above.
-
-# Finally, we manually downloaded the results of Reciprocal Blast Best Hit (RRBH) from XXX and put them into data/rbbh.
-
 import pandas as pd
 
 TAXID_ENSEMBL = pd.read_csv('id/ensembl/ensembl_samples.csv', dtype='string')
