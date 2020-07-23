@@ -1,0 +1,100 @@
+Agrobacterium Tumefaciens K84
+Anolis carolinensis
+Anopheles gambiae str. PEST
+Ailuropoda melanoleuca
+Apis mellifera
+Aspergillus nidulans FGSC A4
+Branchiostoma floridae
+Bacillus subtilis subsp. spizizenii str. RO-NN-1
+Bacillus subtilis subsp. spizizenii str. TU-B-10
+Bacillus subtilis Bsn5
+Bacillus subtilis subsp. spizizenii str. W23
+Candida albicans SC5314
+Caenorhabditis briggsae
+Canis familiaris
+Ciona intestinalis
+Callithrix jacchus
+Cavia porcellus
+Caenorhabditis remani
+Drosophila ananassae
+Dickeya dadantii 3937
+Dictyostelium discoideum AX4
+Drosophila eracta
+Drosophila grimshawi
+Drosophila mojavensis
+Drosophila persimilis
+Drosophila sechellia
+Drosophila simulans
+Drosophila virllis
+Drosophila yakuba
+Escherichia coli O111:H- str. 11128
+Escherichia coli O26:H11 str. 11368
+Escherichia coli O103:H2 str. 12009
+Escherichia coli 536
+Escherichia coli O127:H6 str. 2348_69
+Escherichia coli 55989
+Esicherichia coli CFT073
+Escherichia coli S88
+Escherichia coli IAI39
+Escherichia coli APEC 01
+Escherichia coli B str. REL606
+Escherichia coli O26:H7 str. CB9615
+Escherichia coli E24377A
+Escherichia coli HS
+Escherichia coli IAI1
+Escherichia coli KO11FL
+Escherichia coli SMS-3-5
+Escherichia coli SE11
+Escherichia coli UTI89
+Escherichia coli UMN026
+Escherichia coli BW2952
+Escherichia coli str K-12 substr. DH10B
+Escherichia coli ED1a
+Escherichia coli O157:H7 str. EC4115
+Escherichia coli O157:H7 str. EDL933
+Equus caballus
+Escherichia coli O157:H7 Sakai
+Escherichia coli O157:H7 str. TW14359
+Glycine max
+Loxodonta africana
+Leishmania major strain Friedlin
+Monodelphis domestica
+Meleagris gallopavo
+Macaca mulatta
+Medicago truncatula
+Normascus leucogenys
+Ornithorhynchus anatinus
+Oryctolagus cuniculus
+Oreochromis niloticus
+Oryza sativa Japonica
+Pongo abelii
+Pseudomonas aeruginosa PAO1
+Pseudomonas aeruginosa LESB58
+Pseudomonas aeruginosa PA7
+Pseudomonas aeruginosa UCBPP-PA14
+Plasmodium falciparum 3D7
+Pan troglodytes
+Populus trichocarpa
+Staphylococcus aureus subsp. aureus Mu50
+Staphylococcus aureus subsp. aureus Mu3
+Staphylococcus aureus subsp. aureus MSSA476
+Staphylococcus aureus subsp. aureus COL
+Staphylococcus aureus subsp. aureus ED98
+Staphylococcus aureus subsp. aureus USA300_FPR3757
+Staphylococcus aureus subsp. aureus MRSA252
+Staphylococcus aureus subsp. aureus M013
+Staphylococcus aureus subsp. aureus Newman
+Staphylococcus aureus aureus RF122
+Staphylococcus aureus subsp. aureus MSHR1132
+Staphylococcus aureus subsp. aureus USA300_TCH1516
+Staphylococcus aureus subsp. aureus N315
+Staphylococcus aureus subsp. aureus VC40
+Staphylococcus aureus subsp. aureus MW2
+Streptomyces coelicolor A3(2)
+Strongylocentrotus purpuratus
+Trypanosoma brucei brucei strain 927_4 GUTat10.1
+Toxoplasma gondii ME49
+Taeniopygia guttata
+Vitis vinifera
+Xenopus laevis
+Zea mays
