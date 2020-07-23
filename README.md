@@ -2,19 +2,21 @@
 Workflow to construct [LRBase.XXX.eg.db-type](https://bioconductor.org/packages/release/data/annotation/html/LRBase.Hsa.eg.db.html) packages.
 
 # Evidence code
-## Known Ligand-Receptor
-DLRP (only Human): XXXXX
-IUPHAR (only Human): XXXXX
-Ensembl_DLRP: XXXXX
-Ensembl_IUPHAR: XXXXX
-NCBI_DLRP: XXXXX
-NCBI_IUPHAR: XXXXX
-MeSH_DLRP: XXXXX
-MeSH_IUPHAR: XXXXX
+## 1. Known Ligand-Receptor
 
-## Putative Ligand-Receptor
-SPRING_SWISSPROT: XXXXX
-SPRING_TrEMBL: XXXXX
+- DLRP (only Human): XXXXX
+- IUPHAR (only Human): XXXXX
+- Ensembl_DLRP: XXXXX
+- Ensembl_IUPHAR: XXXXX
+- NCBI_DLRP: XXXXX
+- NCBI_IUPHAR: XXXXX
+- MeSH_DLRP: XXXXX
+- MeSH_IUPHAR: XXXXX
+
+## 2. Putative Ligand-Receptor
+
+- SPRING_SWISSPROT: XXXXX
+- SPRING_TrEMBL: XXXXX
 
 # Summary
 ![](https://github.com/rikenbit/lrbase-workflow/blob/master/plot/coverage.png)
