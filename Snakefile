@@ -17,8 +17,6 @@ THREENAME_MESH = THREENAME_MESH.unique()
 
 TAXID = set(TAXID_ENSEMBL) | set(TAXID_NCBI) | set(TAXID_MESH)
 
-
-
 rule all:
 	input:
 		'plot/coverage.png',
