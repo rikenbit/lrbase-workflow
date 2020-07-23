@@ -1,6 +1,7 @@
 # lrbase-workflow
 Workflow to construct [LRBase.XXX.eg.db-type](https://bioconductor.org/packages/release/data/annotation/html/LRBase.Hsa.eg.db.html) packages.
-![](https://github.com/rikenbit/lrbase-workflow/blob/master/dag.pdf)
+
+![](https://github.com/rikenbit/lrbase-workflow/blob/master/dag.svg)
 
 # Evidence code
 ## 1. Known Ligand-Receptor (Human)
