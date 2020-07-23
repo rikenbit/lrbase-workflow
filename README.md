@@ -46,3 +46,11 @@ In parallel environment (Slurm):
 ```
 snakemake -j 32 --cluster sbatch --latency-wait 2000 --use-conda
 ```
+
+# License
+Copyright (c) 2020 Koki Tsuyuzaki and RIKEN Bioinformatics Research Unit Released under the [Artistic License 2.0](http://www.perlfoundation.org/artistic_license_2_0).
+
+# Authors
+- Koki Tsuyuzaki
+- Manabu Ishii
+- Itoshi Nikaido
