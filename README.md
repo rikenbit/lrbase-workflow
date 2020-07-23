@@ -2,21 +2,24 @@
 Workflow to construct [LRBase.XXX.eg.db-type](https://bioconductor.org/packages/release/data/annotation/html/LRBase.Hsa.eg.db.html) packages.
 
 # Evidence code
-## 1. Known Ligand-Receptor
+## 1. Known Ligand-Receptor (Human)
 
-- **DLRP** (only Human): XXXXX
-- **IUPHAR** (only Human): XXXXX
-- **Ensembl_DLRP**: XXXXX
-- **Ensembl_IUPHAR**: XXXXX
-- **NCBI_DLRP**: XXXXX
-- **NCBI_IUPHAR**: XXXXX
-- **MeSH_DLRP**: XXXXX
-- **MeSH_IUPHAR**: XXXXX
+- **DLRP**: L-R list in [DLRP](http://dip.doe-mbi.ucla.edu/dip/dlrp/dlrp.txt) database
+- **IUPHAR**: L-R list in [IUPHAR](http://www.guidetopharmacology.org/DATA/interactions.csv) database
 
-## 2. Putative Ligand-Receptor
+## 2. Known Ligand-Receptor (other species)
 
-- **SPRING_SWISSPROT**: XXXXX
-- **SPRING_TrEMBL**: XXXXX
+- **Ensembl_DLRP**: L-R list in [DLRP](http://dip.doe-mbi.ucla.edu/dip/dlrp/dlrp.txt) based on the ortholog of Human genes in [Ensembl Protein trees](https://asia.ensembl.org/info/genome/compara/homology_method.html)
+- **Ensembl_IUPHAR**: L-R list in [IUPHAR](http://www.guidetopharmacology.org/DATA/interactions.csv) based on the ortholog of Human genes in [Ensembl Protein trees](https://asia.ensembl.org/info/genome/compara/homology_method.html)
+- **NCBI_DLRP**: L-R list in [DLRP](http://dip.doe-mbi.ucla.edu/dip/dlrp/dlrp.txt) based on the ortholog of Human genes in [NCBI Homologene](https://www.ncbi.nlm.nih.gov/homologene)
+- **NCBI_IUPHAR**: L-R list in [IUPHAR](http://www.guidetopharmacology.org/DATA/interactions.csv) based on the ortholog of Human genes in [NCBI Homologene](https://www.ncbi.nlm.nih.gov/homologene)
+- **RBBH_DLRP**: L-R list in [DLRP](http://dip.doe-mbi.ucla.edu/dip/dlrp/dlrp.txt) based on the ortholog of Human genes in [Reciprocal BLAST Best Hit used in MeSH.XXX.eg.db workflow](https://github.com/rikenbit/meshr-pipeline)
+- **RBBH_IUPHAR**: L-R list in [IUPHAR](http://www.guidetopharmacology.org/DATA/interactions.csv) based on the ortholog of Human genes in [Reciprocal BLAST Best Hit used in MeSH.XXX.eg.db workflow](https://github.com/rikenbit/meshr-pipeline)
+
+## 3. Putative Ligand-Receptor
+
+- **SPRING_SWISSPROT**: PPI list in [SPRING](https://string-db.org/cgi/download.pl) and known subcellular localization in [SWISSPROT](http://www.uniprot.org/uniprot/?query=reviewed:yes)
+- **SPRING_TrEMBL**: PPI list in [SPRING](https://string-db.org/cgi/download.pl) and predicted subcellular localization in [TrEMBL](http://www.uniprot.org/uniprot/?query=reviewed:no)
 
 # Summary
 ![](https://github.com/rikenbit/lrbase-workflow/blob/master/plot/coverage.png)
