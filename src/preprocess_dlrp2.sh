@@ -10,7 +10,5 @@
 #SBATCH -p node03-06
 SLURM_RESTART_COUNT=2
 
-echo $@
-
 Rscript=`ls .snakemake/conda/*/bin/Rscript`
-$Rscript src/biomart.R $@
+$Rscript src/preprocess_dlrp2.R

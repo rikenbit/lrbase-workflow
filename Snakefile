@@ -20,13 +20,12 @@ TAXID = set(TAXID_ENSEMBL) | set(TAXID_NCBI) | set(TAXID_MESH)
 VERSION_STRING = 'v11.0'
 TAXID_STRING = ['9606', '10090', '3702', '10116', '9913', '224308', '44689', '6239', '7227', '7955', '9031', '9601', '83332', '243232', '71421', '8364', '199310', '9823', '224325']
 
-THREENAME_ENSEMBL = ['Hsa_Symbol.txt', 'Hsa', 'Mmu', 'Rno', 'Bta', 'Cel', 'Dme', 'Dre', 'Gga', 'Pab', 'Xtr', 'Ssc', 'Ath' 'Osa']
+THREENAME_ENSEMBL = ['Hsa_Symbol', 'Hsa', 'Mmu', 'Rno', 'Bta', 'Cel', 'Dme', 'Dre', 'Gga', 'Pab', 'Xtr', 'Ssc', 'Ath' 'Osa']
 
 rule all:
 	input:
-		'data/fantom5/PairsLigRec.txt',
-		'data/fantom5/ncomms8866-s3.xlsx',
-		'data/dlrp/dlrp.txt',
+		'data/fantom5.txt',
+		'data/dlrp/pre_dlrp2.csv',
 		'data/iuphar/interactions.csv',
 		'data/hprd/HPRD_Release9_062910/BINARY_PROTEIN_PROTEIN_INTERACTIONS.txt',
 		'data/hgnc/protein-coding_gene.txt',
@@ -44,155 +43,217 @@ rule all:
 		# 'plot/percentage.png',
 		# 'id/lrbase/sample_sheet.csv'
 
-rule fantom5:
+#############################################
+# Data download
+#############################################
+rule download_fantom5:
 	output:
 		touch('data/fantom5/PairsLigRec.txt'),
 		touch('data/fantom5/ncomms8866-s3.xlsx')
 	conda:
 		'envs/myenv.yaml'
 	benchmark:
-		'benchmarks/fantom5.txt'
+		'benchmarks/download_fantom5.txt'
 	log:
-		'logs/fantom5.log'
+		'logs/download_fantom5.log'
 	shell:
-		'src/fantom5.sh >& {log}'
+		'src/download_fantom5.sh >& {log}'
 
-rule dlrp:
+rule preprocess_fantom5:
+	input:
+		'data/fantom5/PairsLigRec.txt',
+		'data/fantom5/ncomms8866-s3.xlsx',
+		'data/ensembl/Hsa_Symbol.txt'
+	output:
+		touch('data/fantom5.txt')
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/preprocess_fantom5.txt'
+	log:
+		'logs/preprocess_fantom5.log'
+	shell:
+		'src/preprocess_fantom5.sh >& {log}'
+
+rule download_dlrp:
 	output:
 		touch('data/dlrp/dlrp.txt')
 	conda:
 		'envs/myenv.yaml'
 	benchmark:
-		'benchmarks/dlrp.txt'
+		'benchmarks/download_dlrp.txt'
 	log:
-		'logs/dlrp.log'
+		'logs/download_dlrp.log'
 	shell:
-		'src/dlrp.sh >& {log}'
+		'src/download_dlrp.sh >& {log}'
 
-rule iuphar:
+rule preprocess_dlrp:
+	input:
+		'data/dlrp/dlrp.txt'
+	output:
+		touch('data/dlrp/pre_dlrp.csv')
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/preprocess_dlrp.txt'
+	log:
+		'logs/preprocess_dlrp.log'
+	shell:
+		'src/preprocess_dlrp.sh >& {log}'
+
+rule preprocess_dlrp2:
+	input:
+		'data/dlrp/pre_dlrp.csv'
+	output:
+		touch('data/dlrp/pre_dlrp2.csv')
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/preprocess_dlrp2.txt'
+	log:
+		'logs/preprocess_dlrp2.log'
+	shell:
+		'src/preprocess_dlrp2.sh >& {log}'
+
+rule download_iuphar:
 	output:
 		touch('data/iuphar/interactions.csv')
 	conda:
 		'envs/myenv.yaml'
 	benchmark:
-		'benchmarks/iuphar.txt'
+		'benchmarks/download_iuphar.txt'
 	log:
-		'logs/iuphar.log'
+		'logs/download_iuphar.log'
 	shell:
-		'src/iuphar.sh >& {log}'
+		'src/download_iuphar.sh >& {log}'
 
-rule hprd:
+rule preprocess_iuphar:
+	output:
+		touch('data/iuphar/XXXXX')
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/preprocess_iuphar.txt'
+	log:
+		'logs/preprocess_iuphar.log'
+	shell:
+		'src/preprocess_iuphar.sh >& {log}'
+
+rule download_hprd:
 	output:
 		'data/hprd/HPRD_Release9_062910/BINARY_PROTEIN_PROTEIN_INTERACTIONS.txt'
 	conda:
 		'envs/myenv.yaml'
 	benchmark:
-		'benchmarks/hprd.txt'
+		'benchmarks/download_hprd.txt'
 	log:
-		'logs/hprd.log'
+		'logs/download_hprd.log'
 	shell:
-		'src/hprd.sh >& {log}'
+		'src/download_hprd.sh >& {log}'
 
-rule hgnc:
+rule download_hgnc:
 	output:
 		touch('data/hgnc/protein-coding_gene.txt')
 	conda:
 		'envs/myenv.yaml'
 	benchmark:
-		'benchmarks/hgnc.txt'
+		'benchmarks/download_hgnc.txt'
 	log:
-		'logs/hgnc.log'
+		'logs/download_hgnc.log'
 	shell:
-		'src/hgnc.sh >& {log}'
+		'src/download_hgnc.sh >& {log}'
 
-rule string:
+rule download_string:
 	output:
 		touch('data/string/{taxid_string}.protein.links.detailed.{v}.txt.gz')
 	conda:
 		'envs/myenv.yaml'
 	benchmark:
-		'benchmarks/string_{v}_{taxid_string}.txt'
+		'benchmarks/download_string_{v}_{taxid_string}.txt'
 	log:
-		'logs/string_{v}_{taxid_string}.log'
+		'logs/download_string_{v}_{taxid_string}.log'
 	shell:
-		'src/string.sh {wildcards.v} {wildcards.taxid_string} >& {log}'
+		'src/download_string.sh {wildcards.v} {wildcards.taxid_string} >& {log}'
 
-rule uniprotkb:
+rule download_uniprotkb:
 	output:
 		touch('data/uniprotkb/uniprot_sprot.dat.gz'),
 		touch('data/uniprotkb/uniprot_trembl.dat.gz')
 	conda:
 		'envs/myenv.yaml'
 	benchmark:
-		'benchmarks/uniprotkb.txt'
+		'benchmarks/download_uniprotkb.txt'
 	log:
-		'logs/uniprotkb.log'
+		'logs/download_uniprotkb.log'
 	shell:
-		'src/uniprotkb.sh >& {log}'
+		'src/download_uniprotkb.sh >& {log}'
 
-rule gene2accession:
+rule download_gene2accession:
 	output:
 		touch('data/gene2accession/gene2accession.gz')
 	conda:
 		'envs/myenv.yaml'
 	benchmark:
-		'benchmarks/gene2accession.txt'
+		'benchmarks/download_gene2accession.txt'
 	log:
-		'logs/gene2accession.log'
+		'logs/download_gene2accession.log'
 	shell:
-		'src/gene2accession.sh >& {log}'
+		'src/download_gene2accession.sh >& {log}'
 
-rule ensembl:
+rule download_ensembl:
 	output:
 		touch(expand('data/ensembl/{threename_ensembl}.txt',
 			threename_ensembl=THREENAME_ENSEMBL))
 	conda:
 		'envs/myenv.yaml'
 	benchmark:
-		'benchmarks/ensembl.txt'
+		'benchmarks/download_ensembl.txt'
 	log:
-		'logs/ensembl.log'
+		'logs/download_ensembl.log'
 	shell:
-		'src/ensembl.sh >& {log}'
+		'src/download_ensembl.sh >& {log}'
 
-rule cellphonedb:
+rule download_cellphonedb:
 	output:
 		touch('data/cellphonedb/interaction_input.csv'),
 		touch('data/cellphonedb/complex_input.csv')
 	conda:
 		'envs/myenv.yaml'
 	benchmark:
-		'benchmarks/cellphonedb.txt'
+		'benchmarks/download_cellphonedb.txt'
 	log:
-		'logs/cellphonedb.log'
+		'logs/download_cellphonedb.log'
 	shell:
-		'src/cellphonedb.sh >& {log}'
+		'src/download_cellphonedb.sh >& {log}'
 
-rule baderlab:
+rule download_baderlab:
 	output:
 		touch('data/baderlab/receptor_ligand_interactions_mitab_v1.0_April2017.txt.zip')
 	conda:
 		'envs/myenv.yaml'
 	benchmark:
-		'benchmarks/baderlab.txt'
+		'benchmarks/download_baderlab.txt'
 	log:
-		'logs/baderlab.log'
+		'logs/download_baderlab.log'
 	shell:
-		'src/baderlab.sh >& {log}'
+		'src/download_baderlab.sh >& {log}'
 
-rule biomart_human:
+
+
+
+rule download_biomart_human:
 	output:
 		touch('data/biomart/9606.csv')
 	conda:
 		'envs/myenv.yaml'
 	benchmark:
-		'benchmarks/biomart_9606.txt'
+		'benchmarks/download_biomart_9606.txt'
 	log:
-		'logs/biomart_9606.log'
+		'logs/download_biomart_9606.log'
 	shell:
-		'src/biomart_human.sh >& {log}'
+		'src/download_biomart_human.sh >& {log}'
 
-rule biomart:
+rule download_biomart:
 	input:
 		'data/biomart/9606.csv'
 	output:
@@ -202,13 +263,13 @@ rule biomart:
 	conda:
 		'envs/myenv.yaml'
 	benchmark:
-		'benchmarks/biomart_{taxid_ensembl}.txt'
+		'benchmarks/download_biomart_{taxid_ensembl}.txt'
 	log:
-		'logs/biomart_{taxid_ensembl}.log'
+		'logs/download_biomart_{taxid_ensembl}.log'
 	shell:
-		'src/biomart.sh {wildcards.taxid_ensembl} {output} >& {log}'
+		'src/download_biomart.sh {wildcards.taxid_ensembl} {output} >& {log}'
 
-rule homologene:
+rule download_homologene:
 	output:
 		touch('data/homologene/{taxid_ncbi}.csv')
 	wildcard_constraints:
@@ -216,17 +277,20 @@ rule homologene:
 	conda:
 		'envs/myenv.yaml'
 	benchmark:
-		'benchmarks/homologene_{taxid_ncbi}.txt'
+		'benchmarks/download_homologene_{taxid_ncbi}.txt'
 	log:
-		'logs/homologene_{taxid_ncbi}.log'
+		'logs/download_homologene_{taxid_ncbi}.log'
 	shell:
-		'src/homologene.sh {wildcards.taxid_ncbi} {output} >& {log}'
+		'src/download_homologene.sh {wildcards.taxid_ncbi} {output} >& {log}'
 
+#############################################
+# Summary
+#############################################
 def mesh_file(wld):
 	idx=TAXID_MESH.to_numpy().tolist().index(wld.taxid_mesh)
 	return('data/rbbh/' + THREENAME_MESH[idx] + '.txt')
 
-rule rbbh:
+rule summary_rbbh:
 	input:
 		mesh_file
 	output:
@@ -236,11 +300,11 @@ rule rbbh:
 	conda:
 		'envs/myenv.yaml'
 	benchmark:
-		'benchmarks/rbbh_{taxid_mesh}.txt'
+		'benchmarks/summary_rbbh_{taxid_mesh}.txt'
 	log:
-		'logs/rbbh_{taxid_mesh}.log'
+		'logs/summary_rbbh_{taxid_mesh}.log'
 	shell:
-		'src/rbbh.sh {input} {output} >& {log}'
+		'src/summary_rbbh.sh {input} {output} >& {log}'
 
 rule coverage_summary:
 	input:
@@ -280,6 +344,9 @@ rule percentage_summary:
 	shell:
 		'src/percentage_summary.sh >& {log}'
 
+#############################################
+# Visualization
+#############################################
 rule plot_coverage:
 	input:
 		'data/coverage_summary.RData'
@@ -308,6 +375,9 @@ rule plot_percentage:
 	shell:
 		'src/plot_percentage.sh >& {log}'
 
+#############################################
+# Final Sample sheet
+#############################################
 rule sample_sheet:
 	input:
 		'data/percentage_summary.RData'
