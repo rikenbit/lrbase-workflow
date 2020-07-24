@@ -17,11 +17,168 @@ THREENAME_MESH = THREENAME_MESH.unique()
 
 TAXID = set(TAXID_ENSEMBL) | set(TAXID_NCBI) | set(TAXID_MESH)
 
+VERSION_STRING = 'v11.0'
+TAXID_STRING = ['9606', '10090', '3702', '10116', '9913', '224308', '44689', '6239', '7227', '7955', '9031', '9601', '83332', '243232', '71421', '8364', '199310', '9823', '224325']
+
+THREENAME_ENSEMBL = ['Hsa_Symbol.txt', 'Hsa', 'Mmu', 'Rno', 'Bta', 'Cel', 'Dme', 'Dre', 'Gga', 'Pab', 'Xtr', 'Ssc', 'Ath' 'Osa']
+
 rule all:
 	input:
-		'plot/coverage.png',
-		'plot/percentage.png',
-		'id/lrbase/sample_sheet.csv'
+		'data/fantom5/PairsLigRec.txt',
+		'data/fantom5/ncomms8866-s3.xlsx',
+		'data/dlrp/dlrp.txt',
+		'data/iuphar/interactions.csv',
+		'data/hprd/HPRD_Release9_062910/BINARY_PROTEIN_PROTEIN_INTERACTIONS.txt',
+		'data/hgnc/protein-coding_gene.txt',
+		expand('data/string/{taxid_string}.protein.links.detailed.{v}.txt.gz',
+			taxid_string=TAXID_STRING, v=VERSION_STRING),
+		'data/uniprotkb/uniprot_sprot.dat.gz',
+		'data/uniprotkb/uniprot_trembl.dat.gz',
+		'data/gene2accession/gene2accession.gz',
+		expand('data/ensembl/{threename_ensembl}.txt',
+			threename_ensembl=THREENAME_ENSEMBL),
+		'data/cellphonedb/interaction_input.csv',
+		'data/cellphonedb/complex_input.csv',
+		'data/baderlab/receptor_ligand_interactions_mitab_v1.0_April2017.txt.zip'
+		# 'plot/coverage.png',
+		# 'plot/percentage.png',
+		# 'id/lrbase/sample_sheet.csv'
+
+rule fantom5:
+	output:
+		touch('data/fantom5/PairsLigRec.txt'),
+		touch('data/fantom5/ncomms8866-s3.xlsx')
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/fantom5.txt'
+	log:
+		'logs/fantom5.log'
+	shell:
+		'src/fantom5.sh >& {log}'
+
+rule dlrp:
+	output:
+		touch('data/dlrp/dlrp.txt')
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/dlrp.txt'
+	log:
+		'logs/dlrp.log'
+	shell:
+		'src/dlrp.sh >& {log}'
+
+rule iuphar:
+	output:
+		touch('data/iuphar/interactions.csv')
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/iuphar.txt'
+	log:
+		'logs/iuphar.log'
+	shell:
+		'src/iuphar.sh >& {log}'
+
+rule hprd:
+	output:
+		'data/hprd/HPRD_Release9_062910/BINARY_PROTEIN_PROTEIN_INTERACTIONS.txt'
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/hprd.txt'
+	log:
+		'logs/hprd.log'
+	shell:
+		'src/hprd.sh >& {log}'
+
+rule hgnc:
+	output:
+		touch('data/hgnc/protein-coding_gene.txt')
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/hgnc.txt'
+	log:
+		'logs/hgnc.log'
+	shell:
+		'src/hgnc.sh >& {log}'
+
+rule string:
+	output:
+		touch('data/string/{taxid_string}.protein.links.detailed.{v}.txt.gz')
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/string_{v}_{taxid_string}.txt'
+	log:
+		'logs/string_{v}_{taxid_string}.log'
+	shell:
+		'src/string.sh {wildcards.v} {wildcards.taxid_string} >& {log}'
+
+rule uniprotkb:
+	output:
+		touch('data/uniprotkb/uniprot_sprot.dat.gz'),
+		touch('data/uniprotkb/uniprot_trembl.dat.gz')
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/uniprotkb.txt'
+	log:
+		'logs/uniprotkb.log'
+	shell:
+		'src/uniprotkb.sh >& {log}'
+
+rule gene2accession:
+	output:
+		touch('data/gene2accession/gene2accession.gz')
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/gene2accession.txt'
+	log:
+		'logs/gene2accession.log'
+	shell:
+		'src/gene2accession.sh >& {log}'
+
+rule ensembl:
+	output:
+		touch(expand('data/ensembl/{threename_ensembl}.txt',
+			threename_ensembl=THREENAME_ENSEMBL))
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/ensembl.txt'
+	log:
+		'logs/ensembl.log'
+	shell:
+		'src/ensembl.sh >& {log}'
+
+rule cellphonedb:
+	output:
+		touch('data/cellphonedb/interaction_input.csv'),
+		touch('data/cellphonedb/complex_input.csv')
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/cellphonedb.txt'
+	log:
+		'logs/cellphonedb.log'
+	shell:
+		'src/cellphonedb.sh >& {log}'
+
+rule baderlab:
+	output:
+		touch('data/baderlab/receptor_ligand_interactions_mitab_v1.0_April2017.txt.zip')
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/baderlab.txt'
+	log:
+		'logs/baderlab.log'
+	shell:
+		'src/baderlab.sh >& {log}'
 
 rule biomart_human:
 	output:
