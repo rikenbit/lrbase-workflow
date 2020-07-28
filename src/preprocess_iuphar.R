@@ -1,0 +1,45 @@
+iuphar <- read.csv("data/iuphar/interactions.csv",  stringsAsFactor=FALSE)
+iuphar <- iuphar[which(iuphar$target_species == "Human"), ]
+iuphar <- iuphar[, c("ligand_gene_symbol", "target_gene_symbol", "pubmed_id")]
+iuphar <- iuphar[intersect(which(iuphar[,1] != ""), which(iuphar[,2] != "")), ]
+
+iuphar2 <- c()
+for(i in 1:nrow(iuphar)){
+	if(length(grep("\\|", iuphar[i,1])) || length(grep("\\|", iuphar[i,2]))){
+		ligand <- unlist(strsplit(iuphar[i, 1], "\\|"))
+		receptor <- unlist(strsplit(iuphar[i, 2], "\\|"))
+		ligand <- rep(ligand, each=length(receptor))
+		receptor <- rep(receptor, length(ligand))
+		lr <- cbind(ligand, receptor, iuphar[i, 3])
+		colnames(lr) <- c("ligand_gene_symbol", "target_gene_symbol", "pubmed_id")
+		iuphar2 <- rbind(iuphar2, lr)
+		rm(lr)
+	}else{
+		iuphar2 <- rbind(iuphar2, iuphar[i,])
+	}
+}
+iuphar = iuphar2
+
+#
+# Emsembl（Gene ID - Symbol)
+#
+ensembl = read.delim("data/ensembl/Hsa_Symbol.txt", sep="\t", header=FALSE)
+colnames(ensembl) = c("GENEID", "Symbol")
+
+# iupharのsymbolをGENEIDに
+colnames(iuphar)[1] = "Symbol"
+iuphar = merge(iuphar, ensembl, by="Symbol")
+colnames(iuphar)[4] = "GENEID_L"
+iuphar = iuphar[, 2:4]
+colnames(iuphar)[1] = "Symbol"
+iuphar = merge(iuphar, ensembl, by="Symbol")
+colnames(iuphar)[4] = "GENEID_R"
+iuphar = iuphar[, c(3,4,2)]
+
+# 最後にIUPHARと記述
+iuphar = cbind(iuphar, "IUPHAR")
+
+colnames(iuphar)[3:4] = c("PMID_PPI", "SOURCEDB")
+
+# 保存
+write.table(iuphar, file="data/iuphar/iuphar.csv", row.names=FALSE, quote=FALSE, sep=",")

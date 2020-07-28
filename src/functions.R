@@ -1,14 +1,14 @@
 library("biomaRt")
-library("LRBase.Hsa.eg.db")
 library("ggplot2")
 library("RSQLite")
+library("Homo.sapiens")
 
 .lapply_pb <- function(X, FUN, ...)
 {
  env <- environment()
  pb_Total <- length(X)
  counter <- 0
- pb <- txtProgressBar(min = 0, max = pb_Total, style = 3)   
+ pb <- txtProgressBar(min = 0, max = pb_Total, style = 3)
 
  # wrapper around FUN
  wrapper <- function(...){

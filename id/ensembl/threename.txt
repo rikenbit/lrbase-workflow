@@ -1,0 +1,14 @@
+Hsa_Symbol
+Hsa
+Mmu
+Rno
+Bta
+Cel
+Dme
+Dre
+Gga
+Pab
+Xtr
+Ssc
+Ath
+Osa

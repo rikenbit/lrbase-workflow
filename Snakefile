@@ -18,27 +18,37 @@ THREENAME_MESH = THREENAME_MESH.unique()
 TAXID = set(TAXID_ENSEMBL) | set(TAXID_NCBI) | set(TAXID_MESH)
 
 VERSION_STRING = 'v11.0'
-TAXID_STRING = ['9606', '10090', '3702', '10116', '9913', '224308', '44689', '6239', '7227', '7955', '9031', '9601', '83332', '243232', '71421', '8364', '199310', '9823', '224325']
+TAXID_STRING = pd.read_csv('id/string/taxid.txt', dtype='string', header=None)[0]
+TAXID_STRING = TAXID_STRING.unique()
 
-THREENAME_ENSEMBL = ['Hsa_Symbol', 'Hsa', 'Mmu', 'Rno', 'Bta', 'Cel', 'Dme', 'Dre', 'Gga', 'Pab', 'Xtr', 'Ssc', 'Ath' 'Osa']
+THREENAME_ENSEMBL = pd.read_csv('id/ensembl/threename.txt', dtype='string', header=None)[0]
+THREENAME_ENSEMBL = THREENAME_ENSEMBL.unique()
+
+TAXID_UNIPROTKB = pd.read_csv('id/uniprotkb/taxid.txt', dtype='string', header=None)[0]
+TAXID_UNIPROTKB = TAXID_UNIPROTKB.unique()
 
 rule all:
 	input:
 		'data/fantom5.txt',
 		'data/dlrp/pre_dlrp2.csv',
-		'data/iuphar/interactions.csv',
+		'data/iuphar/iuphar.csv',
 		'data/hprd/HPRD_Release9_062910/BINARY_PROTEIN_PROTEIN_INTERACTIONS.txt',
 		'data/hgnc/protein-coding_gene.txt',
 		expand('data/string/{taxid_string}.protein.links.detailed.{v}.txt.gz',
 			taxid_string=TAXID_STRING, v=VERSION_STRING),
-		'data/uniprotkb/uniprot_sprot.dat.gz',
-		'data/uniprotkb/uniprot_trembl.dat.gz',
+		expand('data/uniprotkb/swissprot_{taxid_uniprotkb}_secreted.csv',
+			taxid_uniprotkb=TAXID_UNIPROTKB),
+		expand('data/uniprotkb/swissprot_{taxid_uniprotkb}_membrane.csv',
+			taxid_uniprotkb=TAXID_UNIPROTKB),
+		expand('data/uniprotkb/trembl_{taxid_uniprotkb}_secreted.csv',
+			taxid_uniprotkb=TAXID_UNIPROTKB),
+		expand('data/uniprotkb/trembl_{taxid_uniprotkb}_membrane.csv',
+			taxid_uniprotkb=TAXID_UNIPROTKB),
 		'data/gene2accession/gene2accession.gz',
 		expand('data/ensembl/{threename_ensembl}.txt',
 			threename_ensembl=THREENAME_ENSEMBL),
-		'data/cellphonedb/interaction_input.csv',
-		'data/cellphonedb/complex_input.csv',
-		'data/baderlab/receptor_ligand_interactions_mitab_v1.0_April2017.txt.zip'
+		'data/cellphonedb/cellphonedb.csv',
+		'data/baderlab/baderlab.csv'
 		# 'plot/coverage.png',
 		# 'plot/percentage.png',
 		# 'id/lrbase/sample_sheet.csv'
@@ -128,8 +138,11 @@ rule download_iuphar:
 		'src/download_iuphar.sh >& {log}'
 
 rule preprocess_iuphar:
+	input:
+		'data/iuphar/interactions.csv',
+		'data/ensembl/Hsa_Symbol.txt'
 	output:
-		touch('data/iuphar/XXXXX')
+		touch('data/iuphar/iuphar.csv')
 	conda:
 		'envs/myenv.yaml'
 	benchmark:
@@ -177,8 +190,8 @@ rule download_string:
 
 rule download_uniprotkb:
 	output:
-		touch('data/uniprotkb/uniprot_sprot.dat.gz'),
-		touch('data/uniprotkb/uniprot_trembl.dat.gz')
+		touch('data/uniprotkb/uniprot_sprot.dat'),
+		touch('data/uniprotkb/uniprot_trembl.dat')
 	conda:
 		'envs/myenv.yaml'
 	benchmark:
@@ -187,6 +200,94 @@ rule download_uniprotkb:
 		'logs/download_uniprotkb.log'
 	shell:
 		'src/download_uniprotkb.sh >& {log}'
+
+rule preprocess_swissprot:
+	input:
+		'data/uniprotkb/uniprot_sprot.dat'
+	output:
+		touch('data/uniprotkb/swissprot_{taxid_uniprotkb}.csv')
+	wildcard_constraints:
+		taxid_uniprotkb='|'.join([re.escape(x) for x in TAXID_UNIPROTKB])
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/preprocess_swissprot_{taxid_uniprotkb}.txt'
+	log:
+		'logs/preprocess_swissprot_{taxid_uniprotkb}.log'
+	shell:
+		'src/preprocess_swissprot.sh {wildcards.taxid_uniprotkb} >& {log}'
+
+rule preprocess_swissprot_secreted:
+	input:
+		'data/uniprotkb/swissprot_{taxid_uniprotkb}.csv'
+	output:
+		touch('data/uniprotkb/swissprot_{taxid_uniprotkb}_secreted.csv')
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/preprocess_swissprot_{taxid_uniprotkb}_secreted.txt'
+	log:
+		'logs/preprocess_swissprot_{taxid_uniprotkb}_secreted.log'
+	shell:
+		'src/preprocess_swissprot_secreted.sh {wildcards.taxid_uniprotkb} >& {log}'
+
+rule preprocess_swissprot_membrane:
+	input:
+		'data/uniprotkb/swissprot_{taxid_uniprotkb}.csv'
+	output:
+		touch('data/uniprotkb/swissprot_{taxid_uniprotkb}_membrane.csv')
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/preprocess_swissprot_{taxid_uniprotkb}_membrane.txt'
+	log:
+		'logs/preprocess_swissprot_{taxid_uniprotkb}_membrane.log'
+	shell:
+		'src/preprocess_swissprot_membrane.sh {wildcards.taxid_uniprotkb} >& {log}'
+
+rule preprocess_trembl:
+	input:
+		'data/uniprotkb/uniprot_trembl.dat'
+	output:
+		touch('data/uniprotkb/trembl_{taxid_uniprotkb}.csv')
+	wildcard_constraints:
+		taxid_uniprotkb='|'.join([re.escape(x) for x in TAXID_UNIPROTKB])
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/preprocess_trembl_{taxid_uniprotkb}.txt'
+	log:
+		'logs/preprocess_trembl_{taxid_uniprotkb}.log'
+	shell:
+		'src/preprocess_trembl.sh {wildcards.taxid_uniprotkb} >& {log}'
+
+rule preprocess_trembl_secreted:
+	input:
+		'data/uniprotkb/trembl_{taxid_uniprotkb}.csv'
+	output:
+		touch('data/uniprotkb/trembl_{taxid_uniprotkb}_secreted.csv')
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/preprocess_trembl_{taxid_uniprotkb}_secreted.txt'
+	log:
+		'logs/preprocess_trembl_{taxid_uniprotkb}_secreted.log'
+	shell:
+		'src/preprocess_trembl_secreted.sh {wildcards.taxid_uniprotkb} >& {log}'
+
+rule preprocess_trembl_membrane:
+	input:
+		'data/uniprotkb/trembl_{taxid_uniprotkb}.csv'
+	output:
+		touch('data/uniprotkb/trembl_{taxid_uniprotkb}_membrane.csv')
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/preprocess_trembl_{taxid_uniprotkb}_membrane.txt'
+	log:
+		'logs/preprocess_trembl_{taxid_uniprotkb}_membrane.log'
+	shell:
+		'src/preprocess_trembl_membrane.sh {wildcards.taxid_uniprotkb} >& {log}'
 
 rule download_gene2accession:
 	output:
@@ -215,8 +316,8 @@ rule download_ensembl:
 
 rule download_cellphonedb:
 	output:
-		touch('data/cellphonedb/interaction_input.csv'),
-		touch('data/cellphonedb/complex_input.csv')
+		touch('data/cellphonedb/interactions_cellphonedb.csv'),
+		touch('data/cellphonedb/heterodimers.csv')
 	conda:
 		'envs/myenv.yaml'
 	benchmark:
@@ -225,6 +326,21 @@ rule download_cellphonedb:
 		'logs/download_cellphonedb.log'
 	shell:
 		'src/download_cellphonedb.sh >& {log}'
+
+rule preprocess_cellphonedb:
+	input:
+		'data/cellphonedb/interactions_cellphonedb.csv',
+		'data/cellphonedb/heterodimers.csv'
+	output:
+		'data/cellphonedb/cellphonedb.csv'
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/preprocess_cellphonedb.txt'
+	log:
+		'logs/preprocess_cellphonedb.log'
+	shell:
+		'src/preprocess_cellphonedb.sh >& {log}'
 
 rule download_baderlab:
 	output:
@@ -238,8 +354,19 @@ rule download_baderlab:
 	shell:
 		'src/download_baderlab.sh >& {log}'
 
-
-
+rule preprocess_baderlab:
+	input:
+		'data/baderlab/receptor_ligand_interactions_mitab_v1.0_April2017.txt.zip'
+	output:
+		'data/baderlab/baderlab.csv'
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/preprocess_baderlab.txt'
+	log:
+		'logs/preprocess_baderlab.log'
+	shell:
+		'src/preprocess_baderlab.sh >& {log}'
 
 rule download_biomart_human:
 	output:
