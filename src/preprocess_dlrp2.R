@@ -4,7 +4,7 @@ dlrp = read.delim("data/dlrp/pre_dlrp.csv",  stringsAsFactor=FALSE, header=FALSE
 #
 # Emsembl（Gene ID - Symbol)
 #
-ensembl = read.delim("data/ensembl/Hsa_Symbol.txt", sep="\t", header=FALSE)
+ensembl = read.delim("data/ensembl/9606_symbol.txt", sep="\t", header=FALSE)
 colnames(ensembl) = c("GENEID", "Symbol")
 
 # dlrpのsymbolをGENEIDに

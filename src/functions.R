@@ -1,3 +1,4 @@
+library("data.table")
 library("biomaRt")
 library("ggplot2")
 library("RSQLite")

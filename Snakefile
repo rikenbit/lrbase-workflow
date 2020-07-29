@@ -15,40 +15,45 @@ TAXID_MESH = TAXID_MESH.unique()
 THREENAME_MESH = pd.read_csv('id/mesh/threename.txt', dtype='string', header=None)[0]
 THREENAME_MESH = THREENAME_MESH.unique()
 
-TAXID = set(TAXID_ENSEMBL) | set(TAXID_NCBI) | set(TAXID_MESH)
+TAXID_KNOWN = set(TAXID_ENSEMBL) | set(TAXID_NCBI) | set(TAXID_MESH)
 
 VERSION_STRING = 'v11.0'
 TAXID_STRING = pd.read_csv('id/string/taxid.txt', dtype='string', header=None)[0]
 TAXID_STRING = TAXID_STRING.unique()
 
-THREENAME_ENSEMBL = pd.read_csv('id/ensembl/threename.txt', dtype='string', header=None)[0]
-THREENAME_ENSEMBL = THREENAME_ENSEMBL.unique()
-
 TAXID_UNIPROTKB = pd.read_csv('id/uniprotkb/taxid.txt', dtype='string', header=None)[0]
 TAXID_UNIPROTKB = TAXID_UNIPROTKB.unique()
 
+TAXID_PUTATIVE = set(TAXID_UNIPROTKB) & set(TAXID_STRING)
+
+TAXID_ALL = TAXID_KNOWN | TAXID_PUTATIVE
+
 rule all:
 	input:
-		'data/fantom5.txt',
+		'data/fantom5/fantom5.txt',
 		'data/dlrp/pre_dlrp2.csv',
 		'data/iuphar/iuphar.csv',
-		'data/hprd/HPRD_Release9_062910/BINARY_PROTEIN_PROTEIN_INTERACTIONS.txt',
+		'data/swissprot_hprd/9606.csv',
+		'data/trembl_hprd/9606.csv',
 		'data/hgnc/protein-coding_gene.txt',
-		expand('data/string/{taxid_string}.protein.links.detailed.{v}.txt.gz',
-			taxid_string=TAXID_STRING, v=VERSION_STRING),
-		expand('data/uniprotkb/swissprot_{taxid_uniprotkb}_secreted.csv',
-			taxid_uniprotkb=TAXID_UNIPROTKB),
-		expand('data/uniprotkb/swissprot_{taxid_uniprotkb}_membrane.csv',
-			taxid_uniprotkb=TAXID_UNIPROTKB),
-		expand('data/uniprotkb/trembl_{taxid_uniprotkb}_secreted.csv',
-			taxid_uniprotkb=TAXID_UNIPROTKB),
-		expand('data/uniprotkb/trembl_{taxid_uniprotkb}_membrane.csv',
-			taxid_uniprotkb=TAXID_UNIPROTKB),
+		expand('data/uniprotkb/{udb}_{taxid_putative}_{locus}.csv',
+			udb=['swissprot', 'trembl'],
+			taxid_putative=TAXID_PUTATIVE,
+			locus=['secreted', 'membrane']),
+
+		expand('data/{db}/{taxid_putative}_{v}_{thr}.csv',
+			db=['swissprot_string', 'trembl_string'],
+			taxid_putative=TAXID_PUTATIVE,
+			v=VERSION_STRING,
+			thr=['low', 'mid', 'high']),
+
 		'data/gene2accession/gene2accession.gz',
-		expand('data/ensembl/{threename_ensembl}.txt',
-			threename_ensembl=THREENAME_ENSEMBL),
+		expand('data/ensembl/{taxid_putative}.txt',
+			taxid_putative=TAXID_PUTATIVE),
 		'data/cellphonedb/cellphonedb.csv',
 		'data/baderlab/baderlab.csv'
+		# 'data/coverage_summary.RData',
+		# 'data/percentage_summary.RData'
 		# 'plot/coverage.png',
 		# 'plot/percentage.png',
 		# 'id/lrbase/sample_sheet.csv'
@@ -69,22 +74,6 @@ rule download_fantom5:
 	shell:
 		'src/download_fantom5.sh >& {log}'
 
-rule preprocess_fantom5:
-	input:
-		'data/fantom5/PairsLigRec.txt',
-		'data/fantom5/ncomms8866-s3.xlsx',
-		'data/ensembl/Hsa_Symbol.txt'
-	output:
-		touch('data/fantom5.txt')
-	conda:
-		'envs/myenv.yaml'
-	benchmark:
-		'benchmarks/preprocess_fantom5.txt'
-	log:
-		'logs/preprocess_fantom5.log'
-	shell:
-		'src/preprocess_fantom5.sh >& {log}'
-
 rule download_dlrp:
 	output:
 		touch('data/dlrp/dlrp.txt')
@@ -97,34 +86,6 @@ rule download_dlrp:
 	shell:
 		'src/download_dlrp.sh >& {log}'
 
-rule preprocess_dlrp:
-	input:
-		'data/dlrp/dlrp.txt'
-	output:
-		touch('data/dlrp/pre_dlrp.csv')
-	conda:
-		'envs/myenv.yaml'
-	benchmark:
-		'benchmarks/preprocess_dlrp.txt'
-	log:
-		'logs/preprocess_dlrp.log'
-	shell:
-		'src/preprocess_dlrp.sh >& {log}'
-
-rule preprocess_dlrp2:
-	input:
-		'data/dlrp/pre_dlrp.csv'
-	output:
-		touch('data/dlrp/pre_dlrp2.csv')
-	conda:
-		'envs/myenv.yaml'
-	benchmark:
-		'benchmarks/preprocess_dlrp2.txt'
-	log:
-		'logs/preprocess_dlrp2.log'
-	shell:
-		'src/preprocess_dlrp2.sh >& {log}'
-
 rule download_iuphar:
 	output:
 		touch('data/iuphar/interactions.csv')
@@ -136,21 +97,6 @@ rule download_iuphar:
 		'logs/download_iuphar.log'
 	shell:
 		'src/download_iuphar.sh >& {log}'
-
-rule preprocess_iuphar:
-	input:
-		'data/iuphar/interactions.csv',
-		'data/ensembl/Hsa_Symbol.txt'
-	output:
-		touch('data/iuphar/iuphar.csv')
-	conda:
-		'envs/myenv.yaml'
-	benchmark:
-		'benchmarks/preprocess_iuphar.txt'
-	log:
-		'logs/preprocess_iuphar.log'
-	shell:
-		'src/preprocess_iuphar.sh >& {log}'
 
 rule download_hprd:
 	output:
@@ -178,15 +124,15 @@ rule download_hgnc:
 
 rule download_string:
 	output:
-		touch('data/string/{taxid_string}.protein.links.detailed.{v}.txt.gz')
+		touch('data/string/{taxid_putative}.protein.links.detailed.{v}.txt')
 	conda:
 		'envs/myenv.yaml'
 	benchmark:
-		'benchmarks/download_string_{v}_{taxid_string}.txt'
+		'benchmarks/download_string_{v}_{taxid_putative}.txt'
 	log:
-		'logs/download_string_{v}_{taxid_string}.log'
+		'logs/download_string_{v}_{taxid_putative}.log'
 	shell:
-		'src/download_string.sh {wildcards.v} {wildcards.taxid_string} >& {log}'
+		'src/download_string.sh {wildcards.v} {wildcards.taxid_putative} >& {log}'
 
 rule download_uniprotkb:
 	output:
@@ -201,94 +147,6 @@ rule download_uniprotkb:
 	shell:
 		'src/download_uniprotkb.sh >& {log}'
 
-rule preprocess_swissprot:
-	input:
-		'data/uniprotkb/uniprot_sprot.dat'
-	output:
-		touch('data/uniprotkb/swissprot_{taxid_uniprotkb}.csv')
-	wildcard_constraints:
-		taxid_uniprotkb='|'.join([re.escape(x) for x in TAXID_UNIPROTKB])
-	conda:
-		'envs/myenv.yaml'
-	benchmark:
-		'benchmarks/preprocess_swissprot_{taxid_uniprotkb}.txt'
-	log:
-		'logs/preprocess_swissprot_{taxid_uniprotkb}.log'
-	shell:
-		'src/preprocess_swissprot.sh {wildcards.taxid_uniprotkb} >& {log}'
-
-rule preprocess_swissprot_secreted:
-	input:
-		'data/uniprotkb/swissprot_{taxid_uniprotkb}.csv'
-	output:
-		touch('data/uniprotkb/swissprot_{taxid_uniprotkb}_secreted.csv')
-	conda:
-		'envs/myenv.yaml'
-	benchmark:
-		'benchmarks/preprocess_swissprot_{taxid_uniprotkb}_secreted.txt'
-	log:
-		'logs/preprocess_swissprot_{taxid_uniprotkb}_secreted.log'
-	shell:
-		'src/preprocess_swissprot_secreted.sh {wildcards.taxid_uniprotkb} >& {log}'
-
-rule preprocess_swissprot_membrane:
-	input:
-		'data/uniprotkb/swissprot_{taxid_uniprotkb}.csv'
-	output:
-		touch('data/uniprotkb/swissprot_{taxid_uniprotkb}_membrane.csv')
-	conda:
-		'envs/myenv.yaml'
-	benchmark:
-		'benchmarks/preprocess_swissprot_{taxid_uniprotkb}_membrane.txt'
-	log:
-		'logs/preprocess_swissprot_{taxid_uniprotkb}_membrane.log'
-	shell:
-		'src/preprocess_swissprot_membrane.sh {wildcards.taxid_uniprotkb} >& {log}'
-
-rule preprocess_trembl:
-	input:
-		'data/uniprotkb/uniprot_trembl.dat'
-	output:
-		touch('data/uniprotkb/trembl_{taxid_uniprotkb}.csv')
-	wildcard_constraints:
-		taxid_uniprotkb='|'.join([re.escape(x) for x in TAXID_UNIPROTKB])
-	conda:
-		'envs/myenv.yaml'
-	benchmark:
-		'benchmarks/preprocess_trembl_{taxid_uniprotkb}.txt'
-	log:
-		'logs/preprocess_trembl_{taxid_uniprotkb}.log'
-	shell:
-		'src/preprocess_trembl.sh {wildcards.taxid_uniprotkb} >& {log}'
-
-rule preprocess_trembl_secreted:
-	input:
-		'data/uniprotkb/trembl_{taxid_uniprotkb}.csv'
-	output:
-		touch('data/uniprotkb/trembl_{taxid_uniprotkb}_secreted.csv')
-	conda:
-		'envs/myenv.yaml'
-	benchmark:
-		'benchmarks/preprocess_trembl_{taxid_uniprotkb}_secreted.txt'
-	log:
-		'logs/preprocess_trembl_{taxid_uniprotkb}_secreted.log'
-	shell:
-		'src/preprocess_trembl_secreted.sh {wildcards.taxid_uniprotkb} >& {log}'
-
-rule preprocess_trembl_membrane:
-	input:
-		'data/uniprotkb/trembl_{taxid_uniprotkb}.csv'
-	output:
-		touch('data/uniprotkb/trembl_{taxid_uniprotkb}_membrane.csv')
-	conda:
-		'envs/myenv.yaml'
-	benchmark:
-		'benchmarks/preprocess_trembl_{taxid_uniprotkb}_membrane.txt'
-	log:
-		'logs/preprocess_trembl_{taxid_uniprotkb}_membrane.log'
-	shell:
-		'src/preprocess_trembl_membrane.sh {wildcards.taxid_uniprotkb} >& {log}'
-
 rule download_gene2accession:
 	output:
 		touch('data/gene2accession/gene2accession.gz')
@@ -301,10 +159,22 @@ rule download_gene2accession:
 	shell:
 		'src/download_gene2accession.sh >& {log}'
 
+rule download_ensembl_human_symbol:
+	output:
+		touch('data/ensembl/9606_symbol.txt')
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/download_ensembl_human_symbol.txt'
+	log:
+		'logs/download_ensembl_human_symbol.log'
+	shell:
+		'src/download_ensembl_human_symbol.sh >& {log}'
+
 rule download_ensembl:
 	output:
-		touch(expand('data/ensembl/{threename_ensembl}.txt',
-			threename_ensembl=THREENAME_ENSEMBL))
+		touch(expand('data/ensembl/{taxid_putative}.txt',
+			taxid_putative=TAXID_PUTATIVE))
 	conda:
 		'envs/myenv.yaml'
 	benchmark:
@@ -327,21 +197,6 @@ rule download_cellphonedb:
 	shell:
 		'src/download_cellphonedb.sh >& {log}'
 
-rule preprocess_cellphonedb:
-	input:
-		'data/cellphonedb/interactions_cellphonedb.csv',
-		'data/cellphonedb/heterodimers.csv'
-	output:
-		'data/cellphonedb/cellphonedb.csv'
-	conda:
-		'envs/myenv.yaml'
-	benchmark:
-		'benchmarks/preprocess_cellphonedb.txt'
-	log:
-		'logs/preprocess_cellphonedb.log'
-	shell:
-		'src/preprocess_cellphonedb.sh >& {log}'
-
 rule download_baderlab:
 	output:
 		touch('data/baderlab/receptor_ligand_interactions_mitab_v1.0_April2017.txt.zip')
@@ -353,20 +208,6 @@ rule download_baderlab:
 		'logs/download_baderlab.log'
 	shell:
 		'src/download_baderlab.sh >& {log}'
-
-rule preprocess_baderlab:
-	input:
-		'data/baderlab/receptor_ligand_interactions_mitab_v1.0_April2017.txt.zip'
-	output:
-		'data/baderlab/baderlab.csv'
-	conda:
-		'envs/myenv.yaml'
-	benchmark:
-		'benchmarks/preprocess_baderlab.txt'
-	log:
-		'logs/preprocess_baderlab.log'
-	shell:
-		'src/preprocess_baderlab.sh >& {log}'
 
 rule download_biomart_human:
 	output:
@@ -411,8 +252,381 @@ rule download_homologene:
 		'src/download_homologene.sh {wildcards.taxid_ncbi} {output} >& {log}'
 
 #############################################
+# Preprocess
+#############################################
+rule preprocess_fantom5:
+	input:
+		'data/fantom5/PairsLigRec.txt',
+		'data/fantom5/ncomms8866-s3.xlsx',
+		'data/ensembl/9606_symbol.txt'
+	output:
+		touch('data/fantom5/fantom5.txt')
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/preprocess_fantom5.txt'
+	log:
+		'logs/preprocess_fantom5.log'
+	shell:
+		'src/preprocess_fantom5.sh >& {log}'
+
+rule preprocess_dlrp:
+	input:
+		'data/dlrp/dlrp.txt'
+	output:
+		touch('data/dlrp/pre_dlrp.csv')
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/preprocess_dlrp.txt'
+	log:
+		'logs/preprocess_dlrp.log'
+	shell:
+		'src/preprocess_dlrp.sh >& {log}'
+
+rule preprocess_dlrp2:
+	input:
+		'data/dlrp/pre_dlrp.csv',
+		'data/ensembl/9606_symbol.txt'
+	output:
+		touch('data/dlrp/pre_dlrp2.csv')
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/preprocess_dlrp2.txt'
+	log:
+		'logs/preprocess_dlrp2.log'
+	shell:
+		'src/preprocess_dlrp2.sh >& {log}'
+
+rule preprocess_iuphar:
+	input:
+		'data/iuphar/interactions.csv',
+		'data/ensembl/9606_symbol.txt'
+	output:
+		touch('data/iuphar/iuphar.csv')
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/preprocess_iuphar.txt'
+	log:
+		'logs/preprocess_iuphar.log'
+	shell:
+		'src/preprocess_iuphar.sh >& {log}'
+
+rule preprocess_swissprot:
+	input:
+		'data/uniprotkb/uniprot_sprot.dat'
+	output:
+		touch('data/uniprotkb/swissprot_{taxid_putative}.csv')
+	wildcard_constraints:
+		taxid_putative='|'.join([re.escape(x) for x in TAXID_PUTATIVE])
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/preprocess_swissprot_{taxid_putative}.txt'
+	log:
+		'logs/preprocess_swissprot_{taxid_putative}.log'
+	shell:
+		'src/preprocess_swissprot.sh {wildcards.taxid_putative} >& {log}'
+
+rule preprocess_swissprot_secreted:
+	input:
+		'data/uniprotkb/swissprot_{taxid_putative}.csv'
+	output:
+		touch('data/uniprotkb/swissprot_{taxid_putative}_secreted.csv')
+	wildcard_constraints:
+		taxid_putative='|'.join([re.escape(x) for x in TAXID_PUTATIVE])
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/preprocess_swissprot_{taxid_putative}_secreted.txt'
+	log:
+		'logs/preprocess_swissprot_{taxid_putative}_secreted.log'
+	shell:
+		'src/preprocess_swissprot_secreted.sh {wildcards.taxid_putative} >& {log}'
+
+rule preprocess_swissprot_membrane:
+	input:
+		'data/uniprotkb/swissprot_{taxid_putative}.csv'
+	output:
+		touch('data/uniprotkb/swissprot_{taxid_putative}_membrane.csv')
+	wildcard_constraints:
+		taxid_putative='|'.join([re.escape(x) for x in TAXID_PUTATIVE])
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/preprocess_swissprot_{taxid_putative}_membrane.txt'
+	log:
+		'logs/preprocess_swissprot_{taxid_putative}_membrane.log'
+	shell:
+		'src/preprocess_swissprot_membrane.sh {wildcards.taxid_putative} >& {log}'
+
+rule preprocess_trembl:
+	input:
+		'data/uniprotkb/uniprot_trembl.dat'
+	output:
+		touch('data/uniprotkb/trembl_{taxid_putative}.csv')
+	wildcard_constraints:
+		taxid_putative='|'.join([re.escape(x) for x in TAXID_PUTATIVE])
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/preprocess_trembl_{taxid_putative}.txt'
+	log:
+		'logs/preprocess_trembl_{taxid_putative}.log'
+	shell:
+		'src/preprocess_trembl.sh {wildcards.taxid_putative} >& {log}'
+
+rule preprocess_trembl_secreted:
+	input:
+		'data/uniprotkb/trembl_{taxid_putative}.csv'
+	output:
+		touch('data/uniprotkb/trembl_{taxid_putative}_secreted.csv')
+	wildcard_constraints:
+		taxid_putative='|'.join([re.escape(x) for x in TAXID_PUTATIVE])
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/preprocess_trembl_{taxid_putative}_secreted.txt'
+	log:
+		'logs/preprocess_trembl_{taxid_putative}_secreted.log'
+	shell:
+		'src/preprocess_trembl_secreted.sh {wildcards.taxid_putative} >& {log}'
+
+rule preprocess_trembl_membrane:
+	input:
+		'data/uniprotkb/trembl_{taxid_putative}.csv'
+	output:
+		touch('data/uniprotkb/trembl_{taxid_putative}_membrane.csv')
+	wildcard_constraints:
+		taxid_putative='|'.join([re.escape(x) for x in TAXID_PUTATIVE])
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/preprocess_trembl_{taxid_putative}_membrane.txt'
+	log:
+		'logs/preprocess_trembl_{taxid_putative}_membrane.log'
+	shell:
+		'src/preprocess_trembl_membrane.sh {wildcards.taxid_putative} >& {log}'
+
+rule preprocess_swissprot_hprd:
+	input:
+		'data/ensembl/9606_symbol.txt',
+		'data/uniprotkb/swissprot_9606_secreted.csv',
+		'data/uniprotkb/swissprot_9606_membrane.csv',
+		'data/hprd/HPRD_Release9_062910/BINARY_PROTEIN_PROTEIN_INTERACTIONS.txt'
+	output:
+		touch('data/swissprot_hprd/9606.csv')
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/preprocess_swissprot_hprd.txt'
+	log:
+		'logs/preprocess_swissprot_hprd.log'
+	shell:
+		'src/preprocess_swissprot_hprd.sh >& {log}'
+
+rule preprocess_trembl_hprd:
+	input:
+		'data/ensembl/9606_symbol.txt',
+		'data/uniprotkb/trembl_9606_secreted.csv',
+		'data/uniprotkb/trembl_9606_membrane.csv',
+		'data/hprd/HPRD_Release9_062910/BINARY_PROTEIN_PROTEIN_INTERACTIONS.txt'
+	output:
+		touch('data/trembl_hprd/9606.csv')
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/preprocess_trembl_hprd.txt'
+	log:
+		'logs/preprocess_trembl_hprd.log'
+	shell:
+		'src/preprocess_trembl_hprd.sh >& {log}'
+
+rule preprocess_swissprot_string:
+	input:
+		'data/ensembl/{taxid_putative}.txt',
+		'data/uniprotkb/swissprot_{taxid_putative}_secreted.csv',
+		'data/uniprotkb/swissprot_{taxid_putative}_membrane.csv',
+		'data/string/{taxid_putative}.protein.links.detailed.{v}.txt'
+	output:
+		touch('data/swissprot_string/{taxid_putative}_{v}.csv')
+	wildcard_constraints:
+		taxid_putative='|'.join([re.escape(x) for x in TAXID_PUTATIVE]),
+		v=VERSION_STRING
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/preprocess_swissprot_string_{taxid_putative}_{v}.txt'
+	log:
+		'logs/preprocess_swissprot_string_{taxid_putative}_{v}.log'
+	shell:
+		'src/preprocess_swissprot_string.sh {wildcards.taxid_putative} {wildcards.v} >& {log}'
+
+rule preprocess_trembl_string:
+	input:
+		'data/ensembl/{taxid_putative}.txt',
+		'data/uniprotkb/trembl_{taxid_putative}_secreted.csv',
+		'data/uniprotkb/trembl_{taxid_putative}_membrane.csv',
+		'data/string/{taxid_putative}.protein.links.detailed.{v}.txt'
+	output:
+		touch('data/trembl_string/{taxid_putative}_{v}.csv')
+	wildcard_constraints:
+		taxid_putative='|'.join([re.escape(x) for x in TAXID_PUTATIVE]),
+		v=VERSION_STRING
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/preprocess_trembl_string_{taxid_putative}_{v}.txt'
+	log:
+		'logs/preprocess_trembl_string_{taxid_putative}_{v}.log'
+	shell:
+		'src/preprocess_trembl_string.sh {wildcards.taxid_putative} {wildcards.v} >& {log}'
+
+rule preprocess_cellphonedb:
+	input:
+		'data/cellphonedb/interactions_cellphonedb.csv',
+		'data/cellphonedb/heterodimers.csv'
+	output:
+		'data/cellphonedb/cellphonedb.csv'
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/preprocess_cellphonedb.txt'
+	log:
+		'logs/preprocess_cellphonedb.log'
+	shell:
+		'src/preprocess_cellphonedb.sh >& {log}'
+
+rule preprocess_baderlab:
+	input:
+		'data/baderlab/receptor_ligand_interactions_mitab_v1.0_April2017.txt.zip'
+	output:
+		'data/baderlab/baderlab.csv'
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/preprocess_baderlab.txt'
+	log:
+		'logs/preprocess_baderlab.log'
+	shell:
+		'src/preprocess_baderlab.sh >& {log}'
+
+#############################################
 # Summary
 #############################################
+
+rule summary_confidence_swissprot_string_low:
+	input:
+		'data/swissprot_string/{taxid_putative}_{v}.csv'
+	output:
+		touch('data/swissprot_string/{taxid_putative}_{v}_low.csv')
+	wildcard_constraints:
+		taxid_putative='|'.join([re.escape(x) for x in TAXID_PUTATIVE]),
+		v=VERSION_STRING
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/summary_confidence_swissprot_string_{taxid_putative}_{v}.txt'
+	log:
+		'logs/summary_confidence_swissprot_string_{taxid_putative}_{v}.log'
+	shell:
+		'src/summary_confidence_swissprot_string.sh {wildcards.taxid_putative} {wildcards.v} 150 >& {log}'
+
+rule summary_confidence_swissprot_string_mid:
+	input:
+		'data/swissprot_string/{taxid_putative}_{v}.csv'
+	output:
+		touch('data/swissprot_string/{taxid_putative}_{v}_mid.csv')
+	wildcard_constraints:
+		taxid_putative='|'.join([re.escape(x) for x in TAXID_PUTATIVE]),
+		v=VERSION_STRING
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/summary_confidence_swissprot_string_{taxid_putative}_{v}.txt'
+	log:
+		'logs/summary_confidence_swissprot_string_{taxid_putative}_{v}.log'
+	shell:
+		'src/summary_confidence_swissprot_string.sh {wildcards.taxid_putative} {wildcards.v} 400 >& {log}'
+
+rule summary_confidence_swissprot_string_high:
+	input:
+		'data/swissprot_string/{taxid_putative}_{v}.csv'
+	output:
+		touch('data/swissprot_string/{taxid_putative}_{v}_high.csv')
+	wildcard_constraints:
+		taxid_putative='|'.join([re.escape(x) for x in TAXID_PUTATIVE]),
+		v=VERSION_STRING
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/summary_confidence_swissprot_string_{taxid_putative}_{v}.txt'
+	log:
+		'logs/summary_confidence_swissprot_string_{taxid_putative}_{v}.log'
+	shell:
+		'src/summary_confidence_swissprot_string.sh {wildcards.taxid_putative} {wildcards.v} 700 >& {log}'
+
+rule summary_confidence_trembl_string_low:
+	input:
+		'data/trembl_string/{taxid_putative}_{v}.csv'
+	output:
+		touch('data/trembl_string/{taxid_putative}_{v}_low.csv')
+	wildcard_constraints:
+		taxid_putative='|'.join([re.escape(x) for x in TAXID_PUTATIVE]),
+		v=VERSION_STRING
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/summary_confidence_trembl_string_{taxid_putative}_{v}.txt'
+	log:
+		'logs/summary_confidence_trembl_string_{taxid_putative}_{v}.log'
+	shell:
+		'src/summary_confidence_trembl_string.sh {wildcards.taxid_putative} {wildcards.v} 150 >& {log}'
+
+rule summary_confidence_trembl_string_mid:
+	input:
+		'data/trembl_string/{taxid_putative}_{v}.csv'
+	output:
+		touch('data/trembl_string/{taxid_putative}_{v}_mid.csv')
+	wildcard_constraints:
+		taxid_putative='|'.join([re.escape(x) for x in TAXID_PUTATIVE]),
+		v=VERSION_STRING
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/summary_confidence_trembl_string_{taxid_putative}_{v}.txt'
+	log:
+		'logs/summary_confidence_trembl_string_{taxid_putative}_{v}.log'
+	shell:
+		'src/summary_confidence_trembl_string.sh {wildcards.taxid_putative} {wildcards.v} 400 >& {log}'
+
+rule summary_confidence_trembl_string_high:
+	input:
+		'data/trembl_string/{taxid_putative}_{v}.csv'
+	output:
+		touch('data/trembl_string/{taxid_putative}_{v}_high.csv')
+	wildcard_constraints:
+		taxid_putative='|'.join([re.escape(x) for x in TAXID_PUTATIVE]),
+		v=VERSION_STRING
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/summary_confidence_trembl_string_{taxid_putative}_{v}.txt'
+	log:
+		'logs/summary_confidence_trembl_string_{taxid_putative}_{v}.log'
+	shell:
+		'src/summary_confidence_trembl_string.sh {wildcards.taxid_putative} {wildcards.v} 700 >& {log}'
+
+
+
+
+
+rule summary_csv:
+
+
+# From meshr-pipeline
 def mesh_file(wld):
 	idx=TAXID_MESH.to_numpy().tolist().index(wld.taxid_mesh)
 	return('data/rbbh/' + THREENAME_MESH[idx] + '.txt')
@@ -433,6 +647,11 @@ rule summary_rbbh:
 	shell:
 		'src/summary_rbbh.sh {input} {output} >& {log}'
 
+
+
+
+
+# CSVレベルでマージされた後
 rule coverage_summary:
 	input:
 		expand('data/biomart/{taxid_ensembl}.csv',
@@ -518,3 +737,24 @@ rule sample_sheet:
 		'logs/sample_sheet.log'
 	shell:
 		'src/sample_sheet.sh >& {log}'
+
+
+#############################################
+# Final Packaging
+#############################################
+# sample_sheetをinput:とする
+
+# src/RPack.sh
+rule packaging_rpack:
+
+# src/RBuild.sh
+rule packaging_rbuild:
+
+# src/RCheck.sh
+rule packaging_rcheck:
+
+# src/RBiocCheck.sh
+rule packaging_bioccheck:
+
+# src/RInstall.sh
+rule packaging_install:
