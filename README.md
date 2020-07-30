@@ -4,12 +4,12 @@ Workflow to construct [LRBase.XXX.eg.db-type](https://bioconductor.org/packages/
 ![](https://github.com/rikenbit/lrbase-workflow/blob/master/dag.svg)
 
 # Evidence code
-## 1. Known Ligand-Receptor (Human)
+## 1. Known Ligand-Receptor (only human)
 
 - **DLRP**: L-R list in [DLRP](http://dip.doe-mbi.ucla.edu/dip/dlrp/dlrp.txt) database
 - **IUPHAR**: L-R list in [IUPHAR](http://www.guidetopharmacology.org/DATA/interactions.csv) database
 
-## 2. Known Ligand-Receptor (other species)
+## 2. Known Ligand-Receptor (all species)
 
 - **Ensembl_DLRP**: L-R list in [DLRP](http://dip.doe-mbi.ucla.edu/dip/dlrp/dlrp.txt) based on the ortholog of Human genes in [Ensembl Protein trees](https://asia.ensembl.org/info/genome/compara/homology_method.html)
 - **Ensembl_IUPHAR**: L-R list in [IUPHAR](http://www.guidetopharmacology.org/DATA/interactions.csv) based on the ortholog of Human genes in [Ensembl Protein trees](https://asia.ensembl.org/info/genome/compara/homology_method.html)
@@ -18,10 +18,16 @@ Workflow to construct [LRBase.XXX.eg.db-type](https://bioconductor.org/packages/
 - **RBBH_DLRP**: L-R list in [DLRP](http://dip.doe-mbi.ucla.edu/dip/dlrp/dlrp.txt) based on the ortholog of Human genes in [Reciprocal BLAST Best Hit used in MeSH.XXX.eg.db workflow](https://github.com/rikenbit/meshr-pipeline)
 - **RBBH_IUPHAR**: L-R list in [IUPHAR](http://www.guidetopharmacology.org/DATA/interactions.csv) based on the ortholog of Human genes in [Reciprocal BLAST Best Hit used in MeSH.XXX.eg.db workflow](https://github.com/rikenbit/meshr-pipeline)
 
-## 3. Putative Ligand-Receptor
+## 3. Putative Ligand-Receptor (only human)
 
-- **SPRING_SWISSPROT**: PPI list in [SPRING](https://string-db.org/cgi/download.pl) and known subcellular localization in [SWISSPROT](http://www.uniprot.org/uniprot/?query=reviewed:yes)
-- **SPRING_TrEMBL**: PPI list in [SPRING](https://string-db.org/cgi/download.pl) and predicted subcellular localization in [TrEMBL](http://www.uniprot.org/uniprot/?query=reviewed:no)
+- **SWISSPROT_HPRD**: Known subcellular localization in [SWISSPROT](http://www.uniprot.org/uniprot/?query=reviewed:yes) and PPI list in [HPRD](http://hprd.org/download)
+- **TrEMBL_HPRD**: Predicted subcellular localization in [TrEMBL](http://www.uniprot.org/uniprot/?query=reviewed:no) and PPI list in [HPRD](http://hprd.org/download)
+
+
+## 4. Putative Ligand-Receptor (all species)
+
+- **SWISSPROT_SPRING**: Known subcellular localization in [SWISSPROT](http://www.uniprot.org/uniprot/?query=reviewed:yes) and PPI list in [SPRING](https://string-db.org/cgi/download.pl)
+- **TrEMBL_SPRING**: Predicted subcellular localization in [TrEMBL](http://www.uniprot.org/uniprot/?query=reviewed:no) and PPI list in [SPRING](https://string-db.org/cgi/download.pl)
 
 # Summary
 ![](https://github.com/rikenbit/lrbase-workflow/blob/master/plot/coverage.png)

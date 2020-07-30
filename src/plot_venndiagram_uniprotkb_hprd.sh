@@ -1,5 +1,5 @@
 #!/bin/bash
-#$ -l nc=24
+#$ -l nc=4
 #$ -p -50
 #$ -r yes
 #$ -q large.q
@@ -10,4 +10,7 @@
 #SBATCH -p node03-06
 SLURM_RESTART_COUNT=2
 
-wget ftp://ftp.ncbi.nlm.nih.gov/gene/DATA/gene2accession.gz -P data/gene2accession
+echo $@
+
+Rscript=`ls .snakemake/conda/*/bin/Rscript`
+$Rscript src/plot_venndiagram_uniprotkb_hprd.R $@

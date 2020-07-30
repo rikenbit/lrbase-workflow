@@ -30,32 +30,27 @@ TAXID_ALL = TAXID_KNOWN | TAXID_PUTATIVE
 
 rule all:
 	input:
-		'data/fantom5/fantom5.txt',
-		'data/dlrp/pre_dlrp2.csv',
-		'data/iuphar/iuphar.csv',
-		'data/swissprot_hprd/9606.csv',
-		'data/trembl_hprd/9606.csv',
-		'data/hgnc/protein-coding_gene.txt',
-		expand('data/uniprotkb/{udb}_{taxid_putative}_{locus}.csv',
-			udb=['swissprot', 'trembl'],
-			taxid_putative=TAXID_PUTATIVE,
-			locus=['secreted', 'membrane']),
-
-		expand('data/{db}/{taxid_putative}_{v}_{thr}.csv',
+		# After CSV...
+		'data/fantom5/fantom5.csv',
+		'data/cellphonedb/cellphonedb.csv',
+		'data/baderlab/baderlab.csv',
+		'data/singlecellsignalr/lrdb.csv',
+		# Venn Diagram
+		expand('plot/venndiagram_{db}_9606_{v}_{thr}.png',
 			db=['swissprot_string', 'trembl_string'],
-			taxid_putative=TAXID_PUTATIVE,
 			v=VERSION_STRING,
 			thr=['low', 'mid', 'high']),
-
-		'data/gene2accession/gene2accession.gz',
-		expand('data/ensembl/{taxid_putative}.txt',
-			taxid_putative=TAXID_PUTATIVE),
-		'data/cellphonedb/cellphonedb.csv',
-		'data/baderlab/baderlab.csv'
+		expand('plot/venndiagram_{db2}.png',
+			db2=['swissprot_hprd', 'trembl_hprd']),
+		# STRING Score plots
+		'plot/swissprot_string_score.png',
+		'plot/trembl_string_score.png',
+		# Summary plots
 		# 'data/coverage_summary.RData',
 		# 'data/percentage_summary.RData'
 		# 'plot/coverage.png',
 		# 'plot/percentage.png',
+		# Sample Sheet
 		# 'id/lrbase/sample_sheet.csv'
 
 #############################################
@@ -110,18 +105,6 @@ rule download_hprd:
 	shell:
 		'src/download_hprd.sh >& {log}'
 
-rule download_hgnc:
-	output:
-		touch('data/hgnc/protein-coding_gene.txt')
-	conda:
-		'envs/myenv.yaml'
-	benchmark:
-		'benchmarks/download_hgnc.txt'
-	log:
-		'logs/download_hgnc.log'
-	shell:
-		'src/download_hgnc.sh >& {log}'
-
 rule download_string:
 	output:
 		touch('data/string/{taxid_putative}.protein.links.detailed.{v}.txt')
@@ -146,18 +129,6 @@ rule download_uniprotkb:
 		'logs/download_uniprotkb.log'
 	shell:
 		'src/download_uniprotkb.sh >& {log}'
-
-rule download_gene2accession:
-	output:
-		touch('data/gene2accession/gene2accession.gz')
-	conda:
-		'envs/myenv.yaml'
-	benchmark:
-		'benchmarks/download_gene2accession.txt'
-	log:
-		'logs/download_gene2accession.log'
-	shell:
-		'src/download_gene2accession.sh >& {log}'
 
 rule download_ensembl_human_symbol:
 	output:
@@ -208,6 +179,18 @@ rule download_baderlab:
 		'logs/download_baderlab.log'
 	shell:
 		'src/download_baderlab.sh >& {log}'
+
+rule download_singlecellsignalr:
+	output:
+		touch('data/singlecellsignalr/LRdb.rda')
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/download_singlecellsignalr.txt'
+	log:
+		'logs/download_singlecellsignalr.log'
+	shell:
+		'src/download_singlecellsignalr.sh >& {log}'
 
 rule download_biomart_human:
 	output:
@@ -260,7 +243,7 @@ rule preprocess_fantom5:
 		'data/fantom5/ncomms8866-s3.xlsx',
 		'data/ensembl/9606_symbol.txt'
 	output:
-		touch('data/fantom5/fantom5.txt')
+		touch('data/fantom5/fantom5.csv')
 	conda:
 		'envs/myenv.yaml'
 	benchmark:
@@ -513,6 +496,21 @@ rule preprocess_baderlab:
 	shell:
 		'src/preprocess_baderlab.sh >& {log}'
 
+rule preprocess_singlecellsignalr:
+	input:
+		'data/singlecellsignalr/LRdb.rda',
+		'data/ensembl/9606_symbol.txt'
+	output:
+		'data/singlecellsignalr/lrdb.csv'
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/preprocess_singlecellsignalr.txt'
+	log:
+		'logs/preprocess_singlecellsignalr.log'
+	shell:
+		'src/preprocess_singlecellsignalr.sh >& {log}'
+
 #############################################
 # Summary
 #############################################
@@ -621,8 +619,6 @@ rule summary_confidence_trembl_string_high:
 
 
 
-
-
 rule summary_csv:
 
 
@@ -693,6 +689,78 @@ rule percentage_summary:
 #############################################
 # Visualization
 #############################################
+rule plot_string_score:
+	input:
+		expand('data/{db}/{taxid_putative}_{v}_{thr}.csv',
+			db=["trembl_string", "swissprot_string"],
+			taxid_putative=TAXID_PUTATIVE,
+			v=VERSION_STRING,
+			thr=['low', 'mid', 'high'])
+	output:
+		'plot/swissprot_string_score.png',
+		'plot/trembl_string_score.png'
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/plot_string_score.txt'
+	log:
+		'logs/plot_string_score.log'
+	shell:
+		'src/plot_string_score.sh {input} >& {log}'
+
+rule plot_venndiagram_uniprotkb_string:
+	input:
+		'data/{db}/9606_{v}_{thr}.csv',
+		'data/fantom5/fantom5.csv',
+		'data/iuphar/iuphar.csv',
+		'data/dlrp/pre_dlrp2.csv'
+	output:
+		'plot/venndiagram_{db}_9606_{v}_{thr}.png'
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/plot_venndiagram_uniprotkb_string_{db}_{v}_{thr}.txt'
+	log:
+		'logs/plot_venndiagram_uniprotkb_string_{db}_{v}_{thr}.log'
+	shell:
+		'src/plot_venndiagram_uniprotkb_string.sh {input} {output} >& {log}'
+
+rule plot_venndiagram_uniprotkb_hprd:
+	input:
+		'data/{db2}/9606.csv',
+		'data/fantom5/fantom5.csv',
+		'data/iuphar/iuphar.csv',
+		'data/dlrp/pre_dlrp2.csv'
+	output:
+		'plot/venndiagram_{db2}.png'
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/plot_venndiagram_uniprotkb_hprd_{db2}.txt'
+	log:
+		'logs/plot_venndiagram_uniprotkb_hprd_{db2}.log'
+	shell:
+		'src/plot_venndiagram_uniprotkb_hprd.sh {input} {output} >& {log}'
+
+# # CSV後
+# rule plot_venndiagram_lrbase:
+# 	input:
+# 		'data/csv/9606.csv',
+# 		'data/fantom5/fantom5.csv',
+# 		'data/cellphonedb/cellphonedb.csv',
+# 		'data/baderlab/baderlab.csv',
+# 		'data/singlecellsignalr/lrdb.csv',
+# 	output:
+# 		'plot/venndiagram_lrbase.png'
+# 	conda:
+# 		'envs/myenv.yaml'
+# 	benchmark:
+# 		'benchmarks/plot_venndiagram_lrbase.txt'
+# 	log:
+# 		'logs/plot_venndiagram_lrbase.log'
+# 	shell:
+# 		'src/plot_venndiagram_lrbase.sh {input} >& {log}'
+
 rule plot_coverage:
 	input:
 		'data/coverage_summary.RData'

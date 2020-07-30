@@ -3,6 +3,12 @@ library("biomaRt")
 library("ggplot2")
 library("RSQLite")
 library("Homo.sapiens")
+library("gtable")
+library("gridExtra")
+library("grid")　
+library("stringr")
+library("VennDiagram")
+library("data.table")
 
 .lapply_pb <- function(X, FUN, ...)
 {
