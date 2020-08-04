@@ -1,40 +1,45 @@
 import pandas as pd
 
+# Ensembl (158)
 TAXID_ENSEMBL = pd.read_csv('id/ensembl/ensembl_samples.csv', dtype='string')
 TAXID_ENSEMBL = TAXID_ENSEMBL['Taxon ID'].unique()
 
 DATASET_ENSEMBL = pd.read_csv('id/ensembl/ensembl_samples.csv', dtype='string')
 DATASET_ENSEMBL = DATASET_ENSEMBL['Dataset name'].unique()
 
+THREENAME_ENSEMBL = pd.read_csv('id/ensembl/ensembl_samples.csv', dtype='string')
+THREENAME_ENSEMBL = THREENAME_ENSEMBL['Abbreviation'].unique()
+
+# NCBI (20)
 TAXID_NCBI = pd.read_csv('id/ncbi/ncbi_samples.csv', dtype='string')
 TAXID_NCBI = TAXID_NCBI['Taxon ID'].unique()
+THREENAME_NCBI = pd.read_csv('id/ncbi/ncbi_samples.csv', dtype='string')
+THREENAME_NCBI = THREENAME_NCBI['Abbreviation'].unique()
 
+# MeSH (100)
 TAXID_MESH = pd.read_csv('id/mesh/taxid.txt', dtype='string', header=None)[0]
 TAXID_MESH = TAXID_MESH.unique()
-
 THREENAME_MESH = pd.read_csv('id/mesh/threename.txt', dtype='string', header=None)[0]
 THREENAME_MESH = THREENAME_MESH.unique()
 
+# Known (247)
 TAXID_KNOWN = set(TAXID_ENSEMBL) | set(TAXID_NCBI) | set(TAXID_MESH)
+THREENAME_KNOWN = set(THREENAME_ENSEMBL) | set(THREENAME_NCBI) | set(THREENAME_MESH)
 
+# Putative (12)
 VERSION_STRING = 'v11.0'
-TAXID_STRING = pd.read_csv('id/string/taxid.txt', dtype='string', header=None)[0]
-TAXID_STRING = TAXID_STRING.unique()
+TAXID_PUTATIVE = pd.read_csv('id/putative_sample_sheet.csv', header=None, dtype='string')
+TAXID_PUTATIVE = TAXID_PUTATIVE[0].unique()
 
-TAXID_UNIPROTKB = pd.read_csv('id/uniprotkb/taxid.txt', dtype='string', header=None)[0]
-TAXID_UNIPROTKB = TAXID_UNIPROTKB.unique()
+THREENAME_PUTATIVE = pd.read_csv('id/putative_sample_sheet.csv', header=None, dtype='string')
+THREENAME_PUTATIVE = THREENAME_PUTATIVE[1].unique()
 
-TAXID_PUTATIVE = set(TAXID_UNIPROTKB) & set(TAXID_STRING)
-
-TAXID_ALL = TAXID_KNOWN | TAXID_PUTATIVE
+# All (248)
+TAXID_ALL = list(TAXID_KNOWN | set(TAXID_PUTATIVE))
+THREENAME_ALL = list(THREENAME_KNOWN | set(THREENAME_PUTATIVE))
 
 rule all:
 	input:
-		# After CSV...
-		'data/fantom5/fantom5.csv',
-		'data/cellphonedb/cellphonedb.csv',
-		'data/baderlab/baderlab.csv',
-		'data/singlecellsignalr/lrdb.csv',
 		# Venn Diagram
 		expand('plot/venndiagram_{db}_9606_{v}_{thr}.png',
 			db=['swissprot_string', 'trembl_string'],
@@ -46,10 +51,7 @@ rule all:
 		'plot/swissprot_string_score.png',
 		'plot/trembl_string_score.png',
 		# Summary plots
-		# 'data/coverage_summary.RData',
-		# 'data/percentage_summary.RData'
-		# 'plot/coverage.png',
-		# 'plot/percentage.png',
+		'plot/summary.png',
 		# Sample Sheet
 		# 'id/lrbase/sample_sheet.csv'
 
@@ -297,6 +299,96 @@ rule preprocess_iuphar:
 	shell:
 		'src/preprocess_iuphar.sh >& {log}'
 
+rule preprocess_ensembl_dlrp:
+	input:
+		'data/biomart/{taxid_ensembl}.csv',
+		'data/dlrp/pre_dlrp2.csv'
+	output:
+		touch('data/ensembl_dlrp/{taxid_ensembl}.csv')
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/preprocess_ensembl_dlrp_{taxid_ensembl}.txt'
+	log:
+		'logs/preprocess_ensembl_dlrp_{taxid_ensembl}.log'
+	shell:
+		'src/preprocess_ortholog_ppi.sh {input} {output} ENSEMBL_DLRP >& {log}'
+
+rule preprocess_ensembl_iuphar:
+	input:
+		'data/biomart/{taxid_ensembl}.csv',
+		'data/iuphar/iuphar.csv'
+	output:
+		touch('data/ensembl_iuphar/{taxid_ensembl}.csv')
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/preprocess_ensembl_iuphar_{taxid_ensembl}.txt'
+	log:
+		'logs/preprocess_ensembl_iuphar_{taxid_ensembl}.log'
+	shell:
+		'src/preprocess_ortholog_ppi.sh {input} {output} ENSEMBL_IUPHAR >& {log}'
+
+rule preprocess_ncbi_dlrp:
+	input:
+		'data/homologene/{taxid_ncbi}.csv',
+		'data/dlrp/pre_dlrp2.csv'
+	output:
+		touch('data/ncbi_dlrp/{taxid_ncbi}.csv')
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/preprocess_ncbi_dlrp_{taxid_ncbi}.txt'
+	log:
+		'logs/preprocess_ncbi_dlrp_{taxid_ncbi}.log'
+	shell:
+		'src/preprocess_ortholog_ppi.sh {input} {output} NCBI_DLRP >& {log}'
+
+rule preprocess_ncbi_iuphar:
+	input:
+		'data/homologene/{taxid_ncbi}.csv',
+		'data/iuphar/iuphar.csv'
+	output:
+		touch('data/ncbi_iuphar/{taxid_ncbi}.csv')
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/preprocess_ncbi_iuphar_{taxid_ncbi}.txt'
+	log:
+		'logs/preprocess_ncbi_iuphar_{taxid_ncbi}.log'
+	shell:
+		'src/preprocess_ortholog_ppi.sh {input} {output} NCBI_IUPHAR >& {log}'
+
+rule preprocess_rbbh_dlrp:
+	input:
+		'data/rbbh/{taxid_mesh}.csv',
+		'data/dlrp/pre_dlrp2.csv'
+	output:
+		touch('data/rbbh_dlrp/{taxid_mesh}.csv')
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/preprocess_rbbh_dlrp_{taxid_mesh}.txt'
+	log:
+		'logs/preprocess_rbbh_dlrp_{taxid_mesh}.log'
+	shell:
+		'src/preprocess_ortholog_ppi.sh {input} {output} RBBH_DLRP >& {log}'
+
+rule preprocess_rbbh_iuphar:
+	input:
+		'data/rbbh/{taxid_mesh}.csv',
+		'data/iuphar/iuphar.csv'
+	output:
+		touch('data/rbbh_iuphar/{taxid_mesh}.csv')
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/preprocess_rbbh_iuphar_{taxid_mesh}.txt'
+	log:
+		'logs/preprocess_rbbh_iuphar_{taxid_mesh}.log'
+	shell:
+		'src/preprocess_ortholog_ppi.sh {input} {output} RBBH_IUPHAR >& {log}'
+
 rule preprocess_swissprot:
 	input:
 		'data/uniprotkb/uniprot_sprot.dat'
@@ -511,11 +603,7 @@ rule preprocess_singlecellsignalr:
 	shell:
 		'src/preprocess_singlecellsignalr.sh >& {log}'
 
-#############################################
-# Summary
-#############################################
-
-rule summary_confidence_swissprot_string_low:
+rule preprocess_confidence_swissprot_string_low:
 	input:
 		'data/swissprot_string/{taxid_putative}_{v}.csv'
 	output:
@@ -526,13 +614,13 @@ rule summary_confidence_swissprot_string_low:
 	conda:
 		'envs/myenv.yaml'
 	benchmark:
-		'benchmarks/summary_confidence_swissprot_string_{taxid_putative}_{v}.txt'
+		'benchmarks/preprocess_confidence_swissprot_string_{taxid_putative}_{v}.txt'
 	log:
-		'logs/summary_confidence_swissprot_string_{taxid_putative}_{v}.log'
+		'logs/preprocess_confidence_swissprot_string_{taxid_putative}_{v}.log'
 	shell:
-		'src/summary_confidence_swissprot_string.sh {wildcards.taxid_putative} {wildcards.v} 150 >& {log}'
+		'src/preprocess_confidence_swissprot_string.sh {wildcards.taxid_putative} {wildcards.v} 150 >& {log}'
 
-rule summary_confidence_swissprot_string_mid:
+rule preprocess_confidence_swissprot_string_mid:
 	input:
 		'data/swissprot_string/{taxid_putative}_{v}.csv'
 	output:
@@ -543,13 +631,13 @@ rule summary_confidence_swissprot_string_mid:
 	conda:
 		'envs/myenv.yaml'
 	benchmark:
-		'benchmarks/summary_confidence_swissprot_string_{taxid_putative}_{v}.txt'
+		'benchmarks/preprocess_confidence_swissprot_string_{taxid_putative}_{v}.txt'
 	log:
-		'logs/summary_confidence_swissprot_string_{taxid_putative}_{v}.log'
+		'logs/preprocess_confidence_swissprot_string_{taxid_putative}_{v}.log'
 	shell:
-		'src/summary_confidence_swissprot_string.sh {wildcards.taxid_putative} {wildcards.v} 400 >& {log}'
+		'src/preprocess_confidence_swissprot_string.sh {wildcards.taxid_putative} {wildcards.v} 400 >& {log}'
 
-rule summary_confidence_swissprot_string_high:
+rule preprocess_confidence_swissprot_string_high:
 	input:
 		'data/swissprot_string/{taxid_putative}_{v}.csv'
 	output:
@@ -560,13 +648,13 @@ rule summary_confidence_swissprot_string_high:
 	conda:
 		'envs/myenv.yaml'
 	benchmark:
-		'benchmarks/summary_confidence_swissprot_string_{taxid_putative}_{v}.txt'
+		'benchmarks/preprocess_confidence_swissprot_string_{taxid_putative}_{v}.txt'
 	log:
-		'logs/summary_confidence_swissprot_string_{taxid_putative}_{v}.log'
+		'logs/preprocess_confidence_swissprot_string_{taxid_putative}_{v}.log'
 	shell:
-		'src/summary_confidence_swissprot_string.sh {wildcards.taxid_putative} {wildcards.v} 700 >& {log}'
+		'src/preprocess_confidence_swissprot_string.sh {wildcards.taxid_putative} {wildcards.v} 700 >& {log}'
 
-rule summary_confidence_trembl_string_low:
+rule preprocess_confidence_trembl_string_low:
 	input:
 		'data/trembl_string/{taxid_putative}_{v}.csv'
 	output:
@@ -577,13 +665,13 @@ rule summary_confidence_trembl_string_low:
 	conda:
 		'envs/myenv.yaml'
 	benchmark:
-		'benchmarks/summary_confidence_trembl_string_{taxid_putative}_{v}.txt'
+		'benchmarks/preprocess_confidence_trembl_string_{taxid_putative}_{v}.txt'
 	log:
-		'logs/summary_confidence_trembl_string_{taxid_putative}_{v}.log'
+		'logs/preprocess_confidence_trembl_string_{taxid_putative}_{v}.log'
 	shell:
-		'src/summary_confidence_trembl_string.sh {wildcards.taxid_putative} {wildcards.v} 150 >& {log}'
+		'src/preprocess_confidence_trembl_string.sh {wildcards.taxid_putative} {wildcards.v} 150 >& {log}'
 
-rule summary_confidence_trembl_string_mid:
+rule preprocess_confidence_trembl_string_mid:
 	input:
 		'data/trembl_string/{taxid_putative}_{v}.csv'
 	output:
@@ -594,13 +682,13 @@ rule summary_confidence_trembl_string_mid:
 	conda:
 		'envs/myenv.yaml'
 	benchmark:
-		'benchmarks/summary_confidence_trembl_string_{taxid_putative}_{v}.txt'
+		'benchmarks/preprocess_confidence_trembl_string_{taxid_putative}_{v}.txt'
 	log:
-		'logs/summary_confidence_trembl_string_{taxid_putative}_{v}.log'
+		'logs/preprocess_confidence_trembl_string_{taxid_putative}_{v}.log'
 	shell:
-		'src/summary_confidence_trembl_string.sh {wildcards.taxid_putative} {wildcards.v} 400 >& {log}'
+		'src/preprocess_confidence_trembl_string.sh {wildcards.taxid_putative} {wildcards.v} 400 >& {log}'
 
-rule summary_confidence_trembl_string_high:
+rule preprocess_confidence_trembl_string_high:
 	input:
 		'data/trembl_string/{taxid_putative}_{v}.csv'
 	output:
@@ -611,23 +699,18 @@ rule summary_confidence_trembl_string_high:
 	conda:
 		'envs/myenv.yaml'
 	benchmark:
-		'benchmarks/summary_confidence_trembl_string_{taxid_putative}_{v}.txt'
+		'benchmarks/preprocess_confidence_trembl_string_{taxid_putative}_{v}.txt'
 	log:
-		'logs/summary_confidence_trembl_string_{taxid_putative}_{v}.log'
+		'logs/preprocess_confidence_trembl_string_{taxid_putative}_{v}.log'
 	shell:
-		'src/summary_confidence_trembl_string.sh {wildcards.taxid_putative} {wildcards.v} 700 >& {log}'
-
-
-
-rule summary_csv:
-
+		'src/preprocess_confidence_trembl_string.sh {wildcards.taxid_putative} {wildcards.v} 700 >& {log}'
 
 # From meshr-pipeline
 def mesh_file(wld):
 	idx=TAXID_MESH.to_numpy().tolist().index(wld.taxid_mesh)
 	return('data/rbbh/' + THREENAME_MESH[idx] + '.txt')
 
-rule summary_rbbh:
+rule preprocess_rbbh:
 	input:
 		mesh_file
 	output:
@@ -637,54 +720,79 @@ rule summary_rbbh:
 	conda:
 		'envs/myenv.yaml'
 	benchmark:
-		'benchmarks/summary_rbbh_{taxid_mesh}.txt'
+		'benchmarks/preprocess_rbbh_{taxid_mesh}.txt'
 	log:
-		'logs/summary_rbbh_{taxid_mesh}.log'
+		'logs/preprocess_rbbh_{taxid_mesh}.log'
 	shell:
-		'src/summary_rbbh.sh {input} {output} >& {log}'
+		'src/preprocess_rbbh.sh {input} {output} >& {log}'
 
-
-
-
-
-# CSVレベルでマージされた後
-rule coverage_summary:
+rule preprocess_csv_human:
 	input:
-		expand('data/biomart/{taxid_ensembl}.csv',
-			taxid_ensembl=TAXID_ENSEMBL),
-		expand('data/homologene/{taxid_ncbi}.csv',
-			taxid_ncbi=TAXID_NCBI),
-		expand('data/rbbh/{taxid_mesh}.csv',
-			taxid_mesh=TAXID_MESH)
+		expand('data/{db}/9606_{v}_{thr}.csv',
+			db=['swissprot_string', 'trembl_string'],
+			v=VERSION_STRING,
+			thr=['high']),
+		expand('data/{db2}/9606.csv',
+			db2=['swissprot_hprd', 'trembl_hprd']),
+		'data/iuphar/iuphar.csv',
+		'data/dlrp/pre_dlrp2.csv'
 	output:
-		'data/coverage_summary.RData'
+		touch('data/csv/pre_9606.csv')
 	conda:
 		'envs/myenv.yaml'
 	benchmark:
-		'benchmarks/coverage_summary.txt'
+		'benchmarks/preprocess_csv_human.txt'
 	log:
-		'logs/coverage_summary.log'
+		'logs/preprocess_csv_human.log'
 	shell:
-		'src/coverage_summary.sh >& {log}'
+		'src/preprocess_csv_human.sh {input} {output} >& {log}'
 
-rule percentage_summary:
+rule preprocess_csv:
 	input:
-		expand('data/biomart/{taxid_ensembl}.csv',
+		'data/csv/pre_9606.csv',
+		# Known
+		expand('data/ensembl_dlrp/{taxid_ensembl}.csv',
 			taxid_ensembl=TAXID_ENSEMBL),
-		expand('data/homologene/{taxid_ncbi}.csv',
+		expand('data/ensembl_iuphar/{taxid_ensembl}.csv',
+			taxid_ensembl=TAXID_ENSEMBL),
+		expand('data/ncbi_dlrp/{taxid_ncbi}.csv',
 			taxid_ncbi=TAXID_NCBI),
-		expand('data/rbbh/{taxid_mesh}.csv',
-			taxid_mesh=TAXID_MESH)
+		expand('data/ncbi_iuphar/{taxid_ncbi}.csv',
+			taxid_ncbi=TAXID_NCBI),
+		# Putative
+		expand('data/rbbh_dlrp/{taxid_mesh}.csv',
+			taxid_mesh=TAXID_MESH),
+		expand('data/rbbh_iuphar/{taxid_mesh}.csv',
+			taxid_mesh=TAXID_MESH),
 	output:
-		'data/percentage_summary.RData'
+		touch('data/csv/{taxid_all}.csv')
 	conda:
 		'envs/myenv.yaml'
 	benchmark:
-		'benchmarks/percentage_summary.txt'
+		'benchmarks/preprocess_csv_{taxid_all}.txt'
 	log:
-		'logs/percentage_summary.log'
+		'logs/preprocess_csv_{taxid_all}.log'
 	shell:
-		'src/percentage_summary.sh >& {log}'
+		'src/preprocess_csv.sh {wildcards.taxid_all} {output} >& {log}'
+
+#############################################
+# Summary
+#############################################
+
+rule summary:
+	input:
+		expand('data/csv/{taxid_all}.csv',
+			taxid_all=TAXID_ALL)
+	output:
+		touch('data/summary.RData')
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/summary.txt'
+	log:
+		'logs/summary.log'
+	shell:
+		'src/summary.sh v11.0 >& {log}' # ここは変数化できるか後で検討
 
 #############################################
 # Visualization
@@ -697,8 +805,8 @@ rule plot_string_score:
 			v=VERSION_STRING,
 			thr=['low', 'mid', 'high'])
 	output:
-		'plot/swissprot_string_score.png',
-		'plot/trembl_string_score.png'
+		touch('plot/swissprot_string_score.png'),
+		touch('plot/trembl_string_score.png')
 	conda:
 		'envs/myenv.yaml'
 	benchmark:
@@ -715,7 +823,7 @@ rule plot_venndiagram_uniprotkb_string:
 		'data/iuphar/iuphar.csv',
 		'data/dlrp/pre_dlrp2.csv'
 	output:
-		'plot/venndiagram_{db}_9606_{v}_{thr}.png'
+		touch('plot/venndiagram_{db}_9606_{v}_{thr}.png')
 	conda:
 		'envs/myenv.yaml'
 	benchmark:
@@ -732,7 +840,7 @@ rule plot_venndiagram_uniprotkb_hprd:
 		'data/iuphar/iuphar.csv',
 		'data/dlrp/pre_dlrp2.csv'
 	output:
-		'plot/venndiagram_{db2}.png'
+		touch('plot/venndiagram_{db2}.png')
 	conda:
 		'envs/myenv.yaml'
 	benchmark:
@@ -743,7 +851,7 @@ rule plot_venndiagram_uniprotkb_hprd:
 		'src/plot_venndiagram_uniprotkb_hprd.sh {input} {output} >& {log}'
 
 # # CSV後
-# rule plot_venndiagram_lrbase:
+# rule plot_venndiagram_human:
 # 	input:
 # 		'data/csv/9606.csv',
 # 		'data/fantom5/fantom5.csv',
@@ -751,52 +859,38 @@ rule plot_venndiagram_uniprotkb_hprd:
 # 		'data/baderlab/baderlab.csv',
 # 		'data/singlecellsignalr/lrdb.csv',
 # 	output:
-# 		'plot/venndiagram_lrbase.png'
+# 		'plot/venndiagram_human.png'
 # 	conda:
 # 		'envs/myenv.yaml'
 # 	benchmark:
-# 		'benchmarks/plot_venndiagram_lrbase.txt'
+# 		'benchmarks/plot_venndiagram_human.txt'
 # 	log:
-# 		'logs/plot_venndiagram_lrbase.log'
+# 		'logs/plot_venndiagram_human.log'
 # 	shell:
-# 		'src/plot_venndiagram_lrbase.sh {input} >& {log}'
+# 		'src/plot_venndiagram_human.sh {input} >& {log}'
 
-rule plot_coverage:
+rule plot_summary:
 	input:
-		'data/coverage_summary.RData'
+		'data/summary.RData'
 	output:
-		'plot/coverage.png'
+		touch('plot/summary.png')
 	conda:
 		'envs/myenv.yaml'
 	benchmark:
-		'benchmarks/plot_coverage.txt'
+		'benchmarks/plot_summary.txt'
 	log:
-		'logs/plot_coverage.log'
+		'logs/plot_summary.log'
 	shell:
-		'src/plot_coverage.sh >& {log}'
-
-rule plot_percentage:
-	input:
-		'data/percentage_summary.RData'
-	output:
-		'plot/percentage.png'
-	conda:
-		'envs/myenv.yaml'
-	benchmark:
-		'benchmarks/plot_percentage.txt'
-	log:
-		'logs/plot_percentage.log'
-	shell:
-		'src/plot_percentage.sh >& {log}'
+		'src/plot_summary.sh >& {log}'
 
 #############################################
 # Final Sample sheet
 #############################################
 rule sample_sheet:
 	input:
-		'data/percentage_summary.RData'
+		'data/summary.RData'
 	output:
-		'id/lrbase/sample_sheet.csv'
+		touch('sample_sheet.csv')
 	conda:
 		'envs/myenv.yaml'
 	benchmark:
@@ -806,23 +900,36 @@ rule sample_sheet:
 	shell:
 		'src/sample_sheet.sh >& {log}'
 
-
 #############################################
 # Final Packaging
 #############################################
 # sample_sheetをinput:とする
 
-# src/RPack.sh
-rule packaging_rpack:
+# # src/RPack.sh
+# rule packaging_rpack:
+# 	input:
+# 		'sample_sheet.csv',
+# 		expand('data/csv/{taxid_all}.csv',
+# 			taxid_all=TAXID_ALL)
+# 	output:
+# 		'packages/LRBase.{taxid_all}.eg.db.tar.gz'
+# 	conda:
+# 		'envs/myenv.yaml'
+# 	benchmark:
+# 		'benchmarks/sample_sheet.txt'
+# 	log:
+# 		'logs/sample_sheet.log'
+# 	shell:
+# 		'src/sample_sheet.sh >& {log}'
 
-# src/RBuild.sh
-rule packaging_rbuild:
+# # src/RBuild.sh
+# rule packaging_rbuild:
 
-# src/RCheck.sh
-rule packaging_rcheck:
+# # src/RCheck.sh
+# rule packaging_rcheck:
 
-# src/RBiocCheck.sh
-rule packaging_bioccheck:
+# # src/RBiocCheck.sh
+# rule packaging_bioccheck:
 
-# src/RInstall.sh
-rule packaging_install:
+# # src/RInstall.sh
+# rule packaging_install:

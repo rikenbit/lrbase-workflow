@@ -1,9 +1,8 @@
 .snakemake*
 *.sh.*
 *.out
-benchmarks/*
-logs/*
-data/*
-envs/*
+benchmarks
+logs
+data
 ._*
 .DS_Store

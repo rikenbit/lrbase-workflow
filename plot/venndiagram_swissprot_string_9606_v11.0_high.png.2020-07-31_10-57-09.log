@@ -1,0 +1,24 @@
+INFO [2020-07-31 10:57:09] [[1]]
+INFO [2020-07-31 10:57:09] list(FANTOM5 = unique(paste(fantom5$GENEID_L, fantom5$GENEID_R)), 
+INFO [2020-07-31 10:57:09]     DLRP = unique(paste(dlrp$GENEID_L, dlrp$GENEID_R)), IUPHAR = unique(paste(iuphar$GENEID_L, 
+INFO [2020-07-31 10:57:09]         iuphar$GENEID_R)), UNIPROTKB_STRING = unique(paste(uniprotkb_string$GENEID_L, 
+INFO [2020-07-31 10:57:09]         uniprotkb_string$GENEID_R)))
+INFO [2020-07-31 10:57:09] 
+INFO [2020-07-31 10:57:09] $category.names
+INFO [2020-07-31 10:57:09] c("FANTOM5", "DLRP", "IUPHAR", Name)
+INFO [2020-07-31 10:57:09] 
+INFO [2020-07-31 10:57:09] $filename
+INFO [2020-07-31 10:57:09] outfile
+INFO [2020-07-31 10:57:09] 
+INFO [2020-07-31 10:57:09] $imagetype
+INFO [2020-07-31 10:57:09] [1] "png"
+INFO [2020-07-31 10:57:09] 
+INFO [2020-07-31 10:57:09] $scaled
+INFO [2020-07-31 10:57:09] [1] TRUE
+INFO [2020-07-31 10:57:09] 
+INFO [2020-07-31 10:57:09] $fill
+INFO [2020-07-31 10:57:09] 1:4
+INFO [2020-07-31 10:57:09] 
+INFO [2020-07-31 10:57:09] $alpha
+INFO [2020-07-31 10:57:09] rep(0.45, 4)
+INFO [2020-07-31 10:57:09] 
