@@ -136,8 +136,8 @@ gdata <- data.frame(
 		sname_rbbh, sname_rbbh,
 		"Homo sapiens", "Homo sapiens",
 		sname_putative, sname_putative),
-	Coverage=log10(c(p1, p2, p3, p4, p5, p6,
-		p7, p8, p9, p10, p11, p12)+1),
+	Coverage=c(p1, p2, p3, p4, p5, p6,
+		p7, p8, p9, p10, p11, p12),
 	Type=c(
 		rep("DLRP", length(p1)),
 		rep("IUPHAR", length(p2)),

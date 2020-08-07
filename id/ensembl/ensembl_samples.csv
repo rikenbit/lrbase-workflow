@@ -17,7 +17,7 @@ Marmoset,Callithrix jacchus,Cja,9483,cjacchus_gene_ensembl,Ensembl
 Elephant shark,Callorhinchus milii,Cmi,7868,cmilii_gene_ensembl,Ensembl
 Arabian camel,Camelus dromedarius,Cdr,9838,cdromedarius_gene_ensembl,Ensembl
 Dingo,Canis lupus dingo,Cld,286419,cldingo_gene_ensembl,Ensembl
-Dog,Canis lupus familiaris,Cfa,9615,clfamiliaris_gene_ensembl,Ensembl
+Dog,Canis familiaris,Cfa,9615,clfamiliaris_gene_ensembl,Ensembl
 Goat,Capra hircus,Chi,9925,chircus_gene_ensembl,Ensembl
 Tarsier,Carlito syrichta,Csy,1868482,csyrichta_gene_ensembl,Ensembl
 American beaver,Castor canadensis,Cca,51338,ccanadensis_gene_ensembl,Ensembl
@@ -96,7 +96,7 @@ Microbat,Myotis lucifugus,Mlu,59463,mlucifugus_gene_ensembl,Ensembl
 Pinecone soldierfish,Myripristis murdjan,Mmd,586833,mmurdjan_gene_ensembl,Ensembl
 Upper Galilee mountains blind mole rat,Nannospalax galili,Nga,1026970,ngalili_gene_ensembl,Ensembl
 American mink,Neovison vison,Nvi,452646,nvison_gene_ensembl,Ensembl
-Gibbon,Nomascus leucogenys,Nle,61853,nleucogenys_gene_ensembl,Ensembl
+Northern white-cheeked gibbon,Nomascus leucogenys,Nle,61853,nleucogenys_gene_ensembl,Ensembl
 Pika,Ochotona princeps,Opr,9978,oprinceps_gene_ensembl,Ensembl
 Degu,Octodon degus,Ode,10160,odegus_gene_ensembl,Ensembl
 Nile tilapia,Oreochromis niloticus,Oni,8128,oniloticus_gene_ensembl,Ensembl

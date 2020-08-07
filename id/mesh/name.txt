@@ -62,7 +62,7 @@ Monodelphis domestica
 Meleagris gallopavo
 Macaca mulatta
 Medicago truncatula
-Normascus leucogenys
+Nomascus leucogenys
 Ornithorhynchus anatinus
 Oryctolagus cuniculus
 Oreochromis niloticus
@@ -96,5 +96,5 @@ Trypanosoma brucei brucei strain 927_4 GUTat10.1
 Toxoplasma gondii ME49
 Taeniopygia guttata
 Vitis vinifera
-Xenopus laevis
+Xenopus tropicalis
 Zea mays

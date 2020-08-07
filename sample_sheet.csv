@@ -1,0 +1,156 @@
+Scientific.name,Abbreviation,SOURCEDB,Common.name,Taxon.ID,No.LR
+Homo sapiens,Hsa,DLRP|IUPHAR|SWISSPROT_HPRD|TREMBL_HPRD|SWISSPROT_STRING|TREMBL_STRING,Human,9606,41728
+Mus musculus,Mmu,ENSEMBL_DLRP|ENSEMBL_IUPHAR|NCBI_DLRP|NCBI_IUPHAR|SWISSPROT_STRING|TREMBL_STRING,Mouse,10090,29814
+Rattus norvegicus,Rno,ENSEMBL_DLRP|ENSEMBL_IUPHAR|NCBI_DLRP|NCBI_IUPHAR|SWISSPROT_STRING|TREMBL_STRING,Rat,10116,12667
+Bos taurus,Bta,ENSEMBL_DLRP|ENSEMBL_IUPHAR|NCBI_DLRP|NCBI_IUPHAR|SWISSPROT_STRING|TREMBL_STRING,Cow,9913,6757
+Pan troglodytes,Pto,ENSEMBL_DLRP|ENSEMBL_IUPHAR|NCBI_DLRP|NCBI_IUPHAR|RBBH_DLRP|RBBH_IUPHAR,Chimpanzee,9598,2614
+Macaca mulatta,Mml,ENSEMBL_DLRP|ENSEMBL_IUPHAR|NCBI_DLRP|NCBI_IUPHAR|RBBH_DLRP|RBBH_IUPHAR,Rhesus monkey,9544,2516
+Danio rerio,Dre,ENSEMBL_DLRP|ENSEMBL_IUPHAR|NCBI_DLRP|NCBI_IUPHAR|SWISSPROT_STRING|TREMBL_STRING,Zebrafish,7955,2447
+Canis familiaris,Cfa,ENSEMBL_DLRP|ENSEMBL_IUPHAR|NCBI_DLRP|NCBI_IUPHAR|RBBH_DLRP|RBBH_IUPHAR,Dog,9615,2353
+Sus scrofa,Ssc,ENSEMBL_DLRP|ENSEMBL_IUPHAR|SWISSPROT_STRING|TREMBL_STRING,Pig,9823,2271
+Gallus gallus,Gga,ENSEMBL_DLRP|ENSEMBL_IUPHAR|NCBI_DLRP|NCBI_IUPHAR|SWISSPROT_STRING|TREMBL_STRING,Chicken,9031,2038
+Xenopus tropicalis,Xtr,ENSEMBL_DLRP|ENSEMBL_IUPHAR|NCBI_DLRP|NCBI_IUPHAR|RBBH_DLRP|RBBH_IUPHAR|SWISSPROT_STRING|TREMBL_STRING,Tropical clawed frog,8364,1696
+Equus caballus,Eca,ENSEMBL_DLRP|ENSEMBL_IUPHAR|RBBH_DLRP|RBBH_IUPHAR,Horse,9796,1103
+Macaca fascicularis,Mfa,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Crab-eating macaque,9541,1013
+Pan paniscus,Ppa,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Bonobo,9597,1013
+Nomascus leucogenys,Nle,ENSEMBL_DLRP|ENSEMBL_IUPHAR|RBBH_DLRP|RBBH_IUPHAR,Northern white-cheeked gibbon,61853,988
+Colobus angolensis palliatus,Cap,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Angola colobus,336983,980
+Rhinopithecus bieti,Rbi,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Black snub-nosed monkey,61621,968
+Felis catus,Fca,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Cat,9685,967
+Panthera pardus,Ppr,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Leopard,9691,954
+Macaca nemestrina,Mne,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Pig-tailed macaque,9545,944
+Papio anubis,Pan,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Olive baboon,9555,941
+Meriones unguiculatus,Mug,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Mongolian gerbil,10047,937
+Arabidopsis thaliana,Ath,NCBI_DLRP|NCBI_IUPHAR|SWISSPROT_STRING|TREMBL_STRING,Thale cress,3702,936
+Capra hircus,Chi,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Goat,9925,935
+Microcebus murinus,Mmr,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Mouse Lemur,30608,933
+Bos indicus x Bos taurus,Bit,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Hybrid - Bos Indicus,30522,931
+Aotus nancymaae,Ann,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Ma's night monkey,37293,929
+Microtus ochrogaster,Moc,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Prairie vole,79684,924
+Canis lupus dingo,Cld,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Dingo,286419,915
+Cebus capucinus imitator,Cci,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Capuchin,1737458,912
+Mandrillus leucophaeus,Mle,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Drill,9568,911
+Ictidomys tridecemlineatus,Itr,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Squirrel,43179,903
+Nannospalax galili,Nga,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Upper Galilee mountains blind mole rat,1026970,885
+Heterocephalus glaber,Hgl,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Naked mole-rat female,10181,877
+Castor canadensis,Cca,ENSEMBL_DLRP|ENSEMBL_IUPHAR,American beaver,51338,874
+Chinchilla lanigera,Cla,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Long-tailed chinchilla,34839,838
+Monodelphis domestica,Mdo,ENSEMBL_DLRP|ENSEMBL_IUPHAR|RBBH_DLRP|RBBH_IUPHAR,Gray short-tailed Opossum,13616,824
+Marmota marmota marmota,Mmm,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Alpine marmot,9994,817
+Bos mutus,Bmu,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Wild yak,72004,810
+Jaculus jaculus,Jja,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Lesser Egyptian jerboa,51337,805
+Rhinopithecus roxellana,Rro,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Golden snub-nosed monkey,61622,802
+Propithecus coquereli,Pco,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Coquerel's sifaka,379532,801
+Mus pahari,Mpa,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Shrew mouse,10093,798
+Vulpes vulpes,Vvu,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Red fox,9627,786
+Mesocricetus auratus,Mau,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Golden Hamster,10036,712
+Theropithecus gelada,Tge,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Gelada,9565,712
+Bison bison bison,Bbb,ENSEMBL_DLRP|ENSEMBL_IUPHAR,American bison,43346,710
+Dipodomys ordii,Dor,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Kangaroo rat,10020,710
+Fukomys damarensis,Fda,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Damara mole rat,885580,697
+Piliocolobus tephrosceles,Pte,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Ugandan red Colobus,591936,694
+Carlito syrichta,Csy,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Tarsier,1868482,663
+Panthera tigris altaica,Pta,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Tiger,74533,662
+Ursus maritimus,Uma,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Polar bear,29073,656
+Lynx canadensis,Lcn,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Canada lynx,61383,623
+Coturnix japonica,Cjp,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Japanese quail,93934,594
+Mus caroli,Mca,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Ryukyu mouse,10089,593
+Octodon degus,Ode,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Degu,10160,591
+Pogona vitticeps,Pvi,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Central bearded dragon,103695,589
+Salmo salar,Ssa,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Atlantic salmon,8030,583
+Larimichthys crocea,Lcr,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Large yellow croaker,215358,577
+Lonchura striata domestica,Lsd,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Bengalese finch,299123,573
+Pygocentrus nattereri,Pna,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Red-bellied piranha,42514,568
+Lepidothrix coronata,Lco,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Blue-crowned manakin,321398,552
+Betta splendens,Bsp,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Siamese fighting fish,158456,550
+Cricetulus griseus,Cgr,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Chinese hamster CHOK1GS,10029,541
+Ictalurus punctatus,Ipu,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Channel catfish,7998,541
+Xiphophorus maculatus,Xma,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Platyfish,8083,539
+Loxodonta africana,Laf,ENSEMBL_DLRP|ENSEMBL_IUPHAR|RBBH_DLRP|RBBH_IUPHAR,Elephant,9785,536
+Haplochromis burtoni,Hbu,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Burton's mouthbrooder,8153,535
+Denticeps clupeoides,Dcl,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Denticle herring,299321,531
+Dromaius novaehollandiae,Dnv,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Emu,8790,531
+Anolis carolinensis,Aca,ENSEMBL_DLRP|ENSEMBL_IUPHAR|RBBH_DLRP|RBBH_IUPHAR,Anole lizard,28377,527
+Seriola dumerili,Sdu,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Greater amberjack,41447,527
+Maylandia zebra,Mze,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Zebra mbuna,106582,525
+Peromyscus maniculatus bairdii,Pmb,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Northern American deer mouse,230844,517
+Erpetoichthys calabaricus,Ecl,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Reedfish,27687,516
+Monopterus albus,Mal,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Swamp eel,43700,516
+Melopsittacus undulatus,Mun,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Budgerigar,13146,512
+Labrus bergylta,Lbe,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Ballan wrasse,56723,511
+Seriola lalandi dorsalis,Sld,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Yellowtail amberjack,1841481,510
+Parambassis ranga,Pra,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Indian glassy fish,210632,498
+Crocodylus porosus,Cpr,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Australian saltwater crocodile,8502,494
+Poecilia mexicana,Pme,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Shortfin molly,48701,490
+Fundulus heteroclitus,Fhe,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Mummichog,8078,486
+Cottoperca gobio,Cgo,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Channel bull blenny,56716,485
+Cyprinodon variegatus,Cva,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Sheepshead minnow,28743,482
+Pundamilia nyererei,Pny,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Makobe Island cichlid,303518,479
+Gouania willdenowi,Gwi,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Blunt-snouted clingfish,441366,476
+Paramormyrops kingsleyae,Pki,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Elephantfish,1676925,476
+Drosophila melanogaster,Dme,ENSEMBL_DLRP|ENSEMBL_IUPHAR|NCBI_DLRP|NCBI_IUPHAR|SWISSPROT_STRING|TREMBL_STRING,Fruit fly,7227,472
+Electrophorus electricus,Eel,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Electric eel,8005,469
+Poecilia reticulata,Pre,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Guppy,8081,465
+Pongo abelii,Pab,ENSEMBL_DLRP|ENSEMBL_IUPHAR|RBBH_DLRP|RBBH_IUPHAR|SWISSPROT_STRING|TREMBL_STRING,Orangutan,9601,450
+Oryzias melastigma,Ome,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Indian medaka,30732,446
+Hippocampus comes,Hco,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Tiger tail seahorse,109280,434
+Astatotilapia calliptera,Acl,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Eastern happy,8154,433
+Cynoglossus semilaevis,Cse,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Tongue sole,244447,431
+Taeniopygia guttata,Tgu,ENSEMBL_DLRP|ENSEMBL_IUPHAR|RBBH_DLRP|RBBH_IUPHAR,Zebra finch,59729,423
+Oreochromis niloticus,Oni,ENSEMBL_DLRP|ENSEMBL_IUPHAR|RBBH_DLRP|RBBH_IUPHAR,Nile tilapia,8128,421
+Poecilia latipinna,Pla,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Sailfin molly,48699,419
+Lepisosteus oculatus,Loc,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Spotted gar,7918,408
+Ailuropoda melanoleuca,Ame,ENSEMBL_DLRP|ENSEMBL_IUPHAR|RBBH_DLRP|RBBH_IUPHAR,Panda,9646,406
+Callithrix jacchus,Cja,ENSEMBL_DLRP|ENSEMBL_IUPHAR|RBBH_DLRP|RBBH_IUPHAR,Marmoset,9483,400
+Strigops habroptila,Shb,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Kakapo,2489341,391
+Scleropages formosus,Sfo,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Asian bonytongue,113540,379
+Anabas testudineus,Ate,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Climbing perch,64144,378
+Sparus aurata,Sau,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Gilthead seabream,8175,373
+Takifugu rubripes,Tru,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Fugu,31033,366
+Lates calcarifer,Lca,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Barramundi perch,8187,342
+Poecilia formosa,Pfo,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Amazon molly,48698,341
+Callorhinchus milii,Cmi,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Elephant shark,7868,335
+Echeneis naucrates,Ena,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Live sharksucker,173247,335
+Aquila chrysaetos chrysaetos,Acc,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Golden eagle,223781,330
+Serinus canaria,Sca,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Common canary,9135,329
+Astyanax mexicanus,Amx,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Mexican tetra,7994,326
+Latimeria chalumnae,Lch,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Coelacanth,7897,317
+Ornithorhynchus anatinus,Oan,ENSEMBL_DLRP|ENSEMBL_IUPHAR|RBBH_DLRP|RBBH_IUPHAR,Platypus,9258,316
+Pelodiscus sinensis,Psi,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Chinese softshell turtle,13735,314
+Mastacembelus armatus,Mar,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Zig-zag eel,205130,312
+Cavia porcellus,Cpo,ENSEMBL_DLRP|ENSEMBL_IUPHAR|RBBH_DLRP|RBBH_IUPHAR,Guinea Pig,10141,294
+Sarcophilus harrisii,Sha,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Tasmanian devil,9305,289
+Manacus vitellinus,Mvi,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Golden-collared manakin,328815,265
+Salarias fasciatus,Sfa,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Jewelled blenny,181472,246
+Sphaeramia orbicularis,Sor,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Orbiculate cardinalfish,375764,239
+Camelus dromedarius,Cdr,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Arabian camel,9838,234
+Dasypus novemcinctus,Dno,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Armadillo,9361,231
+Myripristis murdjan,Mmd,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Pinecone soldierfish,586833,216
+Ovis aries,Oar,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Sheep,9940,192
+Ficedula albicollis,Fal,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Flycatcher,59894,151
+Clupea harengus,Cha,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Atlantic herring,7950,94
+Chlorocebus sabaeus,Csa,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Green monkey,60711,90
+Anas platyrhynchos,Apl,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Mallard,8839,74
+Oryctolagus cuniculus,Ocu,ENSEMBL_DLRP|ENSEMBL_IUPHAR|RBBH_DLRP|RBBH_IUPHAR,Rabbit,9986,69
+Meleagris gallopavo,Mga,ENSEMBL_DLRP|ENSEMBL_IUPHAR|RBBH_DLRP|RBBH_IUPHAR,Turkey,9103,55
+Oryzias latipes,Ola,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Japanese medaka HNI,8090,53
+Strongylocentrotus purpuratus,Spu,RBBH_DLRP|RBBH_IUPHAR,Purple sea urchin,7668,25
+Mustela putorius furo,Mpf,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Ferret,9669,21
+Tursiops truncatus,Ttr,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Dolphin,9739,20
+Myotis lucifugus,Mlu,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Microbat,59463,19
+Erinaceus europaeus,Eeu,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Hedgehog,9365,17
+Drosophila grimshawi,Dgr,RBBH_DLRP|RBBH_IUPHAR,Fruit fly,7222,17
+Drosophila mojavensis,Dmo,RBBH_DLRP|RBBH_IUPHAR,Fruit fly,7230,17
+Anopheles gambiae str. PEST,Aga.PEST,RBBH_DLRP|RBBH_IUPHAR,African malaria mosquito,180454,16
+Ciona intestinalis,Cin,ENSEMBL_DLRP|ENSEMBL_IUPHAR|RBBH_DLRP|RBBH_IUPHAR,Sea squirt,7719,13
+Sorex araneus,Sar,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Shrew,42254,13
+Anopheles gambiae,Aga,NCBI_DLRP|NCBI_IUPHAR,African malaria mosquito,7165,12
+Drosophila sechellia,Dse,RBBH_DLRP|RBBH_IUPHAR,Fruit fly,7238,9
+Drosophila persimilis,Dpe,RBBH_DLRP|RBBH_IUPHAR,Fruit fly,7234,8
+Caenorhabditis elegans,Cel,ENSEMBL_DLRP|ENSEMBL_IUPHAR|NCBI_DLRP|NCBI_IUPHAR|SWISSPROT_STRING|TREMBL_STRING,Worm,6239,6
+Apis mellifera,Aml,RBBH_DLRP|RBBH_IUPHAR,Western honey bee,7460,6
+Drosophila simulans,Dsi,RBBH_DLRP|RBBH_IUPHAR,Fruit fly,7240,6
+Caenorhabditis remani,Cre,RBBH_DLRP|RBBH_IUPHAR,Worm,31234,3
+Vicugna pacos,Vpa,ENSEMBL_DLRP|ENSEMBL_IUPHAR,Alpaca,30538,2
+Caenorhabditis briggsae,Cbr,RBBH_DLRP|RBBH_IUPHAR,Worm,6238,2
+Drosophila ananassae,Dan,RBBH_DLRP|RBBH_IUPHAR,Fruit fly,7217,2

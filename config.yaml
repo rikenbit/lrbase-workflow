@@ -1,0 +1,9 @@
+# Sample sheets
+ENSEMBL_SAMPLE_SHEET: id/ensembl/ensembl_samples.csv
+NCBI_SAMPLE_SHEET: id/ncbi/ncbi_samples.csv
+MESH_TAXID: id/mesh/taxid.txt
+MESH_THREENAME: id/mesh/threename.txt
+PUTATIVE_SAMPLE_SHEET: id/putative_sample_sheet.csv
+
+# Version of STRING database
+VERSION_STRING: v11.0

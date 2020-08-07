@@ -4,7 +4,7 @@ source("src/functions.R")
 taxid <- commandArgs(trailingOnly=TRUE)[1]
 outfile <- commandArgs(trailingOnly=TRUE)[2]
 
-sample_sheet <- read.delim("homologene.data",
+sample_sheet <- read.delim("data/homologene/homologene.data",
 	stringsAsFactor=FALSE, header=FALSE)
 
 taxid_pos <- which(sample_sheet[,2] == taxid)

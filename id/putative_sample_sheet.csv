@@ -1,12 +1,12 @@
-9606,Hsa,Homo sapiens
-10090,Mmu,Mus musculus
-3702,Ath,Arabidopsis thaliana
-10116,Rno,Rattus norvegicus
-9913,Bta,Bos taurus
-6239,Cel,Caenorhabditis elegans
-7227,Dme,Drosophila melanogaster
-7955,Dre,Danio rerio
-9031,Gga,Gallus gallus
-9601,Pab,Pongo abelii
-8364,Xtr,Xenopus tropicalis
-9823,Ssc,Sus scrofa
+9606,Hsa,Homo sapiens,Human
+10090,Mmu,Mus musculus,Mouse
+3702,Ath,Arabidopsis thaliana,Thale cress
+10116,Rno,Rattus norvegicus,Rat
+9913,Bta,Bos taurus,Cow
+6239,Cel,Caenorhabditis elegans,Worm
+7227,Dme,Drosophila melanogaster,Fruit fly
+7955,Dre,Danio rerio,Zebrafish
+9031,Gga,Gallus gallus,Chicken
+9601,Pab,Pongo abelii,Orangutan
+8364,Xtr,Xenopus tropicalis,Tropical clawed frog
+9823,Ssc,Sus scrofa,Pig

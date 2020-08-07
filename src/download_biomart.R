@@ -4,7 +4,7 @@ source("src/functions.R")
 taxid <- commandArgs(trailingOnly=TRUE)[1]
 outfile <- commandArgs(trailingOnly=TRUE)[2]
 
-sample_sheet <- read.csv("ensembl_samples.csv", stringsAsFactor=FALSE)
+sample_sheet <- read.csv("id/ensembl/ensembl_samples.csv", stringsAsFactor=FALSE)
 dataset <- sample_sheet[which(sample_sheet['Taxon.ID'] == taxid),
 	'Dataset.name']
 

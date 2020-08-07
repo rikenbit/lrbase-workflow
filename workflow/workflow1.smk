@@ -1,42 +1,33 @@
 import pandas as pd
+from snakemake.utils import min_version
+
+min_version("5.8.1")
+configfile: "config.yaml"
 
 # Ensembl (158)
-TAXID_ENSEMBL = pd.read_csv('id/ensembl/ensembl_samples.csv', dtype='string')
+TAXID_ENSEMBL = pd.read_csv(config['ENSEMBL_SAMPLE_SHEET'], dtype='string')
 TAXID_ENSEMBL = TAXID_ENSEMBL['Taxon ID'].unique()
 
-DATASET_ENSEMBL = pd.read_csv('id/ensembl/ensembl_samples.csv', dtype='string')
-DATASET_ENSEMBL = DATASET_ENSEMBL['Dataset name'].unique()
-
-THREENAME_ENSEMBL = pd.read_csv('id/ensembl/ensembl_samples.csv', dtype='string')
-THREENAME_ENSEMBL = THREENAME_ENSEMBL['Abbreviation'].unique()
-
 # NCBI (20)
-TAXID_NCBI = pd.read_csv('id/ncbi/ncbi_samples.csv', dtype='string')
+TAXID_NCBI = pd.read_csv(config['NCBI_SAMPLE_SHEET'], dtype='string')
 TAXID_NCBI = TAXID_NCBI['Taxon ID'].unique()
-THREENAME_NCBI = pd.read_csv('id/ncbi/ncbi_samples.csv', dtype='string')
-THREENAME_NCBI = THREENAME_NCBI['Abbreviation'].unique()
 
 # MeSH (100)
-TAXID_MESH = pd.read_csv('id/mesh/taxid.txt', dtype='string', header=None)[0]
+TAXID_MESH = pd.read_csv(config['MESH_TAXID'], dtype='string', header=None)[0]
+THREENAME_MESH = pd.read_csv(config['MESH_THREENAME'], dtype='string', header=None)[0]
 TAXID_MESH = TAXID_MESH.unique()
-THREENAME_MESH = pd.read_csv('id/mesh/threename.txt', dtype='string', header=None)[0]
 THREENAME_MESH = THREENAME_MESH.unique()
 
 # Known (247)
 TAXID_KNOWN = set(TAXID_ENSEMBL) | set(TAXID_NCBI) | set(TAXID_MESH)
-THREENAME_KNOWN = set(THREENAME_ENSEMBL) | set(THREENAME_NCBI) | set(THREENAME_MESH)
 
 # Putative (12)
-VERSION_STRING = 'v11.0'
-TAXID_PUTATIVE = pd.read_csv('id/putative_sample_sheet.csv', header=None, dtype='string')
+VERSION_STRING = config['VERSION_STRING']
+TAXID_PUTATIVE = pd.read_csv(config['PUTATIVE_SAMPLE_SHEET'], header=None, dtype='string')
 TAXID_PUTATIVE = TAXID_PUTATIVE[0].unique()
-
-THREENAME_PUTATIVE = pd.read_csv('id/putative_sample_sheet.csv', header=None, dtype='string')
-THREENAME_PUTATIVE = THREENAME_PUTATIVE[1].unique()
 
 # All (248)
 TAXID_ALL = list(TAXID_KNOWN | set(TAXID_PUTATIVE))
-THREENAME_ALL = list(THREENAME_KNOWN | set(THREENAME_PUTATIVE))
 
 rule all:
 	input:
@@ -47,13 +38,14 @@ rule all:
 			thr=['low', 'mid', 'high']),
 		expand('plot/venndiagram_{db2}.png',
 			db2=['swissprot_hprd', 'trembl_hprd']),
+		'plot/venndiagram_human.png',
 		# STRING Score plots
 		'plot/swissprot_string_score.png',
 		'plot/trembl_string_score.png',
 		# Summary plots
 		'plot/summary.png',
 		# Sample Sheet
-		# 'id/lrbase/sample_sheet.csv'
+		'sample_sheet.csv'
 
 #############################################
 # Data download
@@ -97,7 +89,7 @@ rule download_iuphar:
 
 rule download_hprd:
 	output:
-		'data/hprd/HPRD_Release9_062910/BINARY_PROTEIN_PROTEIN_INTERACTIONS.txt'
+		touch('data/hprd/HPRD_Release9_062910/BINARY_PROTEIN_PROTEIN_INTERACTIONS.txt')
 	conda:
 		'envs/myenv.yaml'
 	benchmark:
@@ -224,17 +216,15 @@ rule download_biomart:
 
 rule download_homologene:
 	output:
-		touch('data/homologene/{taxid_ncbi}.csv')
-	wildcard_constraints:
-		taxid_ncbi='|'.join([re.escape(x) for x in TAXID_NCBI])
+		touch('data/homologene/homologene.data')
 	conda:
 		'envs/myenv.yaml'
 	benchmark:
-		'benchmarks/download_homologene_{taxid_ncbi}.txt'
+		'benchmarks/download_homologene.txt'
 	log:
-		'logs/download_homologene_{taxid_ncbi}.log'
+		'logs/download_homologene.log'
 	shell:
-		'src/download_homologene.sh {wildcards.taxid_ncbi} {output} >& {log}'
+		'src/download_homologene.sh >& {log}'
 
 #############################################
 # Preprocess
@@ -298,6 +288,22 @@ rule preprocess_iuphar:
 		'logs/preprocess_iuphar.log'
 	shell:
 		'src/preprocess_iuphar.sh >& {log}'
+
+rule preprocess_homologene:
+	input:
+		'data/homologene/homologene.data'
+	output:
+		touch('data/homologene/{taxid_ncbi}.csv')
+	wildcard_constraints:
+		taxid_ncbi='|'.join([re.escape(x) for x in TAXID_NCBI])
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/preprocess_homologene_{taxid_ncbi}.txt'
+	log:
+		'logs/preprocess_homologene_{taxid_ncbi}.log'
+	shell:
+		'src/preprocess_homologene.sh {wildcards.taxid_ncbi} {output} >& {log}'
 
 rule preprocess_ensembl_dlrp:
 	input:
@@ -564,7 +570,7 @@ rule preprocess_cellphonedb:
 		'data/cellphonedb/interactions_cellphonedb.csv',
 		'data/cellphonedb/heterodimers.csv'
 	output:
-		'data/cellphonedb/cellphonedb.csv'
+		touch('data/cellphonedb/cellphonedb.csv')
 	conda:
 		'envs/myenv.yaml'
 	benchmark:
@@ -578,7 +584,7 @@ rule preprocess_baderlab:
 	input:
 		'data/baderlab/receptor_ligand_interactions_mitab_v1.0_April2017.txt.zip'
 	output:
-		'data/baderlab/baderlab.csv'
+		touch('data/baderlab/baderlab.csv')
 	conda:
 		'envs/myenv.yaml'
 	benchmark:
@@ -593,7 +599,7 @@ rule preprocess_singlecellsignalr:
 		'data/singlecellsignalr/LRdb.rda',
 		'data/ensembl/9606_symbol.txt'
 	output:
-		'data/singlecellsignalr/lrdb.csv'
+		touch('data/singlecellsignalr/lrdb.csv')
 	conda:
 		'envs/myenv.yaml'
 	benchmark:
@@ -792,7 +798,7 @@ rule summary:
 	log:
 		'logs/summary.log'
 	shell:
-		'src/summary.sh v11.0 >& {log}' # ここは変数化できるか後で検討
+		'src/summary.sh {VERSION_STRING} >& {log}'
 
 #############################################
 # Visualization
@@ -850,24 +856,23 @@ rule plot_venndiagram_uniprotkb_hprd:
 	shell:
 		'src/plot_venndiagram_uniprotkb_hprd.sh {input} {output} >& {log}'
 
-# # CSV後
-# rule plot_venndiagram_human:
-# 	input:
-# 		'data/csv/9606.csv',
-# 		'data/fantom5/fantom5.csv',
-# 		'data/cellphonedb/cellphonedb.csv',
-# 		'data/baderlab/baderlab.csv',
-# 		'data/singlecellsignalr/lrdb.csv',
-# 	output:
-# 		'plot/venndiagram_human.png'
-# 	conda:
-# 		'envs/myenv.yaml'
-# 	benchmark:
-# 		'benchmarks/plot_venndiagram_human.txt'
-# 	log:
-# 		'logs/plot_venndiagram_human.log'
-# 	shell:
-# 		'src/plot_venndiagram_human.sh {input} >& {log}'
+rule plot_venndiagram_human:
+	input:
+		'data/csv/9606.csv',
+		'data/fantom5/fantom5.csv',
+		'data/cellphonedb/cellphonedb.csv',
+		'data/baderlab/baderlab.csv',
+		'data/singlecellsignalr/lrdb.csv',
+	output:
+		touch('plot/venndiagram_human.png')
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/plot_venndiagram_human.txt'
+	log:
+		'logs/plot_venndiagram_human.log'
+	shell:
+		'src/plot_venndiagram_human.sh >& {log}'
 
 rule plot_summary:
 	input:
@@ -899,37 +904,3 @@ rule sample_sheet:
 		'logs/sample_sheet.log'
 	shell:
 		'src/sample_sheet.sh >& {log}'
-
-#############################################
-# Final Packaging
-#############################################
-# sample_sheetをinput:とする
-
-# # src/RPack.sh
-# rule packaging_rpack:
-# 	input:
-# 		'sample_sheet.csv',
-# 		expand('data/csv/{taxid_all}.csv',
-# 			taxid_all=TAXID_ALL)
-# 	output:
-# 		'packages/LRBase.{taxid_all}.eg.db.tar.gz'
-# 	conda:
-# 		'envs/myenv.yaml'
-# 	benchmark:
-# 		'benchmarks/sample_sheet.txt'
-# 	log:
-# 		'logs/sample_sheet.log'
-# 	shell:
-# 		'src/sample_sheet.sh >& {log}'
-
-# # src/RBuild.sh
-# rule packaging_rbuild:
-
-# # src/RCheck.sh
-# rule packaging_rcheck:
-
-# # src/RBiocCheck.sh
-# rule packaging_bioccheck:
-
-# # src/RInstall.sh
-# rule packaging_install:

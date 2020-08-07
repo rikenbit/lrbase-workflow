@@ -1,5 +1,5 @@
 #!/bin/bash
-#$ -l nc=4
+#$ -l nc=24
 #$ -p -50
 #$ -r yes
 #$ -q large.q
@@ -10,4 +10,5 @@
 #SBATCH -p node03-06
 SLURM_RESTART_COUNT=2
 
-wget ftp://ftp.ncbi.nih.gov/pub/HomoloGene/current/homologene.data -P data/homologene
+Rscript=`ls .snakemake/conda/*/bin/Rscript`
+$Rscript src/plot_venndiagram_human.R
