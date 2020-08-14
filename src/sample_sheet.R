@@ -34,7 +34,8 @@ target.org <- unlist(lapply(as.character(unique(gdata$Name)), function(x){
 target.position <- unlist(sapply(sort(target.org), function(x){
 	which(gdata$Name == x)
 }))
-sample_sheet <- gdata[target.position, ]
+target.nonzero <- which(gdata$Coverage != 0)
+sample_sheet <- gdata[intersect(target.position, target.nonzero), ]
 
 # Merge
 out <- merge(sample_sheet, ORGINFO, by.x="Name", by.y="Scientific.name")

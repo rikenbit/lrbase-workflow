@@ -12,15 +12,19 @@ Workflow to construct [LRBase.XXX.eg.db-type](https://bioconductor.org/packages/
 
 - **DLRP**: L-R list in [DLRP](http://dip.doe-mbi.ucla.edu/dip/dlrp/dlrp.txt) database
 - **IUPHAR**: L-R list in [IUPHAR](http://www.guidetopharmacology.org/DATA/interactions.csv) database
+- **HPMR**: L-R list in [HPMR](http://www.receptome.org) database
 
 ## 2. Known Ligand-Receptor (all species)
 
 - **ENSEMBL_DLRP**: L-R list in [DLRP](http://dip.doe-mbi.ucla.edu/dip/dlrp/dlrp.txt) based on the ortholog of Human genes in [Ensembl Protein trees](https://asia.ensembl.org/info/genome/compara/homology_method.html)
 - **ENSEMBL_IUPHAR**: L-R list in [IUPHAR](http://www.guidetopharmacology.org/DATA/interactions.csv) based on the ortholog of Human genes in [Ensembl Protein trees](https://asia.ensembl.org/info/genome/compara/homology_method.html)
+- **ENSEMBL_HPMR**: L-R list in [HPMR](http://www.receptome.org) based on the ortholog of Human genes in [Ensembl Protein trees](https://asia.ensembl.org/info/genome/compara/homology_method.html)
 - **NCBI_DLRP**: L-R list in [DLRP](http://dip.doe-mbi.ucla.edu/dip/dlrp/dlrp.txt) based on the ortholog of Human genes in [NCBI Homologene](https://www.ncbi.nlm.nih.gov/homologene)
 - **NCBI_IUPHAR**: L-R list in [IUPHAR](http://www.guidetopharmacology.org/DATA/interactions.csv) based on the ortholog of Human genes in [NCBI Homologene](https://www.ncbi.nlm.nih.gov/homologene)
+- **NCBI_HPMR**: L-R list in [HPMR](http://www.receptome.org) based on the ortholog of Human genes in [NCBI Homologene](https://www.ncbi.nlm.nih.gov/homologene)
 - **RBBH_DLRP**: L-R list in [DLRP](http://dip.doe-mbi.ucla.edu/dip/dlrp/dlrp.txt) based on the ortholog of Human genes in [Reciprocal BLAST Best Hit used in MeSH.XXX.eg.db workflow](https://github.com/rikenbit/meshr-pipeline)
 - **RBBH_IUPHAR**: L-R list in [IUPHAR](http://www.guidetopharmacology.org/DATA/interactions.csv) based on the ortholog of Human genes in [Reciprocal BLAST Best Hit used in MeSH.XXX.eg.db workflow](https://github.com/rikenbit/meshr-pipeline)
+- **RBBH_HPMR**: L-R list in [HPMR](http://www.receptome.org) based on the ortholog of Human genes in [Reciprocal BLAST Best Hit used in MeSH.XXX.eg.db workflow](https://github.com/rikenbit/meshr-pipeline)
 
 ## 3. Putative Ligand-Receptor (only human)
 
@@ -50,19 +54,19 @@ After performing workflow/workflow1.smk, perform workflow/workflow2.smk as follo
 In local machine:
 ```
 snakemake -s workflow/workflow1.smk -j 4 --use-conda
-snakemake -s workflow/workflow2.smk -j 4 --use-conda
+snakemake -s workflow/workflow2.smk -j 4 --use-singularity
 ```
 
 In parallel environment (GridEngine):
 ```
-snakemake -s workflow/workflow1.smk -j 32 --cluster "qsub -l nc=4 -p -50 -r yes -q large.q" --latency-wait 2000 --use-conda
-snakemake -s workflow/workflow2.smk -j 32 --cluster "qsub -l nc=4 -p -50 -r yes -q large.q" --latency-wait 2000 --use-conda
+snakemake -s workflow/workflow1.smk -j 32 --cluster "qsub -l nc=4 -p -50 -r yes -q node.q" --latency-wait 600 --use-conda
+snakemake -s workflow/workflow2.smk -j 32 --cluster "qsub -l nc=4 -p -50 -r yes -q node.q" --latency-wait 600 --use-singularity
 ```
 
 In parallel environment (Slurm):
 ```
-snakemake -s workflow/workflow1.smk -j 32 --cluster "sbatch -n 4 --nice=50 --requeue -p node03-06" --latency-wait 2000 --use-conda
-snakemake -s workflow/workflow2.smk -j 32 --cluster "sbatch -n 4 --nice=50 --requeue -p node03-06" --latency-wait 2000 --use-conda
+snakemake -s workflow/workflow1.smk -j 32 --cluster "sbatch -n 4 --nice=50 --requeue -p node03-06" --latency-wait 600 --use-conda
+snakemake -s workflow/workflow2.smk -j 32 --cluster "sbatch -n 4 --nice=50 --requeue -p node03-06" --latency-wait 600 --use-singularity
 ```
 
 # License

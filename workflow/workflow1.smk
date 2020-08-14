@@ -39,6 +39,10 @@ rule all:
 		expand('plot/venndiagram_{db2}.png',
 			db2=['swissprot_hprd', 'trembl_hprd']),
 		'plot/venndiagram_human.png',
+		# Phylogenetic tree
+		'plot/hclust_human.png',
+		# Known/Putative ratio
+		'plot/known_ratio_human.png',
 		# STRING Score plots
 		'plot/swissprot_string_score.png',
 		'plot/trembl_string_score.png',
@@ -289,6 +293,23 @@ rule preprocess_iuphar:
 	shell:
 		'src/preprocess_iuphar.sh >& {log}'
 
+rule preprocess_hpmr:
+	input:
+		'data/fantom5/PairsLigRec.txt',
+		'data/ensembl/9606_symbol.txt',
+		'data/dlrp/pre_dlrp2.csv',
+		'data/iuphar/iuphar.csv'
+	output:
+		touch('data/hpmr/hpmr.csv')
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/preprocess_hpmr.txt'
+	log:
+		'logs/preprocess_hpmr.log'
+	shell:
+		'src/preprocess_hpmr.sh >& {log}'
+
 rule preprocess_homologene:
 	input:
 		'data/homologene/homologene.data'
@@ -335,6 +356,21 @@ rule preprocess_ensembl_iuphar:
 	shell:
 		'src/preprocess_ortholog_ppi.sh {input} {output} ENSEMBL_IUPHAR >& {log}'
 
+rule preprocess_ensembl_hpmr:
+	input:
+		'data/biomart/{taxid_ensembl}.csv',
+		'data/hpmr/hpmr.csv'
+	output:
+		touch('data/ensembl_hpmr/{taxid_ensembl}.csv')
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/preprocess_ensembl_hpmr_{taxid_ensembl}.txt'
+	log:
+		'logs/preprocess_ensembl_hpmr_{taxid_ensembl}.log'
+	shell:
+		'src/preprocess_ortholog_ppi.sh {input} {output} ENSEMBL_HPMR >& {log}'
+
 rule preprocess_ncbi_dlrp:
 	input:
 		'data/homologene/{taxid_ncbi}.csv',
@@ -365,6 +401,21 @@ rule preprocess_ncbi_iuphar:
 	shell:
 		'src/preprocess_ortholog_ppi.sh {input} {output} NCBI_IUPHAR >& {log}'
 
+rule preprocess_ncbi_hpmr:
+	input:
+		'data/homologene/{taxid_ncbi}.csv',
+		'data/hpmr/hpmr.csv'
+	output:
+		touch('data/ncbi_hpmr/{taxid_ncbi}.csv')
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/preprocess_ncbi_hpmr_{taxid_ncbi}.txt'
+	log:
+		'logs/preprocess_ncbi_hpmr_{taxid_ncbi}.log'
+	shell:
+		'src/preprocess_ortholog_ppi.sh {input} {output} NCBI_HPMR >& {log}'
+
 rule preprocess_rbbh_dlrp:
 	input:
 		'data/rbbh/{taxid_mesh}.csv',
@@ -394,6 +445,21 @@ rule preprocess_rbbh_iuphar:
 		'logs/preprocess_rbbh_iuphar_{taxid_mesh}.log'
 	shell:
 		'src/preprocess_ortholog_ppi.sh {input} {output} RBBH_IUPHAR >& {log}'
+
+rule preprocess_rbbh_hpmr:
+	input:
+		'data/rbbh/{taxid_mesh}.csv',
+		'data/hpmr/hpmr.csv'
+	output:
+		touch('data/rbbh_hpmr/{taxid_mesh}.csv')
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/preprocess_rbbh_hpmr_{taxid_mesh}.txt'
+	log:
+		'logs/preprocess_rbbh_hpmr_{taxid_mesh}.log'
+	shell:
+		'src/preprocess_ortholog_ppi.sh {input} {output} RBBH_HPMR >& {log}'
 
 rule preprocess_swissprot:
 	input:
@@ -741,7 +807,8 @@ rule preprocess_csv_human:
 		expand('data/{db2}/9606.csv',
 			db2=['swissprot_hprd', 'trembl_hprd']),
 		'data/iuphar/iuphar.csv',
-		'data/dlrp/pre_dlrp2.csv'
+		'data/dlrp/pre_dlrp2.csv',
+		'data/hpmr/hpmr.csv'
 	output:
 		touch('data/csv/pre_9606.csv')
 	conda:
@@ -761,15 +828,26 @@ rule preprocess_csv:
 			taxid_ensembl=TAXID_ENSEMBL),
 		expand('data/ensembl_iuphar/{taxid_ensembl}.csv',
 			taxid_ensembl=TAXID_ENSEMBL),
+		expand('data/ensembl_hpmr/{taxid_ensembl}.csv',
+			taxid_ensembl=TAXID_ENSEMBL),
 		expand('data/ncbi_dlrp/{taxid_ncbi}.csv',
 			taxid_ncbi=TAXID_NCBI),
 		expand('data/ncbi_iuphar/{taxid_ncbi}.csv',
 			taxid_ncbi=TAXID_NCBI),
-		# Putative
+		expand('data/ncbi_hpmr/{taxid_ncbi}.csv',
+			taxid_ncbi=TAXID_NCBI),
 		expand('data/rbbh_dlrp/{taxid_mesh}.csv',
 			taxid_mesh=TAXID_MESH),
 		expand('data/rbbh_iuphar/{taxid_mesh}.csv',
 			taxid_mesh=TAXID_MESH),
+		expand('data/rbbh_hpmr/{taxid_mesh}.csv',
+			taxid_mesh=TAXID_MESH),
+		# Putative
+		expand('data/{db}/{taxid_putative}_{v}_{thr}.csv',
+			taxid_putative=TAXID_PUTATIVE,
+			db=['swissprot_string', 'trembl_string'],
+			v=VERSION_STRING,
+			thr=['high'])
 	output:
 		touch('data/csv/{taxid_all}.csv')
 	conda:
@@ -779,7 +857,7 @@ rule preprocess_csv:
 	log:
 		'logs/preprocess_csv_{taxid_all}.log'
 	shell:
-		'src/preprocess_csv.sh {wildcards.taxid_all} {output} >& {log}'
+		'src/preprocess_csv.sh {wildcards.taxid_all} {VERSION_STRING} {output} >& {log}'
 
 #############################################
 # Summary
@@ -827,7 +905,8 @@ rule plot_venndiagram_uniprotkb_string:
 		'data/{db}/9606_{v}_{thr}.csv',
 		'data/fantom5/fantom5.csv',
 		'data/iuphar/iuphar.csv',
-		'data/dlrp/pre_dlrp2.csv'
+		'data/dlrp/pre_dlrp2.csv',
+		'data/hpmr/hpmr.csv'		
 	output:
 		touch('plot/venndiagram_{db}_9606_{v}_{thr}.png')
 	conda:
@@ -844,7 +923,8 @@ rule plot_venndiagram_uniprotkb_hprd:
 		'data/{db2}/9606.csv',
 		'data/fantom5/fantom5.csv',
 		'data/iuphar/iuphar.csv',
-		'data/dlrp/pre_dlrp2.csv'
+		'data/dlrp/pre_dlrp2.csv',
+		'data/hpmr/hpmr.csv'		
 	output:
 		touch('plot/venndiagram_{db2}.png')
 	conda:
@@ -873,6 +953,45 @@ rule plot_venndiagram_human:
 		'logs/plot_venndiagram_human.log'
 	shell:
 		'src/plot_venndiagram_human.sh >& {log}'
+
+rule plot_hclust_human:
+	input:
+		'data/csv/9606.csv',
+		'data/fantom5/fantom5.csv',
+		'data/cellphonedb/cellphonedb.csv',
+		'data/baderlab/baderlab.csv',
+		'data/singlecellsignalr/lrdb.csv',
+	output:
+		touch('plot/hclust_human.png')
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/plot_hclust_human.txt'
+	log:
+		'logs/plot_hclust_human.log'
+	shell:
+		'src/plot_hclust_human.sh >& {log}'
+
+rule plot_known_ratio_human:
+	input:
+		'data/dlrp/pre_dlrp2.csv',
+		'data/iuphar/iuphar.csv',
+		'data/hpmr/hpmr.csv',
+		'data/csv/9606.csv',
+		'data/fantom5/fantom5.csv',
+		'data/cellphonedb/cellphonedb.csv',
+		'data/baderlab/baderlab.csv',
+		'data/singlecellsignalr/lrdb.csv',
+	output:
+		touch('plot/known_ratio_human.png')
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/plot_known_ratio_human.txt'
+	log:
+		'logs/plot_known_ratio_human.log'
+	shell:
+		'src/plot_known_ratio_human.sh >& {log}'
 
 rule plot_summary:
 	input:

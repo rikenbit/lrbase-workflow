@@ -1,19 +1,23 @@
 # Parameter
 args <- commandArgs(trailingOnly=TRUE)
 org <- args[1]
-outfile <- args[2]
+v <- args[2]
+outfile <- args[3]
 
 infiles <- c(
 	# Known
 	paste0("data/ensembl_dlrp/", org, ".csv"),
 	paste0("data/ensembl_iuphar/", org, ".csv"),
+	paste0("data/ensembl_hpmr/", org, ".csv"),
 	paste0("data/ncbi_dlrp/", org, ".csv"),
 	paste0("data/ncbi_iuphar/", org, ".csv"),
+	paste0("data/ncbi_hpmr/", org, ".csv"),
 	paste0("data/rbbh_dlrp/", org, ".csv"),
 	paste0("data/rbbh_iuphar/", org, ".csv"),
+	paste0("data/rbbh_hpmr/", org, ".csv"),
 	# Putative
-	paste0("data/swissprot_string", org, ".csv"),
-	paste0("data/trembl_string", org, ".csv")
+	paste0("data/swissprot_string/", org, "_", v, "_high.csv"),
+	paste0("data/trembl_string/", org, "_", v, "_high.csv")
 )
 
 if(org != '9606'){
@@ -46,7 +50,9 @@ if(org != '9606'){
 	out <- unique(out)
 
 	# Output
-	write.table(out, file=outfile, row.names=FALSE, quote=FALSE, sep=",")
+	if(nrow(out) != 0){
+		write.table(out, file=outfile, row.names=FALSE, quote=FALSE, sep=",")
+	}
 }else{
 	file.copy("data/csv/pre_9606.csv", "data/csv/9606.csv", overwrite = TRUE)
 }

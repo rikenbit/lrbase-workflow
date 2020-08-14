@@ -4,6 +4,9 @@
 benchmarks
 logs
 data
+rpackages
+.texlive2019
+check
 ._*
 .DS_Store
 .fuse*

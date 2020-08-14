@@ -1,13 +1,21 @@
 import pandas as pd
+from snakemake.utils import min_version
+
+min_version("5.8.1")
+configfile: "config.yaml"
 
 SAMPLESHEET = pd.read_csv('sample_sheet.csv', dtype='string')
-NAMES = SAMPLESHEET['Scientific.name'].unique()
-THREENAMES = SAMPLESHEET['Abbreviation'].unique()
-COMMONNAMES = SAMPLESHEET['Common.name'].unique()
-TAXID = SAMPLESHEET['Taxon.ID'].unique()
+TAXIDS = SAMPLESHEET['Taxon.ID'].unique()
+VERSION_LRBASE = config['VERSION_LRBASE']
+
+container: "docker://koki/biocdev:latest"
 
 rule all:
-	expand('data/metadata/')
+	input:
+		expand('check/rinstall_{taxid}_{v}_ok',
+			taxid=TAXIDS, v=VERSION_LRBASE),
+		# expand('reports/{taxid}_{v}/index.html',
+		# 	taxid=TAXIDS, v=VERSION_LRBASE)
 
 #############################################
 # METADATA
@@ -16,41 +24,79 @@ rule metadata:
 	input:
 		'sample_sheet.csv'
 	output:
-		''
+		touch(expand('data/metadata/{taxid}.csv',
+			taxid=TAXIDS))
+	benchmark:
+		'benchmarks/metadata.txt'
+	log:
+		'logs/metadata.log'
+	shell:
+		'src/metadata.sh >& {log}'
 
 #############################################
 # R packaging
 #############################################
-# src/RPack.sh
+
 rule packaging_rpack:
-# 	input:
-# 		'sample_sheet.csv',
-# 		expand('data/csv/{taxid_all}.csv',
-# 			taxid_all=TAXID_ALL)
-# 	output:
-# 		'packages/LRBase.{taxid_all}.eg.db.tar.gz'
-# 	conda:
-# 		'envs/myenv.yaml'
-# 	benchmark:
-# 		'benchmarks/sample_sheet.txt'
-# 	log:
-# 		'logs/sample_sheet.log'
-# 	shell:
-# 		'src/sample_sheet.sh >& {log}'
+	input:
+		'data/metadata/{taxid}.csv',
+		'data/csv/{taxid}.csv'
+	output:
+		'check/rpack_{taxid}_ok'
+	benchmark:
+		'benchmarks/packaging_rpack_{taxid}.txt'
+	log:
+		'logs/packaging_rpack_{taxid}.log'
+	shell:
+		'src/packaging_rpack.sh {input} {wildcards.taxid} {VERSION_LRBASE} {output} >& {log}'
 
-# src/RBuild.sh
 rule packaging_rbuild:
+	input:
+		'check/rpack_{taxid}_ok'
+	output:
+		'check/rbuild_{taxid}_ok'
+	benchmark:
+		'benchmarks/packaging_rbuild_{taxid}.txt'
+	log:
+		'logs/packaging_rbuild_{taxid}.log'
+	shell:
+		'src/packaging_rbuild.sh {wildcards.taxid} {VERSION_LRBASE} {output} >& {log}'
 
-# src/RCheck.sh
 rule packaging_rcheck:
+	input:
+		'check/rbuild_{taxid}_ok',
+	output:
+		'check/rcheck_{taxid}_{v}_ok'
+	benchmark:
+		'benchmarks/packaging_rcheck_{taxid}_{v}.txt'
+	log:
+		'logs/packaging_rcheck_{taxid}_{v}.log'
+	shell:
+		'src/packaging_rcheck.sh {wildcards.taxid} {VERSION_LRBASE} {output} >& {log}'
 
-# src/RBiocCheck.sh
-rule packaging_bioccheck:
-
-# src/RInstall.sh
-rule packaging_install:
+rule packaging_rinstall:
+	input:
+		'check/rcheck_{taxid}_{v}_ok'
+	output:
+		'check/rinstall_{taxid}_{v}_ok'
+	benchmark:
+		'benchmarks/packaging_rinstall_{taxid}_{v}.txt'
+	log:
+		'logs/packaging_rinstall_{taxid}_{v}.log'
+	shell:
+		'src/packaging_rinstall.sh {wildcards.taxid} {VERSION_LRBASE} {output} >& {log}'
 
 #############################################
 # Test scTensor report
 #############################################
 rule test_sctensor:
+	input:
+		'check/rinstall_{taxid}_{v}_ok'
+	output:
+		'reports/{taxid}_{v}/index.html'
+	benchmark:
+		'benchmarks/test_sctensor_{taxid}_{v}.txt'
+	log:
+		'logs/test_sctensor_{taxid}_{v}.log'
+	shell:
+		'src/test_sctensor.sh {wildcards.taxid} {VERSION_LRBASE} >& {log}'
