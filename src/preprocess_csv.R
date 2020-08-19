@@ -9,15 +9,39 @@ infiles <- c(
 	paste0("data/ensembl_dlrp/", org, ".csv"),
 	paste0("data/ensembl_iuphar/", org, ".csv"),
 	paste0("data/ensembl_hpmr/", org, ".csv"),
+	paste0("data/ensembl_cellphonedb/", org, ".csv"),
+	paste0("data/ensembl_singlecellsignalr/", org, ".csv"),
+
 	paste0("data/ncbi_dlrp/", org, ".csv"),
 	paste0("data/ncbi_iuphar/", org, ".csv"),
 	paste0("data/ncbi_hpmr/", org, ".csv"),
+	paste0("data/ncbi_cellphonedb/", org, ".csv"),
+	paste0("data/ncbi_singlecellsignalr/", org, ".csv"),
+
 	paste0("data/rbbh_dlrp/", org, ".csv"),
 	paste0("data/rbbh_iuphar/", org, ".csv"),
 	paste0("data/rbbh_hpmr/", org, ".csv"),
+	paste0("data/rbbh_cellphonedb/", org, ".csv"),
+	paste0("data/rbbh_singlecellsignalr/", org, ".csv"),
+
 	# Putative
 	paste0("data/swissprot_string/", org, "_", v, "_high.csv"),
-	paste0("data/trembl_string/", org, "_", v, "_high.csv")
+	paste0("data/trembl_string/", org, "_", v, "_high.csv"),
+
+	paste0("data/ensembl_swissprot_string/", org, "_", v, "_high.csv"),
+	paste0("data/ensembl_trembl_string/", org, "_", v, "_high.csv"),
+	paste0("data/ensembl_fantom5/", org, "_", v, "_high.csv"),
+	paste0("data/ensembl_baderlab/", org, "_", v, "_high.csv"),
+
+	paste0("data/ncbi_swissprot_string/", org, "_", v, "_high.csv"),
+	paste0("data/ncbi_trembl_string/", org, "_", v, "_high.csv"),
+	paste0("data/ncbi_fantom5/", org, "_", v, "_high.csv"),
+	paste0("data/ncbi_baderlab/", org, "_", v, "_high.csv"),
+
+	paste0("data/rbbh_swissprot_string/", org, "_", v, "_high.csv"),
+	paste0("data/rbbh_trembl_string/", org, "_", v, "_high.csv"),
+	paste0("data/rbbh_fantom5/", org, "_", v, "_high.csv"),
+	paste0("data/rbbh_baderlab/", org, "_", v, "_high.csv")
 )
 
 if(org != '9606'){

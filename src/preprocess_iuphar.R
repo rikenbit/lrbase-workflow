@@ -36,10 +36,18 @@ iuphar = merge(iuphar, ensembl, by="Symbol")
 colnames(iuphar)[4] = "GENEID_R"
 iuphar = iuphar[, c(3,4,2)]
 
-# 最後にIUPHARと記述
-iuphar = cbind(iuphar, "IUPHAR")
-
-colnames(iuphar)[3:4] = c("PMID_PPI", "SOURCEDB")
+LRname <- unique(iuphar[,1:2])
+tmp <- apply(LRname, 1, function(x){
+	target <- intersect(
+		which(iuphar[,1] == x[1]),
+		which(iuphar[,2] == x[2]))
+	out <- iuphar[target,3]
+	out <- unique(out)
+	paste(out, collapse="|")
+})
+iuphar <- cbind(LRname, tmp, "IUPHAR")
+colnames(iuphar)[3] = "PMID_PPI"
+colnames(iuphar)[4] = "SOURCEDB"
 
 # 保存
 write.table(iuphar, file="data/iuphar/iuphar.csv", row.names=FALSE, quote=FALSE, sep=",")

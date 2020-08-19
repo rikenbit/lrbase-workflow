@@ -23,6 +23,21 @@ colnames(LRdb) <- c("GENEID_L", "GENEID_R", "PMID_PPI", "SOURCEDB")
 LRdb <- LRdb[which(!is.na(LRdb[,1])), ]
 LRdb <- LRdb[which(!is.na(LRdb[,2])), ]
 
+LRname <- unique(LRdb[,1:2])
+tmp <- apply(LRname, 1, function(x){
+	target <- intersect(
+		which(LRdb[,1] == x[1]),
+		which(LRdb[,2] == x[2]))
+	out <- LRdb[target,3]
+	out <- unique(out)
+	paste(out, collapse="|")
+})
+LRdb <- cbind(LRname, tmp, "SINGLECELLSIGNALR")
+colnames(LRdb)[3] = "PMID_PPI"
+colnames(LRdb)[4] = "SOURCEDB"
+
+LRdb[, "PMID_PPI"] <- gsub(",", "|", LRdb[, "PMID_PPI"])
+
 # 保存
 write.table(LRdb, file="data/singlecellsignalr/lrdb.csv",
 	row.names=FALSE, quote=FALSE, sep=",")

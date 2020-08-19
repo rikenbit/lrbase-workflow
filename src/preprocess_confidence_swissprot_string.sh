@@ -11,6 +11,4 @@
 SLURM_RESTART_COUNT=2
 
 echo $@
-
-Rscript=`ls .snakemake/conda/*/bin/Rscript`
-$Rscript src/preprocess_confidence_swissprot_string.R $@
+$CONDA_PREFIX/bin/Rscript src/preprocess_confidence_swissprot_string.R $@

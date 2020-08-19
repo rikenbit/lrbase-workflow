@@ -39,17 +39,24 @@ rule all:
 		expand('plot/venndiagram_{db2}.png',
 			db2=['swissprot_hprd', 'trembl_hprd']),
 		'plot/venndiagram_human.png',
+		# Known/Putative ratio
+		'plot/known_ratio.png',
+		'plot/known_ratio_percentage.png',
+		'plot/known_ratio_human.png',
+		'plot/known_ratio_human_percentage.png',
 		# Phylogenetic tree
 		'plot/hclust_human.png',
-		# Known/Putative ratio
-		'plot/known_ratio_human.png',
 		# STRING Score plots
 		'plot/swissprot_string_score.png',
 		'plot/trembl_string_score.png',
 		# Summary plots
 		'plot/summary.png',
-		# Sample Sheet
-		'sample_sheet.csv'
+		'plot/summary_percentage.png',
+		# Change by year
+		'plot/swissprot.png',
+		'plot/trembl.png',
+		'plot/string_protein.png',
+		'plot/string_ppi.png'
 
 #############################################
 # Data download
@@ -371,6 +378,96 @@ rule preprocess_ensembl_hpmr:
 	shell:
 		'src/preprocess_ortholog_ppi.sh {input} {output} ENSEMBL_HPMR >& {log}'
 
+rule preprocess_ensembl_cellphonedb:
+	input:
+		'data/biomart/{taxid_ensembl}.csv',
+		'data/cellphonedb/cellphonedb.csv'
+	output:
+		touch('data/ensembl_cellphonedb/{taxid_ensembl}.csv')
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/preprocess_ensembl_cellphonedb_{taxid_ensembl}.txt'
+	log:
+		'logs/preprocess_ensembl_cellphonedb_{taxid_ensembl}.log'
+	shell:
+		'src/preprocess_ortholog_ppi.sh {input} {output} ENSEMBL_CELLPHONEDB >& {log}'
+
+rule preprocess_ensembl_singlecellsignalr:
+	input:
+		'data/biomart/{taxid_ensembl}.csv',
+		'data/singlecellsignalr/lrdb.csv'
+	output:
+		touch('data/ensembl_singlecellsignalr/{taxid_ensembl}.csv')
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/preprocess_ensembl_singlecellsignalr_{taxid_ensembl}.txt'
+	log:
+		'logs/preprocess_ensembl_singlecellsignalr_{taxid_ensembl}.log'
+	shell:
+		'src/preprocess_ortholog_ppi.sh {input} {output} ENSEMBL_SINGLECELLSIGNALR >& {log}'
+
+rule preprocess_ensembl_swissprot_hprd:
+	input:
+		'data/biomart/{taxid_ensembl}.csv',
+		'data/swissprot_hprd/9606.csv'
+	output:
+		touch('data/ensembl_swissprot_hprd/{taxid_ensembl}.csv')
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/preprocess_ensembl_swissprot_hprd_{taxid_ensembl}.txt'
+	log:
+		'logs/preprocess_ensembl_swissprot_hprd_{taxid_ensembl}.log'
+	shell:
+		'src/preprocess_ortholog_ppi.sh {input} {output} ENSEMBL_SWISSPROT_HPRD >& {log}'
+
+rule preprocess_ensembl_trembl_hprd:
+	input:
+		'data/biomart/{taxid_ensembl}.csv',
+		'data/trembl_hprd/9606.csv'
+	output:
+		touch('data/ensembl_trembl_hprd/{taxid_ensembl}.csv')
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/preprocess_ensembl_trembl_hprd_{taxid_ensembl}.txt'
+	log:
+		'logs/preprocess_ensembl_trembl_hprd_{taxid_ensembl}.log'
+	shell:
+		'src/preprocess_ortholog_ppi.sh {input} {output} ENSEMBL_TREMBL_HPRD >& {log}'
+
+rule preprocess_ensembl_fantom5:
+	input:
+		'data/biomart/{taxid_ensembl}.csv',
+		'data/fantom5/fantom5.csv'
+	output:
+		touch('data/ensembl_fantom5/{taxid_ensembl}.csv')
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/preprocess_ensembl_fantom5_{taxid_ensembl}.txt'
+	log:
+		'logs/preprocess_ensembl_fantom5_{taxid_ensembl}.log'
+	shell:
+		'src/preprocess_ortholog_ppi.sh {input} {output} ENSEMBL_FANTOM5 >& {log}'
+
+rule preprocess_ensembl_baderlab:
+	input:
+		'data/biomart/{taxid_ensembl}.csv',
+		'data/baderlab/baderlab.csv'
+	output:
+		touch('data/ensembl_baderlab/{taxid_ensembl}.csv')
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/preprocess_ensembl_baderlab_{taxid_ensembl}.txt'
+	log:
+		'logs/preprocess_ensembl_baderlab_{taxid_ensembl}.log'
+	shell:
+		'src/preprocess_ortholog_ppi.sh {input} {output} ENSEMBL_BADERLAB >& {log}'
+
 rule preprocess_ncbi_dlrp:
 	input:
 		'data/homologene/{taxid_ncbi}.csv',
@@ -416,6 +513,96 @@ rule preprocess_ncbi_hpmr:
 	shell:
 		'src/preprocess_ortholog_ppi.sh {input} {output} NCBI_HPMR >& {log}'
 
+rule preprocess_ncbi_cellphonedb:
+	input:
+		'data/homologene/{taxid_ncbi}.csv',
+		'data/cellphonedb/cellphonedb.csv'
+	output:
+		touch('data/ncbi_cellphonedb/{taxid_ncbi}.csv')
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/preprocess_ncbi_cellphonedb_{taxid_ncbi}.txt'
+	log:
+		'logs/preprocess_ncbi_cellphonedb_{taxid_ncbi}.log'
+	shell:
+		'src/preprocess_ortholog_ppi.sh {input} {output} NCBI_CELLPHONEDB >& {log}'
+
+rule preprocess_ncbi_singlecellsignalr:
+	input:
+		'data/homologene/{taxid_ncbi}.csv',
+		'data/singlecellsignalr/lrdb.csv'
+	output:
+		touch('data/ncbi_singlecellsignalr/{taxid_ncbi}.csv')
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/preprocess_ncbi_singlecellsignalr_{taxid_ncbi}.txt'
+	log:
+		'logs/preprocess_ncbi_singlecellsignalr_{taxid_ncbi}.log'
+	shell:
+		'src/preprocess_ortholog_ppi.sh {input} {output} NCBI_SINGLECELLSIGNALR >& {log}'
+
+rule preprocess_ncbi_swissprot_hprd:
+	input:
+		'data/homologene/{taxid_ncbi}.csv',
+		'data/swissprot_hprd/9606.csv'
+	output:
+		touch('data/ncbi_swissprot_hprd/{taxid_ncbi}.csv')
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/preprocess_ncbi_swissprot_hprd_{taxid_ncbi}.txt'
+	log:
+		'logs/preprocess_ncbi_swissprot_hprd_{taxid_ncbi}.log'
+	shell:
+		'src/preprocess_ortholog_ppi.sh {input} {output} NCBI_SWISSPROT_HPRD >& {log}'
+
+rule preprocess_ncbi_trembl_hprd:
+	input:
+		'data/homologene/{taxid_ncbi}.csv',
+		'data/trembl_hprd/9606.csv'
+	output:
+		touch('data/ncbi_trembl_hprd/{taxid_ncbi}.csv')
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/preprocess_ncbi_trembl_hprd_{taxid_ncbi}.txt'
+	log:
+		'logs/preprocess_ncbi_trembl_hprd_{taxid_ncbi}.log'
+	shell:
+		'src/preprocess_ortholog_ppi.sh {input} {output} NCBI_TREMBL_HPRD >& {log}'
+
+rule preprocess_ncbi_fantom5:
+	input:
+		'data/homologene/{taxid_ncbi}.csv',
+		'data/fantom5/fantom5.csv'
+	output:
+		touch('data/ncbi_fantom5/{taxid_ncbi}.csv')
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/preprocess_ncbi_fantom5_{taxid_ncbi}.txt'
+	log:
+		'logs/preprocess_ncbi_fantom5_{taxid_ncbi}.log'
+	shell:
+		'src/preprocess_ortholog_ppi.sh {input} {output} NCBI_FANTOM5 >& {log}'
+
+rule preprocess_ncbi_baderlab:
+	input:
+		'data/homologene/{taxid_ncbi}.csv',
+		'data/baderlab/baderlab.csv'
+	output:
+		touch('data/ncbi_baderlab/{taxid_ncbi}.csv')
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/preprocess_ncbi_baderlab_{taxid_ncbi}.txt'
+	log:
+		'logs/preprocess_ncbi_baderlab_{taxid_ncbi}.log'
+	shell:
+		'src/preprocess_ortholog_ppi.sh {input} {output} NCBI_BADERLAB >& {log}'
+
 rule preprocess_rbbh_dlrp:
 	input:
 		'data/rbbh/{taxid_mesh}.csv',
@@ -460,6 +647,96 @@ rule preprocess_rbbh_hpmr:
 		'logs/preprocess_rbbh_hpmr_{taxid_mesh}.log'
 	shell:
 		'src/preprocess_ortholog_ppi.sh {input} {output} RBBH_HPMR >& {log}'
+
+rule preprocess_rbbh_cellphonedb:
+	input:
+		'data/rbbh/{taxid_mesh}.csv',
+		'data/cellphonedb/cellphonedb.csv'
+	output:
+		touch('data/rbbh_cellphonedb/{taxid_mesh}.csv')
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/preprocess_rbbh_cellphonedb_{taxid_mesh}.txt'
+	log:
+		'logs/preprocess_rbbh_cellphonedb_{taxid_mesh}.log'
+	shell:
+		'src/preprocess_ortholog_ppi.sh {input} {output} RBBH_CELLPHONEDB >& {log}'
+
+rule preprocess_rbbh_singlecellsignalr:
+	input:
+		'data/rbbh/{taxid_mesh}.csv',
+		'data/singlecellsignalr/lrdb.csv'
+	output:
+		touch('data/rbbh_singlecellsignalr/{taxid_mesh}.csv')
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/preprocess_rbbh_singlecellsignalr_{taxid_mesh}.txt'
+	log:
+		'logs/preprocess_rbbh_singlecellsignalr_{taxid_mesh}.log'
+	shell:
+		'src/preprocess_ortholog_ppi.sh {input} {output} RBBH_SINGLECELLSIGNALR >& {log}'
+
+rule preprocess_rbbh_swissprot_hprd:
+	input:
+		'data/rbbh/{taxid_mesh}.csv',
+		'data/swissprot_hprd/9606.csv'
+	output:
+		touch('data/rbbh_swissprot_hprd/{taxid_mesh}.csv')
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/preprocess_rbbh_swissprot_hprd_{taxid_mesh}.txt'
+	log:
+		'logs/preprocess_rbbh_swissprot_hprd_{taxid_mesh}.log'
+	shell:
+		'src/preprocess_ortholog_ppi.sh {input} {output} RBBH_SWISSPROT_HPRD >& {log}'
+
+rule preprocess_rbbh_trembl_hprd:
+	input:
+		'data/rbbh/{taxid_mesh}.csv',
+		'data/trembl_hprd/9606.csv'
+	output:
+		touch('data/rbbh_trembl_hprd/{taxid_mesh}.csv')
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/preprocess_rbbh_trembl_hprd_{taxid_mesh}.txt'
+	log:
+		'logs/preprocess_rbbh_trembl_hprd_{taxid_mesh}.log'
+	shell:
+		'src/preprocess_ortholog_ppi.sh {input} {output} RBBH_TREMBL_HPRD >& {log}'
+
+rule preprocess_rbbh_fantom5:
+	input:
+		'data/rbbh/{taxid_mesh}.csv',
+		'data/fantom5/fantom5.csv'
+	output:
+		touch('data/rbbh_fantom5/{taxid_mesh}.csv')
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/preprocess_rbbh_fantom5_{taxid_mesh}.txt'
+	log:
+		'logs/preprocess_rbbh_fantom5_{taxid_mesh}.log'
+	shell:
+		'src/preprocess_ortholog_ppi.sh {input} {output} RBBH_FANTOM5 >& {log}'
+
+rule preprocess_rbbh_baderlab:
+	input:
+		'data/rbbh/{taxid_mesh}.csv',
+		'data/baderlab/baderlab.csv'
+	output:
+		touch('data/rbbh_baderlab/{taxid_mesh}.csv')
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/preprocess_rbbh_baderlab_{taxid_mesh}.txt'
+	log:
+		'logs/preprocess_rbbh_baderlab_{taxid_mesh}.log'
+	shell:
+		'src/preprocess_ortholog_ppi.sh {input} {output} RBBH_BADERLAB >& {log}'
 
 rule preprocess_swissprot:
 	input:
@@ -808,7 +1085,11 @@ rule preprocess_csv_human:
 			db2=['swissprot_hprd', 'trembl_hprd']),
 		'data/iuphar/iuphar.csv',
 		'data/dlrp/pre_dlrp2.csv',
-		'data/hpmr/hpmr.csv'
+		'data/hpmr/hpmr.csv',
+		'data/fantom5/fantom5.csv',
+		'data/cellphonedb/cellphonedb.csv',
+		'data/baderlab/baderlab.csv',
+		'data/singlecellsignalr/lrdb.csv'
 	output:
 		touch('data/csv/pre_9606.csv')
 	conda:
@@ -830,24 +1111,66 @@ rule preprocess_csv:
 			taxid_ensembl=TAXID_ENSEMBL),
 		expand('data/ensembl_hpmr/{taxid_ensembl}.csv',
 			taxid_ensembl=TAXID_ENSEMBL),
+		expand('data/ensembl_cellphonedb/{taxid_ensembl}.csv',
+			taxid_ensembl=TAXID_ENSEMBL),
+		expand('data/ensembl_singlecellsignalr/{taxid_ensembl}.csv',
+			taxid_ensembl=TAXID_ENSEMBL),
+
 		expand('data/ncbi_dlrp/{taxid_ncbi}.csv',
 			taxid_ncbi=TAXID_NCBI),
 		expand('data/ncbi_iuphar/{taxid_ncbi}.csv',
 			taxid_ncbi=TAXID_NCBI),
 		expand('data/ncbi_hpmr/{taxid_ncbi}.csv',
 			taxid_ncbi=TAXID_NCBI),
+		expand('data/ncbi_cellphonedb/{taxid_ncbi}.csv',
+			taxid_ncbi=TAXID_NCBI),
+		expand('data/ncbi_singlecellsignalr/{taxid_ncbi}.csv',
+			taxid_ncbi=TAXID_NCBI),
+
 		expand('data/rbbh_dlrp/{taxid_mesh}.csv',
 			taxid_mesh=TAXID_MESH),
 		expand('data/rbbh_iuphar/{taxid_mesh}.csv',
 			taxid_mesh=TAXID_MESH),
 		expand('data/rbbh_hpmr/{taxid_mesh}.csv',
 			taxid_mesh=TAXID_MESH),
+		expand('data/rbbh_cellphonedb/{taxid_mesh}.csv',
+			taxid_mesh=TAXID_MESH),
+		expand('data/rbbh_singlecellsignalr/{taxid_mesh}.csv',
+			taxid_mesh=TAXID_MESH),
+
 		# Putative
 		expand('data/{db}/{taxid_putative}_{v}_{thr}.csv',
 			taxid_putative=TAXID_PUTATIVE,
 			db=['swissprot_string', 'trembl_string'],
 			v=VERSION_STRING,
-			thr=['high'])
+			thr=['high']),
+
+		expand('data/ensembl_swissprot_hprd/{taxid_ensembl}.csv',
+			taxid_ensembl=TAXID_ENSEMBL),
+		expand('data/ensembl_trembl_hprd/{taxid_ensembl}.csv',
+			taxid_ensembl=TAXID_ENSEMBL),
+		expand('data/ensembl_fantom5/{taxid_ensembl}.csv',
+			taxid_ensembl=TAXID_ENSEMBL),
+		expand('data/ensembl_baderlab/{taxid_ensembl}.csv',
+			taxid_ensembl=TAXID_ENSEMBL),
+
+		expand('data/ncbi_swissprot_hprd/{taxid_ncbi}.csv',
+			taxid_ncbi=TAXID_NCBI),
+		expand('data/ncbi_trembl_hprd/{taxid_ncbi}.csv',
+			taxid_ncbi=TAXID_NCBI),
+		expand('data/ncbi_fantom5/{taxid_ncbi}.csv',
+			taxid_ncbi=TAXID_NCBI),
+		expand('data/ncbi_baderlab/{taxid_ncbi}.csv',
+			taxid_ncbi=TAXID_NCBI),
+
+		expand('data/rbbh_swissprot_hprd/{taxid_mesh}.csv',
+			taxid_mesh=TAXID_MESH),
+		expand('data/rbbh_trembl_hprd/{taxid_mesh}.csv',
+			taxid_mesh=TAXID_MESH),
+		expand('data/rbbh_fantom5/{taxid_mesh}.csv',
+			taxid_mesh=TAXID_MESH),
+		expand('data/rbbh_baderlab/{taxid_mesh}.csv',
+			taxid_mesh=TAXID_MESH)
 	output:
 		touch('data/csv/{taxid_all}.csv')
 	conda:
@@ -903,10 +1226,7 @@ rule plot_string_score:
 rule plot_venndiagram_uniprotkb_string:
 	input:
 		'data/{db}/9606_{v}_{thr}.csv',
-		'data/fantom5/fantom5.csv',
-		'data/iuphar/iuphar.csv',
-		'data/dlrp/pre_dlrp2.csv',
-		'data/hpmr/hpmr.csv'		
+		'data/csv/9606.csv'
 	output:
 		touch('plot/venndiagram_{db}_9606_{v}_{thr}.png')
 	conda:
@@ -921,10 +1241,7 @@ rule plot_venndiagram_uniprotkb_string:
 rule plot_venndiagram_uniprotkb_hprd:
 	input:
 		'data/{db2}/9606.csv',
-		'data/fantom5/fantom5.csv',
-		'data/iuphar/iuphar.csv',
-		'data/dlrp/pre_dlrp2.csv',
-		'data/hpmr/hpmr.csv'		
+		'data/csv/9606.csv'
 	output:
 		touch('plot/venndiagram_{db2}.png')
 	conda:
@@ -938,11 +1255,7 @@ rule plot_venndiagram_uniprotkb_hprd:
 
 rule plot_venndiagram_human:
 	input:
-		'data/csv/9606.csv',
-		'data/fantom5/fantom5.csv',
-		'data/cellphonedb/cellphonedb.csv',
-		'data/baderlab/baderlab.csv',
-		'data/singlecellsignalr/lrdb.csv',
+		'data/csv/9606.csv'
 	output:
 		touch('plot/venndiagram_human.png')
 	conda:
@@ -956,11 +1269,7 @@ rule plot_venndiagram_human:
 
 rule plot_hclust_human:
 	input:
-		'data/csv/9606.csv',
-		'data/fantom5/fantom5.csv',
-		'data/cellphonedb/cellphonedb.csv',
-		'data/baderlab/baderlab.csv',
-		'data/singlecellsignalr/lrdb.csv',
+		'data/csv/9606.csv'
 	output:
 		touch('plot/hclust_human.png')
 	conda:
@@ -974,16 +1283,10 @@ rule plot_hclust_human:
 
 rule plot_known_ratio_human:
 	input:
-		'data/dlrp/pre_dlrp2.csv',
-		'data/iuphar/iuphar.csv',
-		'data/hpmr/hpmr.csv',
-		'data/csv/9606.csv',
-		'data/fantom5/fantom5.csv',
-		'data/cellphonedb/cellphonedb.csv',
-		'data/baderlab/baderlab.csv',
-		'data/singlecellsignalr/lrdb.csv',
+		'data/csv/9606.csv'
 	output:
-		touch('plot/known_ratio_human.png')
+		touch('plot/known_ratio_human.png'),
+		touch('plot/known_ratio_human_percentage.png')
 	conda:
 		'envs/myenv.yaml'
 	benchmark:
@@ -993,11 +1296,29 @@ rule plot_known_ratio_human:
 	shell:
 		'src/plot_known_ratio_human.sh >& {log}'
 
+rule plot_known_ratio:
+	input:
+		'sample_sheet.csv',
+		expand('data/csv/{taxid_all}.csv',
+			taxid_all=TAXID_ALL)
+	output:
+		touch('plot/known_ratio.png'),
+		touch('plot/known_ratio_percentage.png')
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/plot_known_ratio.txt'
+	log:
+		'logs/plot_known_ratio.log'
+	shell:
+		'src/plot_known_ratio.sh >& {log}'
+
 rule plot_summary:
 	input:
 		'data/summary.RData'
 	output:
-		touch('plot/summary.png')
+		touch('plot/summary.png'),
+		touch('plot/summary_percentage.png')
 	conda:
 		'envs/myenv.yaml'
 	benchmark:
@@ -1006,6 +1327,43 @@ rule plot_summary:
 		'logs/plot_summary.log'
 	shell:
 		'src/plot_summary.sh >& {log}'
+
+rule plot_swissprot:
+	output:
+		touch('plot/swissprot.png')
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/plot_swissprot.txt'
+	log:
+		'logs/plot_swissprot.log'
+	shell:
+		'src/plot_swissprot.sh >& {log}'
+
+rule plot_trembl:
+	output:
+		touch('plot/trembl.png')
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/plot_trembl.txt'
+	log:
+		'logs/plot_trembl.log'
+	shell:
+		'src/plot_trembl.sh >& {log}'
+
+rule plot_string:
+	output:
+		touch('plot/string_protein.png'),
+		touch('plot/string_ppi.png')
+	conda:
+		'envs/myenv.yaml'
+	benchmark:
+		'benchmarks/plot_string.txt'
+	log:
+		'logs/plot_string.log'
+	shell:
+		'src/plot_string.sh >& {log}'
 
 #############################################
 # Final Sample sheet

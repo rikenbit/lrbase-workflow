@@ -11,5 +11,4 @@
 SLURM_RESTART_COUNT=2
 
 echo $@
-
 grep "Homo sapiens" $1 | awk -v 'OFS=,' '{print $1,$4}' | sort | uniq > $2

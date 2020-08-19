@@ -6,12 +6,6 @@ fantom5 <- fantom5[intersect(which(fantom5[,1] != ""), which(fantom5[,2] != ""))
 # No PMID
 fantom5$PMID.Manual[which(fantom5$PMID.Manual == "")] <- "-"
 
-# Replace ", " with "|"
-fantom5$PMID.Manual <- sapply(fantom5$PMID.Manual, function(x){
-                sub(", ", "|", x)
-        })
-colnames(fantom5)[3] = "PMID_PPI"
-
 #
 # Emsembl（Gene ID - Symbol)
 #
@@ -28,9 +22,21 @@ fantom5 = merge(fantom5, ensembl, by="Symbol")
 colnames(fantom5)[4] = "GENEID_R"
 fantom5 = fantom5[, c(3,4,2)]
 
-# At the last column, write FANTOM5
-fantom5 <- cbind(fantom5, "FANTOM5")
+LRname <- unique(fantom5[,1:2])
+tmp <- apply(LRname, 1, function(x){
+	target <- intersect(
+		which(fantom5[,1] == x[1]),
+		which(fantom5[,2] == x[2]))
+	out <- fantom5[target,3]
+	out <- unique(out)
+	paste(out, collapse="|")
+})
+fantom5 <- cbind(LRname, tmp, "FANTOM5")
+colnames(fantom5)[3] = "PMID_PPI"
 colnames(fantom5)[4] = "SOURCEDB"
 
+fantom5$PMID_PPI <- gsub(", ", "|", fantom5$PMID_PPI)
+
 # Save
-write.table(fantom5, file="data/fantom5/fantom5.csv", row.names=FALSE, quote=FALSE, sep=",")
+write.table(fantom5, file="data/fantom5/fantom5.csv",
+	row.names=FALSE, quote=FALSE, sep=",")

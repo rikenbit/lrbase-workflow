@@ -10,5 +10,4 @@
 #SBATCH -p node03-06
 SLURM_RESTART_COUNT=2
 
-julia=`ls .snakemake/conda/*/bin/julia`
-$julia src/preprocess_dlrp.jl
+$CONDA_PREFIX/bin/julia src/preprocess_dlrp.jl

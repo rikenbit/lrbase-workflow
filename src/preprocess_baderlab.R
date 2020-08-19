@@ -70,7 +70,20 @@ PMID_PPI <- gsub("pubmed:", "", Bader$pmid)
 
 # Bader
 bader <- data.frame(GENEID_L=GENEID_L, GENEID_R=GENEID_R,
-	PMID_PPI=PMID_PPI, SOURCEDB="BaderLab")
+	PMID_PPI=PMID_PPI)
+
+LRname <- unique(bader[,1:2])
+tmp <- apply(LRname, 1, function(x){
+	target <- intersect(
+		which(bader[,1] == x[1]),
+		which(bader[,2] == x[2]))
+	out <- bader[target,3]
+	out <- unique(out)
+	paste(out, collapse="|")
+})
+bader <- cbind(LRname, tmp, "BADERLAB")
+colnames(bader)[3] = "PMID_PPI"
+colnames(bader)[4] = "SOURCEDB"
 
 # 保存
 write.table(bader, file="data/baderlab/baderlab.csv",

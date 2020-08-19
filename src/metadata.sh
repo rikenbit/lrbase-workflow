@@ -12,5 +12,4 @@ SLURM_RESTART_COUNT=2
 
 export LC_ALL=C
 
-Rscript=`ls .snakemake/conda/*/bin/Rscript`
-$Rscript src/metadata.R
+$CONDA_PREFIX/bin/Rscript src/metadata.R

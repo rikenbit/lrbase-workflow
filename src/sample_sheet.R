@@ -24,21 +24,8 @@ PUTATIVE = data.frame(
 )
 ORGINFO = rbind(KNOWN, PUTATIVE)
 
-# Filtering
-target.org <- unlist(lapply(as.character(unique(gdata$Name)), function(x){
-	score <- gdata[which(gdata$Name == x), 2]
-	if(sum(score) != 0){
-		return(x)
-	}
-}))
-target.position <- unlist(sapply(sort(target.org), function(x){
-	which(gdata$Name == x)
-}))
-target.nonzero <- which(gdata$Coverage != 0)
-sample_sheet <- gdata[intersect(target.position, target.nonzero), ]
-
 # Merge
-out <- merge(sample_sheet, ORGINFO, by.x="Name", by.y="Scientific.name")
+out <- merge(gdata, ORGINFO, by.x="Name", by.y="Scientific.name")
 out <- unique(out)
 for(i in 1:ncol(out)){
 	out[,i] <- as.character(out[,i])
@@ -52,6 +39,8 @@ na <- length(unique(out$Abbreviation))
 check1 <- nn == nt
 check2 <- nt == na
 check3 <- nn >= nc
+
+target.org <- as.character(unique(gdata$Name))
 
 if(check1 && check2 && check3){
 	# Shrink in each organism

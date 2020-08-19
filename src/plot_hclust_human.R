@@ -1,11 +1,10 @@
 source("src/functions.R")
 
-lrbase = read.csv('data/csv/9606.csv', stringsAsFactors=FALSE, header=TRUE)[,1:2]
-fantom5 = read.csv('data/fantom5/fantom5.csv', stringsAsFactors=FALSE, header=TRUE)[,1:2]
-cellphonedb = read.csv('data/cellphonedb/cellphonedb.csv', stringsAsFactors=FALSE, header=TRUE)[,1:2]
-baderlab = read.csv('data/baderlab/baderlab.csv', stringsAsFactors=FALSE, header=TRUE)[,1:2]
-singlecellsignalr = read.table('data/singlecellsignalr/lrdb.csv', stringsAsFactors=FALSE, skip=1, sep=",", col.names = paste0("V",seq_len(13)), fill=TRUE)[,1:2]
-colnames(singlecellsignalr) <- c("GENEID_L", "GENEID_R")
+lrbase <- read.csv('data/csv/9606.csv', stringsAsFactors=FALSE, header=TRUE)
+fantom5 = lrbase[which(lrbase$SOURCEDB == "FANTOM5"), ]
+cellphonedb = lrbase[which(lrbase$SOURCEDB == "CELLPHONEDB"), ]
+baderlab = lrbase[which(lrbase$SOURCEDB == "BADERLAB"), ]
+singlecellsignalr = lrbase[which(lrbase$SOURCEDB == "SINGLECELLSIGNALR"), ]
 
 # Phylogenetic tree
 d <- matrix(0, nrow=length(lrnames), ncol=length(lrnames))

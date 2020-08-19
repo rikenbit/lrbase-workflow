@@ -10,5 +10,4 @@
 #SBATCH -p node03-06
 SLURM_RESTART_COUNT=2
 
-Rscript=`ls .snakemake/conda/*/bin/Rscript`
-$Rscript src/preprocess_iuphar.R
+$CONDA_PREFIX/bin/Rscript src/preprocess_iuphar.R

@@ -10,5 +10,4 @@
 #SBATCH -p node03-06
 SLURM_RESTART_COUNT=2
 
-Rscript=`ls .snakemake/conda/*/bin/Rscript`
-$Rscript src/sample_sheet.R
+$CONDA_PREFIX/bin/Rscript src/sample_sheet.R

@@ -11,6 +11,4 @@
 SLURM_RESTART_COUNT=2
 
 echo $@
-
-Rscript=`ls .snakemake/conda/*/bin/Rscript`
-$Rscript src/download_biomart_human.R $@
+$CONDA_PREFIX/bin/Rscript src/download_biomart_human.R $@

@@ -11,5 +11,4 @@
 SLURM_RESTART_COUNT=2
 
 echo $@
-julia=`ls .snakemake/conda/*/bin/julia`
-$julia src/preprocess_trembl.jl $@
+$CONDA_PREFIX/bin/julia src/preprocess_trembl.jl $@

@@ -3,17 +3,15 @@ source("src/functions.R")
 # Parameter
 infile1 = commandArgs(trailingOnly=TRUE)[1]
 infile2 = commandArgs(trailingOnly=TRUE)[2]
-infile3 = commandArgs(trailingOnly=TRUE)[3]
-infile4 = commandArgs(trailingOnly=TRUE)[4]
-infile5 = commandArgs(trailingOnly=TRUE)[5]
-outfile = commandArgs(trailingOnly=TRUE)[6]
+outfile = commandArgs(trailingOnly=TRUE)[3]
 
 # Data loading
 uniprotkb_string <- read.csv(infile1)
-fantom5 <- read.csv(infile2)
-iuphar <- read.csv(infile3)
-dlrp <- read.csv(infile4)
-hpmr <- read.csv(infile5)
+lrbase <- read.csv(infile2, stringsAsFactors=FALSE, header=TRUE)
+fantom5 = lrbase[which(lrbase$SOURCEDB == "FANTOM5"), ]
+iuphar = lrbase[which(lrbase$SOURCEDB == "IUPHAR"), ]
+dlrp = lrbase[which(lrbase$SOURCEDB == "DLRP"), ]
+hpmr = lrbase[which(lrbase$SOURCEDB == "HPMR"), ]
 
 if(length(grep("swissprot_string", infile1)) == 1){
 	Name <- "SWISSPROT_STRING"

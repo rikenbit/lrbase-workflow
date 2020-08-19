@@ -11,6 +11,4 @@
 SLURM_RESTART_COUNT=2
 
 echo $@
-
-Rscript=`ls .snakemake/conda/*/bin/Rscript`
-$Rscript src/plot_string_score.R $@
+$CONDA_PREFIX/bin/Rscript src/plot_string_score.R $@
