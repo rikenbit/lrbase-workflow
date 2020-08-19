@@ -63,7 +63,9 @@ Workflow to construct [LRBase.XXX.eg.db-type](https://bioconductor.org/packages/
 
 # Summary
 ![](https://github.com/rikenbit/lrbase-workflow/blob/master/plot/summary.png)
+![](https://github.com/rikenbit/lrbase-workflow/blob/master/plot/known_ratio.png)
 ![](https://github.com/rikenbit/lrbase-workflow/blob/master/plot/summary_percentage.png)
+![](https://github.com/rikenbit/lrbase-workflow/blob/master/plot/known_ratio_percentage.png)
 
 # How to reproduce this workflow
 ## 1. Configuration
