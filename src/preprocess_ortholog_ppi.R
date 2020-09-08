@@ -4,6 +4,11 @@ infile2 <- commandArgs(trailingOnly=TRUE)[2]
 outfile <- commandArgs(trailingOnly=TRUE)[3]
 sourcedb <- commandArgs(trailingOnly=TRUE)[4]
 
+# infile1='data/biomart/56716.csv'
+# infile2='data/singlecellsignalr/lrdb.csv'
+# sourcedb="ENSEMBL_SINGLECELLSIGNALR"
+
+
 if(file.info(infile1)$size != 0){
 	# Data loading
 	if(length(grep("rbbh", infile1)) == 1){
@@ -31,6 +36,17 @@ if(file.info(infile1)$size != 0){
 	out <- unique(out)
 	nonNA <- intersect(which(!is.na(out[,1])), which(!is.na(out[,2])))
 	out <- out[nonNA, ]
+
+
+	# res <- c()
+	# for(i in seq(hid)){
+	# 	target <- which(sample_sheet[,1] == i)
+	# 	small_sheet <- sample_sheet[target, ]
+	# 	geneid_taxid <- small_sheet[which(small_sheet[,2] == taxid), 3]
+	# 	geneid_human <- small_sheet[which(small_sheet[,2] == 9606), 3]
+	# 	res <- rbind(res, expand.grid(geneid_taxid, geneid_human))
+	# }
+
 
 	# Output
 	if(!is.null(out)){

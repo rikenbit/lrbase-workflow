@@ -10,4 +10,5 @@
 #SBATCH -p node03-06
 SLURM_RESTART_COUNT=2
 
+echo $CONDA_PREFIX
 $CONDA_PREFIX/bin/julia src/preprocess_dlrp.jl

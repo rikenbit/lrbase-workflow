@@ -13,21 +13,14 @@ taxid_hid <- unique(sample_sheet[taxid_pos, 1])
 human_hid <- unique(sample_sheet[human_pos, 1])
 hid <- intersect(taxid_hid, human_hid)
 
-res1 <- lapply(hid, function(x){
-	target <- which(sample_sheet[,1] == x)
+res <- c()
+for(i in seq(hid)){
+	target <- which(sample_sheet[,1] == i)
 	small_sheet <- sample_sheet[target, ]
-	target_taxid <- which(small_sheet[,2] == taxid)
-	small_sheet[target_taxid, 3]
-})
-
-res2 <- lapply(hid, function(x){
-	target <- which(sample_sheet[,1] == x)
-	small_sheet <- sample_sheet[target, ]
-	target_human <- which(small_sheet[,2] == 9606)
-	small_sheet[target_human, 3]
-})
-
-res <- cbind(res1, res2)
+	geneid_taxid <- small_sheet[which(small_sheet[,2] == taxid), 3]
+	geneid_human <- small_sheet[which(small_sheet[,2] == 9606), 3]
+	res <- rbind(res, expand.grid(geneid_taxid, geneid_human))
+}
 
 colnames(res) <- c(paste0("GENEID_", taxid), "GENEID_9606")
 

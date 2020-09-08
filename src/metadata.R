@@ -1,4 +1,4 @@
-source("src/functions.R")
+source("src/functions_singularity.R")
 
 # Data loading
 sample_sheet <- read.csv("sample_sheet.csv", stringsAsFactors=FALSE)

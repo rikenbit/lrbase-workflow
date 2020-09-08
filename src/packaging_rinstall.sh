@@ -13,7 +13,8 @@ SLURM_RESTART_COUNT=2
 export LC_ALL=C
 
 echo $@
-abbr=`grep $1 sample_sheet.csv | awk -F ',' '{print $2}'`
+abbr=(`awk -F ',' '{print $2,$5}' sample_sheet.csv | grep $1`)
+abbr=${abbr[0]}
 echo $abbr
 
 cd rpackages
@@ -34,6 +35,7 @@ species(LRBase."$abbr".eg.db);
 lrPackageName(LRBase."$abbr".eg.db);
 lrNomenclature(LRBase."$abbr".eg.db);
 lrListDatabases(LRBase."$abbr".eg.db);
-lrVersion(LRBase."$abbr".eg.db)"
+lrVersion(LRBase."$abbr".eg.db);
+print(sessionInfo())"
 
 touch $3

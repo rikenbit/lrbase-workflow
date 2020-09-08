@@ -10,3 +10,6 @@ check
 ._*
 .DS_Store
 .fuse*
+libs
+check
+reports

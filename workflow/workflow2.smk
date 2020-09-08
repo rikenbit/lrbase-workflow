@@ -1,19 +1,21 @@
 import pandas as pd
 from snakemake.utils import min_version
 
-min_version("5.8.1")
+min_version("5.3.0")
 configfile: "config.yaml"
 
 SAMPLESHEET = pd.read_csv('sample_sheet.csv', dtype='string')
 TAXIDS = SAMPLESHEET['Taxon.ID'].unique()
 VERSION_LRBASE = config['VERSION_LRBASE']
 
+container: "docker://koki/biocdev:latest"
+
 rule all:
 	input:
-		expand('check/rinstall_{taxid}_{v}_ok',
-			taxid=TAXIDS, v=VERSION_LRBASE),
-		# expand('reports/{taxid}_{v}/index.html',
-		# 	taxid=TAXIDS, v=VERSION_LRBASE)
+		# expand('check/rinstall_{taxid}_{v}_ok',
+		# 	taxid=TAXIDS, v=VERSION_LRBASE),
+		expand('reports/{taxid}_{v}/index.html',
+			taxid=TAXIDS, v=VERSION_LRBASE)
 
 #############################################
 # METADATA
@@ -24,8 +26,6 @@ rule metadata:
 	output:
 		touch(expand('data/metadata/{taxid}.csv',
 			taxid=TAXIDS))
-	conda:
-		'envs/myenv.yaml'
 	benchmark:
 		'benchmarks/metadata.txt'
 	log:
@@ -43,8 +43,6 @@ rule packaging_rpack:
 		'data/csv/{taxid}.csv'
 	output:
 		'check/rpack_{taxid}_ok'
-	container:
-		"docker://koki/biocdev:latest"
 	benchmark:
 		'benchmarks/packaging_rpack_{taxid}.txt'
 	log:
@@ -57,8 +55,6 @@ rule packaging_rbuild:
 		'check/rpack_{taxid}_ok'
 	output:
 		'check/rbuild_{taxid}_ok'
-	container:
-		"docker://koki/biocdev:latest"
 	benchmark:
 		'benchmarks/packaging_rbuild_{taxid}.txt'
 	log:
@@ -71,8 +67,6 @@ rule packaging_rcheck:
 		'check/rbuild_{taxid}_ok',
 	output:
 		'check/rcheck_{taxid}_{v}_ok'
-	container:
-		"docker://koki/biocdev:latest"
 	benchmark:
 		'benchmarks/packaging_rcheck_{taxid}_{v}.txt'
 	log:
@@ -85,8 +79,6 @@ rule packaging_rinstall:
 		'check/rcheck_{taxid}_{v}_ok'
 	output:
 		'check/rinstall_{taxid}_{v}_ok'
-	container:
-		"docker://koki/biocdev:latest"
 	benchmark:
 		'benchmarks/packaging_rinstall_{taxid}_{v}.txt'
 	log:
@@ -102,8 +94,6 @@ rule test_sctensor:
 		'check/rinstall_{taxid}_{v}_ok'
 	output:
 		'reports/{taxid}_{v}/index.html'
-	container:
-		"docker://koki/biocdev:latest"
 	benchmark:
 		'benchmarks/test_sctensor_{taxid}_{v}.txt'
 	log:

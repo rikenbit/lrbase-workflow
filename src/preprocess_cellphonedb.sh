@@ -10,4 +10,5 @@
 #SBATCH -p node03-06
 SLURM_RESTART_COUNT=2
 
+echo $CONDA_PREFIX
 $CONDA_PREFIX/bin/Rscript src/preprocess_cellphonedb.R

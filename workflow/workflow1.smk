@@ -1,7 +1,7 @@
 import pandas as pd
 from snakemake.utils import min_version
 
-min_version("5.8.1")
+min_version("5.3.0")
 configfile: "config.yaml"
 
 # Ensembl (158)
@@ -1055,13 +1055,13 @@ rule preprocess_confidence_trembl_string_high:
 		'src/preprocess_confidence_trembl_string.sh {wildcards.taxid_putative} {wildcards.v} 700 >& {log}'
 
 # From meshr-pipeline
-def mesh_file(wld):
+def mesh_threename_file(wld):
 	idx=TAXID_MESH.to_numpy().tolist().index(wld.taxid_mesh)
 	return('data/rbbh/' + THREENAME_MESH[idx] + '.txt')
 
 rule preprocess_rbbh:
 	input:
-		mesh_file
+		mesh_threename_file
 	output:
 		touch('data/rbbh/{taxid_mesh}.csv')
 	wildcard_constraints:

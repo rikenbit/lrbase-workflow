@@ -2,6 +2,7 @@ source("src/functions.R")
 
 # Data loading
 load("data/singlecellsignalr/LRdb.rda")
+LRdb[,4] <- gsub(")", "", LRdb[, 4])
 symbol <- read.delim('data/ensembl/9606_symbol.txt', header=FALSE)
 symbol <- symbol[which(!is.na(symbol[,1])),]
 

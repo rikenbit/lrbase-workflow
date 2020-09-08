@@ -12,4 +12,4 @@ SLURM_RESTART_COUNT=2
 
 export LC_ALL=C
 
-$CONDA_PREFIX/bin/Rscript src/metadata.R
+Rscript src/metadata.R

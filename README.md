@@ -3,7 +3,7 @@ Workflow to construct [LRBase.XXX.eg.db-type](https://bioconductor.org/packages/
 
 # Pre-requisites
 - Bash: GNU bash, version 4.2.46(1)-release (x86_64-redhat-linux-gnu)
-- Snakemake: 5.14.0
+- Snakemake: 5.3.0
 - Anaconda: 4.8.3
 - Singularity: 3.5.3
 
@@ -80,19 +80,19 @@ After performing workflow/workflow1.smk, perform workflow/workflow2.smk as follo
 In local machine:
 ```
 snakemake -s workflow/workflow1.smk -j 4 --use-conda
-snakemake -s workflow/workflow2.smk -j 4 --use-conda --use-singularity
+snakemake -s workflow/workflow2.smk -j 4 --use-singularity
 ```
 
 In parallel environment (GridEngine):
 ```
 snakemake -s workflow/workflow1.smk -j 32 --cluster "qsub -l nc=4 -p -50 -r yes -q node.q" --latency-wait 600 --use-conda
-snakemake -s workflow/workflow2.smk -j 32 --cluster "qsub -l nc=4 -p -50 -r yes -q node.q" --latency-wait 600 --use-conda --use-singularity
+snakemake -s workflow/workflow2.smk -j 32 --cluster "qsub -l nc=4 -p -50 -r yes -q node.q" --latency-wait 600 --use-singularity
 ```
 
 In parallel environment (Slurm):
 ```
 snakemake -s workflow/workflow1.smk -j 32 --cluster "sbatch -n 4 --nice=50 --requeue -p node03-06" --latency-wait 600 --use-conda
-snakemake -s workflow/workflow2.smk -j 32 --cluster "sbatch -n 4 --nice=50 --requeue -p node03-06" --latency-wait 600 --use-conda --use-singularity
+snakemake -s workflow/workflow2.smk -j 32 --cluster "sbatch -n 4 --nice=50 --requeue -p node03-06" --latency-wait 600 --use-singularity
 ```
 
 # License

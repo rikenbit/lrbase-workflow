@@ -11,11 +11,13 @@
 SLURM_RESTART_COUNT=2
 
 export LC_ALL=C
+mkdir -p rpackages
 
 echo $@
 Rscript src/packaging_rpack.R $@
 
-abbr=`grep $3 sample_sheet.csv | awk -F ',' '{print $2}'`
+abbr=(`awk -F ',' '{print $2,$5}' sample_sheet.csv | grep $3`)
+abbr=${abbr[0]}
 echo $abbr
 
 PackageDir=rpackages/LRBase.$abbr.eg.db

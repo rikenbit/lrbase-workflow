@@ -11,4 +11,5 @@
 SLURM_RESTART_COUNT=2
 
 echo $@
+echo $CONDA_PREFIX
 $CONDA_PREFIX/bin/Rscript src/preprocess_ortholog_ppi.R $@

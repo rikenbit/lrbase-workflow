@@ -7,14 +7,12 @@ Ma's night monkey,Aotus nancymaae,Ann,37293,anancymaae_gene_ensembl,Ensembl
 Golden eagle,Aquila chrysaetos chrysaetos,Acc,223781,acchrysaetos_gene_ensembl,Ensembl
 Eastern happy,Astatotilapia calliptera,Acl,8154,acalliptera_gene_ensembl,Ensembl
 Mexican tetra,Astyanax mexicanus,Amx,7994,amexicanus_gene_ensembl,Ensembl
-Siamese fighting fish,Betta splendens,Bsp,158456,bsplendens_gene_ensembl,Ensembl
 American bison,Bison bison bison,Bbb,43346,bbbison_gene_ensembl,Ensembl
 Hybrid - Bos Indicus,Bos indicus x Bos taurus,Bit,30522,bihybrid_gene_ensembl,Ensembl
 Wild yak,Bos mutus,Bmu,72004,bmutus_gene_ensembl,Ensembl
 Cow,Bos taurus,Bta,9913,btaurus_gene_ensembl,Ensembl
 Worm,Caenorhabditis elegans,Cel,6239,celegans_gene_ensembl,Ensembl
 Marmoset,Callithrix jacchus,Cja,9483,cjacchus_gene_ensembl,Ensembl
-Elephant shark,Callorhinchus milii,Cmi,7868,cmilii_gene_ensembl,Ensembl
 Arabian camel,Camelus dromedarius,Cdr,9838,cdromedarius_gene_ensembl,Ensembl
 Dingo,Canis lupus dingo,Cld,286419,cldingo_gene_ensembl,Ensembl
 Dog,Canis familiaris,Cfa,9615,clfamiliaris_gene_ensembl,Ensembl
@@ -67,7 +65,6 @@ Ballan wrasse,Labrus bergylta,Lbe,56723,lbergylta_gene_ensembl,Ensembl
 Large yellow croaker,Larimichthys crocea,Lcr,215358,lcrocea_gene_ensembl,Ensembl
 Barramundi perch,Lates calcarifer,Lca,8187,lcalcarifer_gene_ensembl,Ensembl
 Coelacanth,Latimeria chalumnae,Lch,7897,lchalumnae_gene_ensembl,Ensembl
-Blue-crowned manakin,Lepidothrix coronata,Lco,321398,lcoronata_gene_ensembl,Ensembl
 Spotted gar,Lepisosteus oculatus,Loc,7918,loculatus_gene_ensembl,Ensembl
 Bengalese finch,Lonchura striata domestica,Lsd,299123,lsdomestica_gene_ensembl,Ensembl
 Elephant,Loxodonta africana,Laf,9785,lafricana_gene_ensembl,Ensembl
@@ -111,7 +108,6 @@ Leopard,Panthera pardus,Ppr,9691,ppardus_gene_ensembl,Ensembl
 Tiger,Panthera tigris altaica,Pta,74533,ptaltaica_gene_ensembl,Ensembl
 Olive baboon,Papio anubis,Pan,9555,panubis_gene_ensembl,Ensembl
 Indian glassy fish,Parambassis ranga,Pra,210632,pranga_gene_ensembl,Ensembl
-Elephantfish,Paramormyrops kingsleyae,Pki,1676925,pkingsleyae_gene_ensembl,Ensembl
 Chinese softshell turtle,Pelodiscus sinensis,Psi,13735,psinensis_gene_ensembl,Ensembl
 Northern American deer mouse,Peromyscus maniculatus bairdii,Pmb,230844,pmbairdii_gene_ensembl,Ensembl
 Lamprey,Petromyzon marinus,Pma,7757,pmarinus_gene_ensembl,Ensembl
@@ -156,4 +152,3 @@ Alpaca,Vicugna pacos,Vpa,30538,vpacos_gene_ensembl,Ensembl
 Common wombat,Vombatus ursinus,Vur,29139,vursinus_gene_ensembl,Ensembl
 Red fox,Vulpes vulpes,Vvu,9627,vvulpes_gene_ensembl,Ensembl
 Tropical clawed frog,Xenopus tropicalis,Xtr,8364,xtropicalis_gene_ensembl,Ensembl
-Platyfish,Xiphophorus maculatus,Xma,8083,xmaculatus_gene_ensembl,Ensembl

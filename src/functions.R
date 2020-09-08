@@ -15,7 +15,6 @@ library("AnnotationHub")
 library("AnnotationDbi")
 library("ensembldb")
 library("GenomicFeatures")
-library("LRBaseDbi")
 
 # Name Vectors
 lrnames <- c("lrbase", "fantom5", "cellphonedb", "baderlab", "singlecellsignalr")
