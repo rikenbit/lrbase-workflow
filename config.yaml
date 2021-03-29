@@ -1,12 +1,14 @@
 # Sample sheets
-ENSEMBL_SAMPLE_SHEET: id/ensembl/ensembl_samples.csv
-NCBI_SAMPLE_SHEET: id/ncbi/ncbi_samples.csv
-MESH_TAXID: id/mesh/taxid.txt
-MESH_THREENAME: id/mesh/threename.txt
-PUTATIVE_SAMPLE_SHEET: id/putative_sample_sheet.csv
+ENSEMBL: sample_sheet/ensembl.csv
+NCBI: sample_sheet/ncbi.csv
+RBBH: sample_sheet/114.csv
+PUTATIVE: sample_sheet/putative.csv
 
 # Latest version of STRING database
 VERSION_STRING: v11.0
 
-# Version of LRBase.XXX.eg.db to create
-VERSION_LRBASE: 2.0.0
+# METADATA Version (Should be bumped in each BioC update)
+METADATA_VERSION: v001
+
+# Bioconductor Version (for next coming)
+BIOC_VERSION: 3.13

@@ -2,25 +2,17 @@
 load("data/summary.RData")
 
 # Known
-ENSEMBL = read.csv('id/ensembl/ensembl_samples.csv', stringsAsFactors=FALSE)[,c("Common.name", "Scientific.name", "Abbreviation", "Taxon.ID")]
-NCBI = read.csv('id/ncbi/ncbi_samples.csv', stringsAsFactors=FALSE)[,c("Common.name", "Scientific.name", "Abbreviation", "Taxon.ID")]
-MESH1 <- unlist(read.csv('id/mesh/commonname.txt', stringsAsFactors=FALSE, header=FALSE))
-MESH2 <- unlist(read.csv('id/mesh/name.txt', stringsAsFactors=FALSE, header=FALSE))
-MESH3 <- unlist(read.csv('id/mesh/threename.txt', stringsAsFactors=FALSE, header=FALSE))
-MESH4 <- unlist(read.csv('id/mesh/taxid.txt', stringsAsFactors=FALSE, header=FALSE))
-MESH <- data.frame(
-	Common.name=as.character(MESH1),
-	Scientific.name=as.character(MESH2),
-	Abbreviation=as.character(MESH3),
-	Taxon.ID=as.character(MESH4))
-KNOWN <- rbind(ENSEMBL, NCBI, MESH)
+ENSEMBL = read.csv('sample_sheet/ensembl.csv', stringsAsFactors=FALSE)[,c("Common.name", "Scientific.name", "Abbreviation", "Taxon.ID")]
+NCBI = read.csv('sample_sheet/ncbi.csv', stringsAsFactors=FALSE)[,c("Common.name", "Scientific.name", "Abbreviation", "Taxon.ID")]
+RBBH = read.csv('sample_sheet/114.csv', stringsAsFactors=FALSE)[,c("Common.name", "Scientific.name", "Abbreviation", "Taxon.ID")]
+KNOWN <- rbind(ENSEMBL, NCBI, RBBH)
 
-PUTATIVE = read.csv('id/putative_sample_sheet.csv', stringsAsFactors=FALSE, header=FALSE)
+PUTATIVE = read.csv('sample_sheet/putative.csv', stringsAsFactors=FALSE, header=TRUE)
 PUTATIVE = data.frame(
-	Common.name=as.character(PUTATIVE[,4]),
-	Scientific.name=as.character(PUTATIVE[,3]),
-	Abbreviation=as.character(PUTATIVE[,2]),
-	Taxon.ID=as.character(PUTATIVE[,1])
+	Common.name=as.character(PUTATIVE$Common.name),
+	Scientific.name=as.character(PUTATIVE$Scientific.name),
+	Abbreviation=as.character(PUTATIVE$Abbreviation),
+	Taxon.ID=as.character(PUTATIVE$Taxon.ID)
 )
 ORGINFO = rbind(KNOWN, PUTATIVE)
 
@@ -44,7 +36,7 @@ target.org <- as.character(unique(gdata$Name))
 
 if(check1 && check2 && check3){
 	# Shrink in each organism
-	tmp <- t(sapply(target.org, function(x, out){
+	tmp <- t(vapply(target.org, function(x, out){
 		target <- which(out$Name == x)
 		Scientific.name=x
 		Abbreviation=unique(out[target, 5])
@@ -53,12 +45,12 @@ if(check1 && check2 && check3){
 		Taxon.ID=unique(out[target, 6])
 		No.LR=sum(as.numeric(out[target, 2]))
 		c(Scientific.name, Abbreviation, SOURCEDB, Common.name, Taxon.ID, No.LR)
-	}, out=out))
+	}, out=out, FUN.VALUE=rep("", 6)))
 	colnames(tmp) <- c("Scientific.name", "Abbreviation", "SOURCEDB", "Common.name", "Taxon.ID", "No.LR")
 	# Sort
 	tmp <- tmp[order(as.numeric(tmp[,6]), decreasing=TRUE), ]
 	# Ouput
-	write.csv(tmp, "sample_sheet.csv", quote=FALSE, row.names=FALSE)
+	write.csv(tmp, "sample_sheet/sample_sheet.csv", quote=FALSE, row.names=FALSE)
 }else{
 	stop("Duplicated Name, Common.name, or Abbreviation!!!")
 }

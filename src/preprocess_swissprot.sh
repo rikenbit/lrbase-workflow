@@ -10,6 +10,4 @@
 #SBATCH -p node03-06
 SLURM_RESTART_COUNT=2
 
-echo $@
-echo $CONDA_PREFIX
-$CONDA_PREFIX/bin/julia src/preprocess_swissprot.jl $@
+julia src/preprocess_swissprot.jl $@

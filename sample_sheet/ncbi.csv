@@ -1,4 +1,4 @@
-Common name,Scientific name,Abbreviation,Taxon ID,Dataset name,Database
+Common.name,Scientific.name,Abbreviation,Taxon.ID,Dataset.name,Database
 Thale cress,Arabidopsis thaliana,Ath,3702,homologene.data,NCBI
 Cow,Bos taurus,Bta,9913,homologene.data,NCBI
 Worm,Caenorhabditis elegans,Cel,6239,homologene.data,NCBI

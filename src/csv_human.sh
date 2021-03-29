@@ -1,3 +1,4 @@
+
 #!/bin/bash
 #$ -l nc=24
 #$ -p -50
@@ -10,6 +11,4 @@
 #SBATCH -p node03-06
 SLURM_RESTART_COUNT=2
 
-echo $@
-echo $CONDA_PREFIX
-$CONDA_PREFIX/bin/Rscript src/preprocess_csv.R $@
+Rscript src/csv_human.R $@

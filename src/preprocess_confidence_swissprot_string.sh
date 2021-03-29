@@ -10,6 +10,4 @@
 #SBATCH -p node03-06
 SLURM_RESTART_COUNT=2
 
-echo $@
-echo $CONDA_PREFIX
-$CONDA_PREFIX/bin/Rscript src/preprocess_confidence_swissprot_string.R $@
+Rscript src/preprocess_confidence_swissprot_string.R $@

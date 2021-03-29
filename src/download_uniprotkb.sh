@@ -10,7 +10,7 @@
 #SBATCH -p node03-06
 SLURM_RESTART_COUNT=2
 
-wget ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/uniprot_sprot.dat.gz -P data/uniprotkb/
-wget ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/uniprot_trembl.dat.gz -P data/uniprotkb/
-
-gunzip data/uniprotkb/*.gz
+cd data/uniprotkb
+axel -n 6 ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/uniprot_sprot.dat.gz
+axel -n 6 ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/uniprot_trembl.dat.gz
+gunzip *.gz

@@ -1,15 +1,15 @@
 #!/bin/bash
-#$ -l nc=24
+#$ -l nc=4
 #$ -p -50
 #$ -r yes
-#$ -q large.q
+#$ -q node.q
 
 #SBATCH -n 4
 #SBATCH --nice=50
 #SBATCH --requeue
 #SBATCH -p node03-06
 SLURM_RESTART_COUNT=2
+export LC_ALL=C
 
-echo $@
-echo $CONDA_PREFIX
-$CONDA_PREFIX/bin/Rscript src/preprocess_csv_human.R $@
+# CSV Check
+Rscript src/metadata_check.R $@

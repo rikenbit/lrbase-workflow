@@ -10,5 +10,4 @@
 #SBATCH -p node03-06
 SLURM_RESTART_COUNT=2
 
-echo $CONDA_PREFIX
-$CONDA_PREFIX/bin/Rscript src/plot_trembl.R
+Rscript src/plot_trembl.R

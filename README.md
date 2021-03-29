@@ -4,7 +4,6 @@ Workflow to construct [LRBase.XXX.eg.db-type](https://bioconductor.org/packages/
 # Pre-requisites
 - Bash: GNU bash, version 4.2.46(1)-release (x86_64-redhat-linux-gnu)
 - Snakemake: 5.3.0
-- Anaconda: 4.8.3
 - Singularity: 3.5.3
 
 # Evidence code
@@ -69,9 +68,9 @@ Workflow to construct [LRBase.XXX.eg.db-type](https://bioconductor.org/packages/
 
 # How to reproduce this workflow
 ## 1. Configuration
-- data/rbbh/*.txt: Download from [meshr-pipeline/data/RBBH/*.txt](https://github.com/rikenbit/meshr-pipeline/tree/master/data) and set them to data/rbbh/ directory.
-- id/mesh/{threename.txt,commonname.txt,name.txt,taxid.txt}: Download from [meshr-pipeline/100ID/*.txt](https://github.com/rikenbit/meshr-pipeline) and set them to id/mesh/ directory.
-- config.yaml: Check the latest version of STRING database (e.g., v11.0 on 2020/8/6 https://string-db.org) and change the value of VERSION_STRING, if it is needed. Also, specify the version of LRBase to crate.
+- data/rbbh/*.txt: Download from [mesh-workflow/output/rbbh/*.txt](https://github.com/rikenbit/mesh-workflow) and set them to data/rbbh/ directory.
+- sample_sheet/100.csv: Download from [mesh-workflow/sample_sheet/100.csv](https://github.com/rikenbit/meshr-workflow) and set them as sample_sheet/100.csv.
+- config.yaml: Check the latest version of STRING database (e.g., v11.0 on 2021/3/26 https://string-db.org) and change the value of VERSION_STRING, if it is needed. Also, specify the version of LRBase to crate.
 
 ## 2. Perform snakemake command
 The workflow consists of two snakemake workflows.
@@ -79,24 +78,48 @@ After performing workflow/workflow1.smk, perform workflow/workflow2.smk as follo
 
 In local machine:
 ```
-snakemake -s workflow/workflow1.smk -j 4 --use-conda
-snakemake -s workflow/workflow2.smk -j 4 --use-singularity
+snakemake -s workflow/download.smk -j 4 --use-singularity
+snakemake -s workflow/preprocess_known_human.smk -j 4 --use-singularity
+snakemake -s workflow/preprocess_known_otherspecies.smk -j 4 --use-singularity
+snakemake -s workflow/preprocess_putative_human.smk -j 4 --use-singularity
+snakemake -s workflow/preprocess_putative_otherspecies.smk -j 4 --use-singularity
+snakemake -s workflow/preprocess_putative_allpecies.smk -j 4 --use-singularity
+snakemake -s workflow/csv.smk -j 4 --use-singularity
+snakemake -s workflow/sqlite.smk -j 4 --use-singularity
+snakemake -s workflow/metadata.smk -j 4 --use-singularity
+snakemake -s workflow/plot.smk -j 4 --use-singularity
 ```
 
 In parallel environment (GridEngine):
 ```
-snakemake -s workflow/workflow1.smk -j 32 --cluster "qsub -l nc=4 -p -50 -r yes -q node.q" --latency-wait 600 --use-conda
-snakemake -s workflow/workflow2.smk -j 32 --cluster "qsub -l nc=4 -p -50 -r yes -q node.q" --latency-wait 600 --use-singularity
+snakemake -s workflow/download.smk -j 32 --cluster "qsub -l nc=4 -p -50 -r yes -q node.q" --latency-wait 600 --use-singularity
+snakemake -s workflow/preprocess_known_human.smk -j 32 --cluster "qsub -l nc=4 -p -50 -r yes -q node.q" --latency-wait 600 --use-singularity
+snakemake -s workflow/preprocess_known_otherspecies.smk -j 32 --cluster "qsub -l nc=4 -p -50 -r yes -q node.q" --latency-wait 600 --use-singularity
+snakemake -s workflow/preprocess_known_allspecies.smk -j 32 --cluster "qsub -l nc=4 -p -50 -r yes -q node.q" --latency-wait 600 --use-singularity
+snakemake -s workflow/preprocess_putative_human.smk -j 32 --cluster "qsub -l nc=4 -p -50 -r yes -q node.q" --latency-wait 600 --use-singularity
+snakemake -s workflow/preprocess_putative_otherspecies.smk -j 32 --cluster "qsub -l nc=4 -p -50 -r yes -q node.q" --latency-wait 600 --use-singularity
+snakemake -s workflow/csv.smk -j 32 --cluster "qsub -l nc=4 -p -50 -r yes -q node.q" --latency-wait 600 --use-singularity
+snakemake -s workflow/sqlite.smk -j 32 --cluster "qsub -l nc=4 -p -50 -r yes -q node.q" --latency-wait 600 --use-singularity
+snakemake -s workflow/metadata.smk -j 32 --cluster "qsub -l nc=4 -p -50 -r yes -q node.q" --latency-wait 600 --use-singularity
+snakemake -s workflow/plot.smk -j 32 --cluster "qsub -l nc=4 -p -50 -r yes -q node.q" --latency-wait 600 --use-singularity
 ```
 
 In parallel environment (Slurm):
 ```
-snakemake -s workflow/workflow1.smk -j 32 --cluster "sbatch -n 4 --nice=50 --requeue -p node03-06" --latency-wait 600 --use-conda
-snakemake -s workflow/workflow2.smk -j 32 --cluster "sbatch -n 4 --nice=50 --requeue -p node03-06" --latency-wait 600 --use-singularity
+snakemake -s workflow/download.smk -j 32 --cluster "sbatch -n 4 --nice=50 --requeue -p node03-06" --latency-wait 600 --use-singularity
+snakemake -s workflow/preprocess_known_human.smk -j 32 --cluster "sbatch -n 4 --nice=50 --requeue -p node03-06" --latency-wait 600 --use-singularity
+snakemake -s workflow/preprocess_known_otherspecies.smk -j 32 --cluster "sbatch -n 4 --nice=50 --requeue -p node03-06" --latency-wait 600 --use-singularity
+snakemake -s workflow/preprocess_putative_human.smk -j 32 --cluster "sbatch -n 4 --nice=50 --requeue -p node03-06" --latency-wait 600 --use-singularity
+snakemake -s workflow/preprocess_putative_otherspecies.smk -j 32 --cluster "sbatch -n 4 --nice=50 --requeue -p node03-06" --latency-wait 600 --use-singularity
+snakemake -s workflow/preprocess_putative_allspecies.smk -j 32 --cluster "sbatch -n 4 --nice=50 --requeue -p node03-06" --latency-wait 600 --use-singularity
+snakemake -s workflow/csv.smk -j 32 --cluster "sbatch -n 4 --nice=50 --requeue -p node03-06" --latency-wait 600 --use-singularity
+snakemake -s workflow/sqlite.smk -j 32 --cluster "sbatch -n 4 --nice=50 --requeue -p node03-06" --latency-wait 600 --use-singularity
+snakemake -s workflow/metadata.smk -j 32 --cluster "sbatch -n 4 --nice=50 --requeue -p node03-06" --latency-wait 600 --use-singularity
+snakemake -s workflow/plot.smk -j 32 --cluster "sbatch -n 4 --nice=50 --requeue -p node03-06" --latency-wait 600 --use-singularity
 ```
 
 # License
-Copyright (c) 2020 Koki Tsuyuzaki and RIKEN Bioinformatics Research Unit Released under the [Artistic License 2.0](http://www.perlfoundation.org/artistic_license_2_0).
+Copyright (c) 2021 Koki Tsuyuzaki and RIKEN Bioinformatics Research Unit Released under the [Artistic License 2.0](http://www.perlfoundation.org/artistic_license_2_0).
 
 # Authors
 - Koki Tsuyuzaki

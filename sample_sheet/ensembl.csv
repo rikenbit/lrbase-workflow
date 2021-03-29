@@ -1,4 +1,4 @@
-Common name,Scientific name,Abbreviation,Taxon ID,Dataset name,Database
+Common.name,Scientific.name,Abbreviation,Taxon.ID,Dataset.name,Database
 Panda,Ailuropoda melanoleuca,Ame,9646,amelanoleuca_gene_ensembl,Ensembl
 Climbing perch,Anabas testudineus,Ate,64144,atestudineus_gene_ensembl,Ensembl
 Mallard,Anas platyrhynchos,Apl,8839,aplatyrhynchos_gene_ensembl,Ensembl
@@ -19,7 +19,7 @@ Dog,Canis familiaris,Cfa,9615,clfamiliaris_gene_ensembl,Ensembl
 Goat,Capra hircus,Chi,9925,chircus_gene_ensembl,Ensembl
 Tarsier,Carlito syrichta,Csy,1868482,csyrichta_gene_ensembl,Ensembl
 American beaver,Castor canadensis,Cca,51338,ccanadensis_gene_ensembl,Ensembl
-Guinea Pig,Cavia porcellus,Cpo,10141,cporcellus_gene_ensembl,Ensembl
+Guinea pig,Cavia porcellus,Cpo,10141,cporcellus_gene_ensembl,Ensembl
 Capuchin,Cebus capucinus imitator,Cci,1737458,ccapucinus_gene_ensembl,Ensembl
 Long-tailed chinchilla,Chinchilla lanigera,Cla,34839,clanigera_gene_ensembl,Ensembl
 Green monkey,Chlorocebus sabaeus,Csa,60711,csabaeus_gene_ensembl,Ensembl
@@ -83,7 +83,7 @@ Mongolian gerbil,Meriones unguiculatus,Mug,10047,munguiculatus_gene_ensembl,Ense
 Golden Hamster,Mesocricetus auratus,Mau,10036,mauratus_gene_ensembl,Ensembl
 Mouse Lemur,Microcebus murinus,Mmr,30608,mmurinus_gene_ensembl,Ensembl
 Prairie vole,Microtus ochrogaster,Moc,79684,mochrogaster_gene_ensembl,Ensembl
-Gray short-tailed Opossum,Monodelphis domestica,Mdo,13616,mdomestica_gene_ensembl,Ensembl
+Gray short-tailed opossum,Monodelphis domestica,Mdo,13616,mdomestica_gene_ensembl,Ensembl
 Swamp eel,Monopterus albus,Mal,43700,malbus_gene_ensembl,Ensembl
 Ryukyu mouse,Mus caroli,Mca,10089,mcaroli_gene_ensembl,Ensembl
 Mouse,Mus musculus,Mmu,10090,mmusculus_gene_ensembl,Ensembl

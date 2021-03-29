@@ -16,22 +16,23 @@ swissprot_hprd <- human[which(human$SOURCEDB == "SWISSPROT_HPRD"), ]
 trembl_hprd <- human[which(human$SOURCEDB == "TREMBL_HPRD"), ]
 
 # Ensembl (158)
-ensembl <- read.csv("id/ensembl/ensembl_samples.csv", stringsAsFactors=FALSE)
+ensembl <- read.csv("sample_sheet/ensembl.csv", stringsAsFactors=FALSE)
 sname_ensembl <- unique(unlist(ensembl['Scientific.name']))
 taxid_ensembl <- unique(unlist(ensembl['Taxon.ID']))
 
 # NCBI (20)
-ncbi <- read.csv("id/ncbi/ncbi_samples.csv", stringsAsFactors=FALSE)
+ncbi <- read.csv("sample_sheet/ncbi.csv", stringsAsFactors=FALSE)
 sname_ncbi <- unique(unlist(ncbi['Scientific.name']))
 taxid_ncbi <- unique(unlist(ncbi['Taxon.ID']))
 
-# RBBH (100)
-sname_rbbh <- unlist(read.csv("id/mesh/name.txt", header=FALSE, stringsAsFactors=FALSE))
-taxid_rbbh <- unlist(read.csv("id/mesh/taxid.txt", header=FALSE, stringsAsFactors=FALSE))
+# RBBH (114)
+rbbh <- read.csv("sample_sheet/114.csv", stringsAsFactors=FALSE)
+sname_rbbh <- rbbh$Scientific.name
+taxid_rbbh <- rbbh$Taxon.ID
 
 # Putative (12)
-putative <- read.csv("id/putative_sample_sheet.csv",
-	header=FALSE, stringsAsFactors=FALSE)
+putative <- read.csv("sample_sheet/putative.csv",
+	header=TRUE, stringsAsFactors=FALSE)
 sname_putative <- unique(unlist(putative[,3]))
 taxid_putative <- unique(unlist(putative[,1]))
 

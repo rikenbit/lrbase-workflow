@@ -1,0 +1,115 @@
+Scientific.name,Abbreviation,Common.name,Taxon.ID
+Arabidopsis thaliana,Ath,Thale cress,3702
+Bacillus subtilis subsp. subtilis str. 168,Bsu.168,NA,224308
+Bos taurus,Bta,Cow,9913
+Caenorhabditis elegans,Cel,Worm,6239
+Drosophila melanogaster,Dme,Fruit fly,7227
+Danio rerio,Dre,Zebrafish,7955
+Escherichia coli str. K-12 substr. MG1655,Eco.K12.MG1655,NA,511145
+Gallus gallus,Gga,Chicken,9031
+Mus musculus,Mmu,Mouse,10090
+Rattus norvegicus,Rno,Rat,10116
+Saccharomyces cerevisiae S288C,Sce.S288C,NA,559292
+Schizosaccharomyces pombe 972h-,Spo.972h,NA,284812
+Sus scrofa,Ssc,Pig,9823
+Xenopus laevis,Xla,Western clawed frog,8355
+Agrobacterium Tumefaciens K84,Atu.K84,NA,311403
+Anolis carolinensis,Aca,Anole lizard,28377
+Anopheles gambiae str. PEST,Aga.PEST,Anopheline,180454
+Ailuropoda melanoleuca,Ame,Panda,9646
+Apis mellifera,Aml,Honey bee,7460
+Aspergillus nidulans FGSC A4,Ani.FGSC,Filamentous ascomycete,227321
+Branchiostoma floridae,Bfl,Lancelet,7739
+Bacillus subtilis subsp. spizizenii str. RO-NN-1,Bsu.RONN1,NA,1052588
+Bacillus subtilis subsp. spizizenii str. TU-B-10,Bsu.TUB10,NA,1052585
+Bacillus subtilis Bsn5,Bsu.Bsn5,NA,936156
+Bacillus subtilis subsp. spizizenii str. W23,Bsu.W23,NA,655816
+Candida albicans SC5314,Cal.SC5314,NA,237561
+Caenorhabditis briggsae,Cbr,Worm,6238
+Canis familiaris,Cfa,Dog,9615
+Ciona intestinalis,Cin,Sea squirt,7719
+Callithrix jacchus,Cja,Marmoset,9483
+Cavia porcellus,Cpo,Guinea pig,10141
+Caenorhabditis remanei,Cre,Worm,31234
+Drosophila ananassae,Dan,Fruit fly,7217
+Dickeya dadantii 3937,Dda.3937,NA,198628
+Dictyostelium discoideum AX4,Ddi.AX4,Cellular slime mold,352472
+Drosophila erecta,Der,Fruit fly,7220
+Drosophila grimshawi,Dgr,Fruit fly,7222
+Drosophila mojavensis,Dmo,Fruit fly,7230
+Drosophila persimilis,Dpe,Fruit fly,7234
+Drosophila sechellia,Dse,Fruit fly,7238
+Drosophila simulans,Dsi,Fruit fly,7240
+Drosophila virilis,Dvi,Fruit fly,7244
+Drosophila yakuba,Dya,Fruit fly,7245
+Escherichia coli O111:H- str. 11128,Eco.O111.H.11128,NA,585396
+Escherichia coli O26:H11 str. 11368,Eco.O26.H11.11368,NA,573235
+Escherichia coli O103:H2 str. 12009,Eco.O103.H2.12009,NA,585395
+Escherichia coli 536,Eco.536,NA,362663
+Escherichia coli O127:H6 str. 2348_69,Eco.O127.H6.E2348.69,NA,574521
+Escherichia coli 55989,Eco.55989,NA,585055
+Esicherichia coli CFT073,Eco.CFT073,NA,199310
+Escherichia coli S88,Eco.S88,NA,585035
+Escherichia coli IAI39,Eco.IAI39,NA,585057
+Escherichia coli APEC 01,Eco.APEC01,NA,405955
+Escherichia coli B str. REL606,Eco.B.REL606,NA,413997
+Escherichia coli O26:H7 str. CB9615,Eco.O26.H7.CB9615,NA,701177
+Escherichia coli E24377A,Eco.E24377A,NA,331111
+Escherichia coli HS,Eco.HS,NA,331112
+Escherichia coli IAI1,Eco.IAI1,NA,585034
+Escherichia coli KO11FL,Eco.KO11FL,NA,595495
+Escherichia coli SMS-3-5,Eco.SMS35,NA,439855
+Escherichia coli SE11,Eco.SE11,NA,409438
+Escherichia coli UTI89,Eco.UTI89,NA,364106
+Escherichia coli UMN026,Eco.UMN026,NA,585056
+Escherichia coli BW2952,Eco.BW2952,NA,595496
+Escherichia coli str K-12 substr. DH10B,Eco.K12.DH10B,NA,316385
+Escherichia coli ED1a,Eco.ED1a,NA,585397
+Escherichia coli O157:H7 str. EC4115,Eco.O157.H7.EC4115,NA,444450
+Escherichia coli O157:H7 str. EDL933,Eco.O157.H7.EDL933,NA,155864
+Equus caballus,Eca,Horse,9796
+Escherichia coli O157:H7 str. Sakai,Eco.O157.H7.Sakai,NA,386585
+Escherichia coli O157:H7 str. TW14359,Eco.O157.H7.TW14359,NA,544404
+Glycine max,Gma,Soybean,3847
+Loxodonta africana,Laf,Elephant,9785
+Leishmania major strain Friedlin,Lma,Leishmania,347515
+Monodelphis domestica,Mdo,Gray short-tailed opossum,13616
+Meleagris gallopavo,Mga,Turkey,9103
+Macaca mulatta,Mml,Rhesus monkey,9544
+Medicago truncatula,Mtr,Clover,3880
+Nomascus leucogenys,Nle,Northern white-cheeked gibbon,61853
+Ornithorhynchus anatinus,Oan,Platypus,9258
+Oryctolagus cuniculus,Ocu,Rabbit,9986
+Oreochromis niloticus,Oni,Nile tilapia,8128
+Oryza sativa Japonica Group,Osa,Rice,39947
+Pongo abelii,Pab,Orangutan,9601
+Pseudomonas aeruginosa PAO1,Pae.PAO1,NA,208964
+Pseudomonas aeruginosa LESB58,Pae.LESB58,NA,557722
+Pseudomonas aeruginosa PA7,Pae.PA7,NA,381754
+Pseudomonas aeruginosa UCBPP-PA14,Pae.PA14,NA,208963
+Plasmodium falciparum 3D7,Pfa.3D7,NA,36329
+Pan troglodytes,Pto,Chimpanzee,9598
+Populus trichocarpa,Ptr,Black cottonwood,3694
+Staphylococcus aureus subsp. aureus Mu50,Sau.Mu50,NA,158878
+Staphylococcus aureus subsp. aureus Mu3,Sau.Mu3,NA,418127
+Staphylococcus aureus subsp. aureus MSSA476,Sau.MSSA476,NA,282459
+Staphylococcus aureus subsp. aureus COL,Sau.COL,NA,93062
+Staphylococcus aureus subsp. aureus ED98,Sau.ED98,NA,681288
+Staphylococcus aureus subsp. aureus USA300_FPR3757,Sau.USA300FPR3757,NA,451515
+Staphylococcus aureus subsp. aureus MRSA252,Sau.MRSA252,NA,282458
+Staphylococcus aureus subsp. aureus M013,Sau.M013,NA,1118959
+Staphylococcus aureus subsp. aureus Newman,Sau.Newman,NA,426430
+Staphylococcus aureus aureus RF122,Sau.RF122,NA,273036
+Staphylococcus argenteus,Sar,NA,985002
+Staphylococcus aureus subsp. aureus USA300_TCH1516,Sau.USA300TCH1516,NA,451516
+Staphylococcus aureus subsp. aureus N315,Sau.N315,NA,158879
+Staphylococcus aureus subsp. aureus VC40,Sau.VC40,NA,1028799
+Staphylococcus aureus subsp. aureus MW2,Sau.MW2,NA,196620
+Streptomyces coelicolor A3(2),Sco.A32,NA,100226
+Strongylocentrotus purpuratus,Spu,Purple sea urchin,7668
+Trypanosoma brucei brucei TREU927,Tbb.TREU927,Trypanosoma,185431
+Toxoplasma gondii ME49,Tgo.ME49,Toxoplasma,508771
+Taeniopygia guttata,Tgu,Zebra finch,59729
+Vitis vinifera,Vvi,Grape,29760
+Xenopus tropicalis,Xtr,Tropical clawed frog,8364
+Zea mays,Zma,Corn,4577

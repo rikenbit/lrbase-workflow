@@ -3,6 +3,8 @@ args <- commandArgs(trailingOnly=TRUE)
 org <- args[1]
 v <- args[2]
 outfile <- args[3]
+# org = "1737458"
+# v = "v11.0"
 
 infiles <- c(
 	# Known
@@ -76,6 +78,8 @@ if(org != '9606'){
 	# Output
 	if(nrow(out) != 0){
 		write.table(out, file=outfile, row.names=FALSE, quote=FALSE, sep=",")
+	}else{
+		file.create(outfile)
 	}
 }else{
 	file.copy("data/csv/pre_9606.csv", "data/csv/9606.csv", overwrite = TRUE)

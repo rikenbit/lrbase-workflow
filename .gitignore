@@ -1,9 +1,14 @@
 .snakemake*
+.cache
+.wget-hsts
 *.sh.*
+slurm-*
 *.out
 benchmarks
 logs
 data
+sqlite
+report
 rpackages
 .texlive2019
 check

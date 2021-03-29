@@ -4,10 +4,10 @@ infile2 <- commandArgs(trailingOnly=TRUE)[2]
 outfile <- commandArgs(trailingOnly=TRUE)[3]
 sourcedb <- commandArgs(trailingOnly=TRUE)[4]
 
-# infile1='data/biomart/56716.csv'
-# infile2='data/singlecellsignalr/lrdb.csv'
-# sourcedb="ENSEMBL_SINGLECELLSIGNALR"
-
+# infile1="data/biomart/9646.csv"
+# infile2="data/swissprot_hprd/9606.csv"
+# outfile="data/ensembl_swissprot_hprd/9646.csv"
+# sourcedb="ENSEMBL_SWISSPROT_HPRD"
 
 if(file.info(infile1)$size != 0){
 	# Data loading
@@ -37,17 +37,6 @@ if(file.info(infile1)$size != 0){
 	nonNA <- intersect(which(!is.na(out[,1])), which(!is.na(out[,2])))
 	out <- out[nonNA, ]
 
-
-	# res <- c()
-	# for(i in seq(hid)){
-	# 	target <- which(sample_sheet[,1] == i)
-	# 	small_sheet <- sample_sheet[target, ]
-	# 	geneid_taxid <- small_sheet[which(small_sheet[,2] == taxid), 3]
-	# 	geneid_human <- small_sheet[which(small_sheet[,2] == 9606), 3]
-	# 	res <- rbind(res, expand.grid(geneid_taxid, geneid_human))
-	# }
-
-
 	# Output
 	if(!is.null(out)){
 		if(!is.vector(out)){
@@ -56,6 +45,12 @@ if(file.info(infile1)$size != 0){
 				rownames(out) <- NULL
 				write.table(out, file=outfile, row.names=FALSE, quote=FALSE, sep=",")
 			}
+		}else{
+			file.create(outfile)
 		}
+	}else{
+	file.create(outfile)
 	}
+}else{
+	file.create(outfile)
 }
