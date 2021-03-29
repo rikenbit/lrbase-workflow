@@ -69,7 +69,6 @@ Workflow to construct [LRBase.XXX.eg.db-type](https://bioconductor.org/packages/
 # How to reproduce this workflow
 ## 1. Configuration
 - data/rbbh/*.txt: Download from [mesh-workflow/output/rbbh/*.txt](https://github.com/rikenbit/mesh-workflow) and set them to data/rbbh/ directory.
-- sample_sheet/100.csv: Download from [mesh-workflow/sample_sheet/100.csv](https://github.com/rikenbit/meshr-workflow) and set them as sample_sheet/100.csv.
 - config.yaml: Check the latest version of STRING database (e.g., v11.0 on 2021/3/26 https://string-db.org) and change the value of VERSION_STRING, if it is needed. Also, specify the version of LRBase to crate.
 
 ## 2. Perform snakemake command
