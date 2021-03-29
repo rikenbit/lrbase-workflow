@@ -76,7 +76,7 @@ The workflow consists of two snakemake workflows.
 After performing workflow/workflow1.smk, perform workflow/workflow2.smk as follows.
 
 In local machine:
-```
+```bash
 snakemake -s workflow/download.smk -j 4 --use-singularity
 snakemake -s workflow/preprocess_known_human.smk -j 4 --use-singularity
 snakemake -s workflow/preprocess_known_otherspecies.smk -j 4 --use-singularity
@@ -90,7 +90,7 @@ snakemake -s workflow/plot.smk -j 4 --use-singularity
 ```
 
 In parallel environment (GridEngine):
-```
+```bash
 snakemake -s workflow/download.smk -j 32 --cluster "qsub -l nc=4 -p -50 -r yes -q node.q" --latency-wait 600 --use-singularity
 snakemake -s workflow/preprocess_known_human.smk -j 32 --cluster "qsub -l nc=4 -p -50 -r yes -q node.q" --latency-wait 600 --use-singularity
 snakemake -s workflow/preprocess_known_otherspecies.smk -j 32 --cluster "qsub -l nc=4 -p -50 -r yes -q node.q" --latency-wait 600 --use-singularity
@@ -104,7 +104,7 @@ snakemake -s workflow/plot.smk -j 32 --cluster "qsub -l nc=4 -p -50 -r yes -q no
 ```
 
 In parallel environment (Slurm):
-```
+```bash
 snakemake -s workflow/download.smk -j 32 --cluster "sbatch -n 4 --nice=50 --requeue -p node03-06" --latency-wait 600 --use-singularity
 snakemake -s workflow/preprocess_known_human.smk -j 32 --cluster "sbatch -n 4 --nice=50 --requeue -p node03-06" --latency-wait 600 --use-singularity
 snakemake -s workflow/preprocess_known_otherspecies.smk -j 32 --cluster "sbatch -n 4 --nice=50 --requeue -p node03-06" --latency-wait 600 --use-singularity
