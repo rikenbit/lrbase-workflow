@@ -6,6 +6,12 @@ Workflow to construct [LRBase.XXX.eg.db-type](https://bioconductor.org/packages/
 - Snakemake: 5.3.0
 - Singularity: 3.5.3
 
+# Summary
+![](https://github.com/rikenbit/lrbase-workflow/blob/master/plot/summary.png)
+![](https://github.com/rikenbit/lrbase-workflow/blob/master/plot/known_ratio.png)
+![](https://github.com/rikenbit/lrbase-workflow/blob/master/plot/summary_percentage.png)
+![](https://github.com/rikenbit/lrbase-workflow/blob/master/plot/known_ratio_percentage.png)
+
 # Evidence code
 ## 1. Known Ligand-Receptor (only human)
 
@@ -59,12 +65,6 @@ Workflow to construct [LRBase.XXX.eg.db-type](https://bioconductor.org/packages/
 
 - **SWISSPROT_SPRING**: Known subcellular localization in [Swiss-Prot](http://www.uniprot.org/uniprot/?query=reviewed:yes) and PPI list in [SPRING](https://string-db.org/cgi/download.pl)
 - **TREMBL_SPRING**: Predicted subcellular localization in [TrEMBL](http://www.uniprot.org/uniprot/?query=reviewed:no) and PPI list in [SPRING](https://string-db.org/cgi/download.pl)
-
-# Summary
-![](https://github.com/rikenbit/lrbase-workflow/blob/master/plot/summary.png)
-![](https://github.com/rikenbit/lrbase-workflow/blob/master/plot/known_ratio.png)
-![](https://github.com/rikenbit/lrbase-workflow/blob/master/plot/summary_percentage.png)
-![](https://github.com/rikenbit/lrbase-workflow/blob/master/plot/known_ratio_percentage.png)
 
 # How to reproduce this workflow
 ## 1. Configuration
