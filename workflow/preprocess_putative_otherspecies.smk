@@ -20,8 +20,7 @@ THREENAME_RBBH = RBBH['Abbreviation'].unique()
 TAXID_KNOWN = set(TAXID_ENSEMBL) | set(TAXID_NCBI) | set(TAXID_RBBH)
 # Putative (12)
 VERSION_STRING = config['VERSION_STRING']
-TAXID_PUTATIVE = pd.read_csv(config['PUTATIVE'], header=None, dtype='string')
-TAXID_PUTATIVE = TAXID_PUTATIVE[0].unique()
+TAXID_PUTATIVE = PUTATIVE['Taxon.ID'].unique()
 # All (248)
 TAXID_ALL = list(TAXID_KNOWN | set(TAXID_PUTATIVE))
 

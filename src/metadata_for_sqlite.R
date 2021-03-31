@@ -1,14 +1,18 @@
 # Functions/Objects
 .url <- list(
+	FANTOM5="http://fantom.gsc.riken.jp",
 	DLRP="https://dip.doe-mbi.ucla.edu/dip/DLRP.cgi",
 	IUPHAR="https://www.guidetopharmacology.org/download.jsp",
+	HPRD="http://hprd.org/download",
+	STRING="https://string-db.org/cgi/download.pl",
+	SWISSPROT="http://www.uniprot.org/uniprot/?query=reviewed:yes",
+	TREMBL="http://www.uniprot.org/uniprot/?query=reviewed:no",
 	ENSEMBL="https://asia.ensembl.org/info/genome/compara/homology_method.html",
 	NCBI="https://ftp.ncbi.nih.gov/pub/HomoloGene/current/",
 	RBBH="https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-015-0453-z",
-	SWISSPROT="http://www.uniprot.org/uniprot/?query=reviewed:yes",
-	TREMBL="http://www.uniprot.org/uniprot/?query=reviewed:no",
-	HPRD="http://hprd.org/download",
-	STRING="https://string-db.org/cgi/download.pl"
+	CELLPHONEDB="https://www.cellphonedb.org",
+	BADERLAB=" http://baderlab.org/CellCellInteractions",
+	SINGLECELLSIGNALR="http://www.bioconductor.org/packages/release/bioc/html/SingleCellSignalR.html"
 )
 
 # Data loading
@@ -34,7 +38,12 @@ for(i in 1:nrow(sample_sheet)){
 
 	# SOURCEURL
 	for(i in 1:length(dbnames)){
-		out <- rbind(out, c(paste0("SOURCEURL", i), .url[[dbnames[i]]]))
+		tmp <- .url[[dbnames[i]]]
+		if(is.null(tmp)){
+			out <- rbind(out, c(paste0("SOURCEURL", i), ""))
+		}else{
+			out <- rbind(out, c(paste0("SOURCEURL", i), .url[[dbnames[i]]]))
+		}
 	}
 
 	# DBSCHEMA

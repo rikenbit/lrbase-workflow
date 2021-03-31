@@ -6,8 +6,6 @@ configfile: "config.yaml"
 
 SAMPLESHEET = pd.read_csv('sample_sheet/sample_sheet.csv', dtype='string')
 TAXIDS = SAMPLESHEET['Taxon.ID'].unique()
-COMMONNAMES = SAMPLESHEET['Common.name'].unique()
-SCIENTIFICNAMES = SAMPLESHEET['Scientific.name'].unique()
 THREENAMES = SAMPLESHEET['Abbreviation'].unique()
 
 VERSION_STRING = config['VERSION_STRING']
