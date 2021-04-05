@@ -1,5 +1,5 @@
 # lrbase-workflow
-Workflow to construct [LRBase.XXX.eg.db-type](https://bioconductor.org/packages/release/data/annotation/html/LRBase.Hsa.eg.db.html) packages.
+Workflow to construct SQLite files of [LRBase.XXX.eg.db-type](https://bioconductor.org/packages/release/data/annotation/html/LRBase.Hsa.eg.db.html) packages.
 
 # Pre-requisites
 - Bash: GNU bash, version 4.2.46(1)-release (x86_64-redhat-linux-gnu)
