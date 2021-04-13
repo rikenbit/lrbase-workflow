@@ -45,41 +45,39 @@ for(i in seq(sname)){
 	}
 }
 
-sourceurl <- paste(c(
-# FANTOM5
-"http://fantom.gsc.riken.jp/5/suppl/Ramilowski_et_al_2015/data/PairsLigRec.txt",
-"https://www.dropbox.com/s/dvvgudbgbhrlkud/ncomms8866-s3.xlsx?dl=1",
-# DLRP
-"https://www.dropbox.com/s/f2g65zrhrf99ljb/dlrp.txt?dl=1
-mv dlrp.txt?dl=1 data/dlrp/dlrp.txt",
-# IUPHAR
-"http://www.guidetopharmacology.org/DATA/interactions.csv",
-# HPRD
-"http://hprd.org/edownload/HPRD_Release9_041310",
-# STRING
-"https://stringdb-static.org/download/",
-# SWISSPROT
-"ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/uniprot_sprot.dat.gz",
-# TREMBL
-"ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/uniprot_trembl.dat.gz",
-# ENSEMBL
-"http://www.ensembl.org/biomart",
-"http://plants.ensembl.org/biomart",
-# CELLPHONEDB
-"https://www.dropbox.com/s/66fw400bmoab89a/interactions_cellphonedb.csv?dl=1",
-"https://www.dropbox.com/s/0l7oykri87wpr0x/heterodimers.csv?dl=1",
-# BADERLAB
-" https://www.dropbox.com/s/95mcq48j8osfno1/receptor_ligand_interactions_mitab_v1.0_April2017.txt.zip?dl=0",
-# SINGLECELLSIGNALR
-"https://www.dropbox.com/s/w5t0qgxo8soszd4/LRdb.rda?dl=1",
-# HOMOLOGENE
-"ftp://ftp.ncbi.nih.gov/pub/HomoloGene/current/homologene.data"
-), collapse=",")
+# sourceurl <- paste(c(
+# # FANTOM5
+# "http://fantom.gsc.riken.jp/5/suppl/Ramilowski_et_al_2015/data/PairsLigRec.txt",
+# "https://www.dropbox.com/s/dvvgudbgbhrlkud/ncomms8866-s3.xlsx?dl=1",
+# # DLRP
+# "https://www.dropbox.com/s/f2g65zrhrf99ljb/dlrp.txt?dl=1
+# mv dlrp.txt?dl=1 data/dlrp/dlrp.txt",
+# # IUPHAR
+# "http://www.guidetopharmacology.org/DATA/interactions.csv",
+# # HPRD
+# "http://hprd.org/edownload/HPRD_Release9_041310",
+# # STRING
+# "https://stringdb-static.org/download/",
+# # SWISSPROT
+# "ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/uniprot_sprot.dat.gz",
+# # TREMBL
+# "ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/uniprot_trembl.dat.gz",
+# # ENSEMBL
+# "http://www.ensembl.org/biomart",
+# "http://plants.ensembl.org/biomart",
+# # CELLPHONEDB
+# "https://www.dropbox.com/s/66fw400bmoab89a/interactions_cellphonedb.csv?dl=1",
+# "https://www.dropbox.com/s/0l7oykri87wpr0x/heterodimers.csv?dl=1",
+# # BADERLAB
+# " https://www.dropbox.com/s/95mcq48j8osfno1/receptor_ligand_interactions_mitab_v1.0_April2017.txt.zip?dl=0",
+# # SINGLECELLSIGNALR
+# "https://www.dropbox.com/s/w5t0qgxo8soszd4/LRdb.rda?dl=1",
+# # HOMOLOGENE
+# "ftp://ftp.ncbi.nih.gov/pub/HomoloGene/current/homologene.data"
+# ), collapse=",")
+sourceurl <- "https://github.com/rikenbit/lrbase-workflow"
 
 rdatapath <- paste0("AHLRBaseDbs/", metadata_version, "/", nonzero_sqlites)
-
-
-
 
 # Merge
 Sys.setlocale("LC_TIME", "C")
