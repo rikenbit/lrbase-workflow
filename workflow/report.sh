@@ -1,6 +1,6 @@
 # HTML
-mkdir report
-mkdir report/v001
+mkdir -p report
+mkdir -p report/v001
 snakemake -s workflow/download.smk --report report/v001/download.html
 snakemake -s workflow/preprocess_known_human.smk --report report/v001/preprocess_known_human.html
 snakemake -s workflow/preprocess_known_otherspecies.smk --report report/v001/preprocess_known_otherspecies.html
