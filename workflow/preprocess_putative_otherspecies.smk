@@ -27,7 +27,8 @@ TAXID_ALL = list(TAXID_KNOWN | set(TAXID_PUTATIVE))
 rule all:
 	input:
 		expand('data/ensembl_fantom5/{taxid_ensembl}.csv',
-				taxid_ensembl=TAXID_ENSEMBL),
+				taxid_ensembl=TAXID_ENSEMBL,
+                                taxid_putative=TAXID_PUTATIVE,),
 		expand('data/ensembl_baderlab/{taxid_ensembl}.csv',
 				taxid_ensembl=TAXID_ENSEMBL),
 		expand('data/ensembl_swissprot_hprd/{taxid_ensembl}.csv',
@@ -51,7 +52,17 @@ rule all:
 		expand('data/rbbh_swissprot_hprd/{taxid_rbbh}.csv',
 				taxid_rbbh=TAXID_RBBH),
 		expand('data/rbbh_trembl_hprd/{taxid_rbbh}.csv',
-				taxid_rbbh=TAXID_RBBH)
+				taxid_rbbh=TAXID_RBBH),
+
+                expand('data/uniprotkb/swissprot_{taxid_putative}_secreted.csv',
+                                taxid_putative=TAXID_PUTATIVE),
+                expand('data/uniprotkb/swissprot_{taxid_putative}_membrane.csv',
+                                taxid_putative=TAXID_PUTATIVE),
+
+                expand('data/uniprotkb/trembl_{taxid_putative}_secreted.csv',
+                                taxid_putative=TAXID_PUTATIVE),
+                expand('data/uniprotkb/trembl_{taxid_putative}_membrane.csv',
+                                taxid_putative=TAXID_PUTATIVE)
 
 #############################################
 # Preprocess
