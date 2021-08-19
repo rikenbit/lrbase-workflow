@@ -1,6 +1,6 @@
 source("src/functions.R")
 
-sample_sheet <- read.csv("sample_sheet.csv")
+sample_sheet <- read.csv("sample_sheet/sample_sheet.csv")
 taxid_all <- as.character(sample_sheet[, "Taxon.ID"])
 orgname_all <- as.character(sample_sheet[, "Scientific.name"])
 

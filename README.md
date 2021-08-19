@@ -83,7 +83,7 @@ snakemake -s workflow/preprocess_known_human.smk -j 4 --use-singularity
 snakemake -s workflow/preprocess_known_otherspecies.smk -j 4 --use-singularity
 snakemake -s workflow/preprocess_putative_human.smk -j 4 --use-singularity
 snakemake -s workflow/preprocess_putative_otherspecies.smk -j 4 --use-singularity
-snakemake -s workflow/preprocess_putative_allpecies.smk -j 4 --use-singularity
+snakemake -s workflow/preprocess_putative_allspecies.smk -j 4 --use-singularity
 snakemake -s workflow/csv.smk -j 4 --use-singularity
 snakemake -s workflow/sqlite.smk -j 4 --use-singularity
 snakemake -s workflow/metadata.smk -j 4 --use-singularity

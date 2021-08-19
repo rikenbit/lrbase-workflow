@@ -150,7 +150,7 @@ rule plot_known_ratio_human:
 
 rule plot_known_ratio:
 	input:
-		'sample_sheet.csv',
+		'sample_sheet/sample_sheet.csv',
 		expand('data/csv/{taxid_all}.csv',
 			taxid_all=TAXID_ALL)
 	output:
