@@ -1,0 +1,31 @@
+INFO [2022-03-18 17:09:53] [[1]]
+INFO [2022-03-18 17:09:53] list(FANTOM5 = unique(paste(fantom5$GENEID_L, fantom5$GENEID_R)), 
+INFO [2022-03-18 17:09:53]     DLRP = unique(paste(dlrp$GENEID_L, dlrp$GENEID_R)), IUPHAR = unique(paste(iuphar$GENEID_L, 
+INFO [2022-03-18 17:09:53]         iuphar$GENEID_R)), HPMR = unique(paste(hpmr$GENEID_L, 
+INFO [2022-03-18 17:09:53]         hpmr$GENEID_R)), UNIPROTKB_HPRD = unique(paste(uniprotkb_hprd$GENEID_L, 
+INFO [2022-03-18 17:09:53]         uniprotkb_hprd$GENEID_R)))
+INFO [2022-03-18 17:09:53] 
+INFO [2022-03-18 17:09:53] $category.names
+INFO [2022-03-18 17:09:53] c("FANTOM5", "DLRP", "IUPHAR", "HPMR", Name)
+INFO [2022-03-18 17:09:53] 
+INFO [2022-03-18 17:09:53] $filename
+INFO [2022-03-18 17:09:53] outfile
+INFO [2022-03-18 17:09:53] 
+INFO [2022-03-18 17:09:53] $imagetype
+INFO [2022-03-18 17:09:53] [1] "png"
+INFO [2022-03-18 17:09:53] 
+INFO [2022-03-18 17:09:53] $scaled
+INFO [2022-03-18 17:09:53] [1] TRUE
+INFO [2022-03-18 17:09:53] 
+INFO [2022-03-18 17:09:53] $fill
+INFO [2022-03-18 17:09:53] 1:5
+INFO [2022-03-18 17:09:53] 
+INFO [2022-03-18 17:09:53] $alpha
+INFO [2022-03-18 17:09:53] rep(0.45, 5)
+INFO [2022-03-18 17:09:53] 
+INFO [2022-03-18 17:09:53] $cat.cex
+INFO [2022-03-18 17:09:53] [1] 0.9
+INFO [2022-03-18 17:09:53] 
+INFO [2022-03-18 17:09:53] $margin
+INFO [2022-03-18 17:09:53] [1] 0.182
+INFO [2022-03-18 17:09:53] 
