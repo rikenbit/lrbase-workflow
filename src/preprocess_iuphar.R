@@ -1,7 +1,8 @@
-iuphar <- read.csv("data/iuphar/interactions.csv",  stringsAsFactor=FALSE)
-iuphar <- iuphar[which(iuphar$target_species == "Human"), ]
-iuphar <- iuphar[, c("ligand_gene_symbol", "target_gene_symbol", "pubmed_id")]
+iuphar <- read.csv("data/iuphar/interactions.csv",  stringsAsFactor=FALSE, skip=1)
+iuphar <- iuphar[which(iuphar$"Target.Species" == "Human"), ]
+iuphar <- iuphar[, c("Ligand.Gene.Symbol", "Target.Gene.Symbol", "PubMed.ID")]
 iuphar <- iuphar[intersect(which(iuphar[,1] != ""), which(iuphar[,2] != "")), ]
+colnames(iuphar) <- c("ligand_gene_symbol", "target_gene_symbol", "pubmed_id")
 
 iuphar2 <- c()
 for(i in 1:nrow(iuphar)){

@@ -10,7 +10,8 @@ SQLITE, = glob_wildcards('sqlite/{sqlite}.sqlite')
 
 rule all:
 	input:
-		f'check/metadata_{METADATA_VERSION}'
+		f'check/metadata_{METADATA_VERSION}',
+                f'check/check_species_taxid_{METADATA_VERSION}'
 
 #############################################
 # METADATA
@@ -43,3 +44,17 @@ rule metadata_check:
 		'logs/metadata_check_{METADATA_VERSION}.log'
 	shell:
 		'src/metadata_check.sh {input} {output} >& {log}'
+
+rule metadata_check_species_taxid:
+        input:
+                'AHLRBaseDbs/inst/extdata/metadata_{METADATA_VERSION}.csv'
+        output:
+                'check/check_species_taxid_{METADATA_VERSION}'
+        container:
+                "docker://bioconductor/bioconductor_docker:RELEASE_3_15"
+        benchmark:
+                'benchmarks/metadata_check_species_taxid_{METADATA_VERSION}.txt'
+        log:
+                'logs/metadata_check_species_taxid_{METADATA_VERSION}.log'
+        shell:
+                'src/metadata_check_species_taxid.sh {input} {output} >& {log}'
