@@ -1,0 +1,29 @@
+INFO [2023-03-12 16:20:00] [[1]]
+INFO [2023-03-12 16:20:00] list(LRBase.Hsa.eg.db = unique(paste(lrbase$GENEID_L, lrbase$GENEID_R)), 
+INFO [2023-03-12 16:20:00]     FANTOM5 = unique(paste(fantom5$GENEID_L, fantom5$GENEID_R)), 
+INFO [2023-03-12 16:20:00]     CellPhoneDB = unique(paste(cellphonedb$GENEID_L, cellphonedb$GENEID_R)), 
+INFO [2023-03-12 16:20:00]     BaderLab = unique(paste(baderlab$GENEID_L, baderlab$GENEID_R)), 
+INFO [2023-03-12 16:20:00]     SingleCellSignalR = unique(paste(singlecellsignalr$GENEID_L, 
+INFO [2023-03-12 16:20:00]         singlecellsignalr$GENEID_R)))
+INFO [2023-03-12 16:20:00] 
+INFO [2023-03-12 16:20:00] $filename
+INFO [2023-03-12 16:20:00] [1] "plot/venndiagram_human.png"
+INFO [2023-03-12 16:20:00] 
+INFO [2023-03-12 16:20:00] $imagetype
+INFO [2023-03-12 16:20:00] [1] "png"
+INFO [2023-03-12 16:20:00] 
+INFO [2023-03-12 16:20:00] $scaled
+INFO [2023-03-12 16:20:00] [1] TRUE
+INFO [2023-03-12 16:20:00] 
+INFO [2023-03-12 16:20:00] $fill
+INFO [2023-03-12 16:20:00] 1:5
+INFO [2023-03-12 16:20:00] 
+INFO [2023-03-12 16:20:00] $alpha
+INFO [2023-03-12 16:20:00] rep(0.45, 5)
+INFO [2023-03-12 16:20:00] 
+INFO [2023-03-12 16:20:00] $cat.cex
+INFO [2023-03-12 16:20:00] [1] 1.2
+INFO [2023-03-12 16:20:00] 
+INFO [2023-03-12 16:20:00] $margin
+INFO [2023-03-12 16:20:00] [1] 0.182
+INFO [2023-03-12 16:20:00] 

@@ -1,0 +1,31 @@
+INFO [2023-03-12 16:18:20] [[1]]
+INFO [2023-03-12 16:18:20] list(FANTOM5 = unique(paste(fantom5$GENEID_L, fantom5$GENEID_R)), 
+INFO [2023-03-12 16:18:20]     DLRP = unique(paste(dlrp$GENEID_L, dlrp$GENEID_R)), IUPHAR = unique(paste(iuphar$GENEID_L, 
+INFO [2023-03-12 16:18:20]         iuphar$GENEID_R)), HPMR = unique(paste(hpmr$GENEID_L, 
+INFO [2023-03-12 16:18:20]         hpmr$GENEID_R)), UNIPROTKB_HPRD = unique(paste(uniprotkb_hprd$GENEID_L, 
+INFO [2023-03-12 16:18:20]         uniprotkb_hprd$GENEID_R)))
+INFO [2023-03-12 16:18:20] 
+INFO [2023-03-12 16:18:20] $category.names
+INFO [2023-03-12 16:18:20] c("FANTOM5", "DLRP", "IUPHAR", "HPMR", Name)
+INFO [2023-03-12 16:18:20] 
+INFO [2023-03-12 16:18:20] $filename
+INFO [2023-03-12 16:18:20] outfile
+INFO [2023-03-12 16:18:20] 
+INFO [2023-03-12 16:18:20] $imagetype
+INFO [2023-03-12 16:18:20] [1] "png"
+INFO [2023-03-12 16:18:20] 
+INFO [2023-03-12 16:18:20] $scaled
+INFO [2023-03-12 16:18:20] [1] TRUE
+INFO [2023-03-12 16:18:20] 
+INFO [2023-03-12 16:18:20] $fill
+INFO [2023-03-12 16:18:20] 1:5
+INFO [2023-03-12 16:18:20] 
+INFO [2023-03-12 16:18:20] $alpha
+INFO [2023-03-12 16:18:20] rep(0.45, 5)
+INFO [2023-03-12 16:18:20] 
+INFO [2023-03-12 16:18:20] $cat.cex
+INFO [2023-03-12 16:18:20] [1] 0.9
+INFO [2023-03-12 16:18:20] 
+INFO [2023-03-12 16:18:20] $margin
+INFO [2023-03-12 16:18:20] [1] 0.182
+INFO [2023-03-12 16:18:20] 
