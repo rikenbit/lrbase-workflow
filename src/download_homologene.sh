@@ -10,4 +10,4 @@
 #SBATCH -p node03-06
 SLURM_RESTART_COUNT=2
 
-wget ftp://ftp.ncbi.nih.gov/pub/HomoloGene/current/homologene.data -P data/homologene
+wget ftp://ftp.ncbi.nih.gov/pub/HomoloGene/last-archive/homologene.data -P data/homologene

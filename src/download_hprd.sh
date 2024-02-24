@@ -10,6 +10,5 @@
 #SBATCH -p node03-06
 SLURM_RESTART_COUNT=2
 
-wget http://hprd.org/edownload/HPRD_Release9_041310 -P data/hprd
-mv data/hprd/HPRD_Release9_041310 data/hprd/HPRD_Release9_041310.tar
+wget https://zenodo.org/records/10677256/files/HPRD_Release9_041310.tar -P data/hprd
 tar -xvf data/hprd/HPRD_Release9_041310.tar -C data/hprd
