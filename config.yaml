@@ -11,4 +11,4 @@ VERSION_STRING: v12.0
 METADATA_VERSION: v008
 
 # Bioconductor Version (for next coming)
-BIOC_VERSION: 3.20
+BIOC_VERSION: "3.20"
