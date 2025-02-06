@@ -11,7 +11,7 @@ SQLITE, = glob_wildcards('sqlite/{sqlite}.sqlite')
 rule all:
 	input:
 		f'check/metadata_{METADATA_VERSION}',
-                f'check/check_species_taxid_{METADATA_VERSION}'
+		f'check/check_species_taxid_{METADATA_VERSION}'
 
 #############################################
 # METADATA
