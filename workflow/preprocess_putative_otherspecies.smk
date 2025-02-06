@@ -54,15 +54,15 @@ rule all:
 		expand('data/rbbh_trembl_hprd/{taxid_rbbh}.csv',
 				taxid_rbbh=TAXID_RBBH),
 
-                expand('data/uniprotkb/swissprot_{taxid_putative}_secreted.csv',
-                                taxid_putative=TAXID_PUTATIVE),
-                expand('data/uniprotkb/swissprot_{taxid_putative}_membrane.csv',
-                                taxid_putative=TAXID_PUTATIVE),
+		expand('data/uniprotkb/swissprot_{taxid_putative}_secreted.csv',
+				taxid_putative=TAXID_PUTATIVE),
+		expand('data/uniprotkb/swissprot_{taxid_putative}_membrane.csv',
+				taxid_putative=TAXID_PUTATIVE),
 
-                expand('data/uniprotkb/trembl_{taxid_putative}_secreted.csv',
-                                taxid_putative=TAXID_PUTATIVE),
-                expand('data/uniprotkb/trembl_{taxid_putative}_membrane.csv',
-                                taxid_putative=TAXID_PUTATIVE)
+		expand('data/uniprotkb/trembl_{taxid_putative}_secreted.csv',
+				taxid_putative=TAXID_PUTATIVE),
+		expand('data/uniprotkb/trembl_{taxid_putative}_membrane.csv',
+				taxid_putative=TAXID_PUTATIVE)
 
 #############################################
 # Preprocess
