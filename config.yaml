@@ -8,7 +8,7 @@ PUTATIVE: sample_sheet/putative.csv
 VERSION_STRING: v12.0
 
 # METADATA Version (Should be bumped in each BioC update)
-METADATA_VERSION: v009
+METADATA_VERSION: v010
 
 # Bioconductor Version (for next coming)
-BIOC_VERSION: "3.21"
+BIOC_VERSION: "3.22"
