@@ -1,4 +1,5 @@
 source("src/functions.R")
+options(timeout = 3600)
 
 # Parameter
 taxid <- commandArgs(trailingOnly=TRUE)[1]
