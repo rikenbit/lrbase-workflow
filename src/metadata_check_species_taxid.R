@@ -1,7 +1,7 @@
 dir.create('/tmp/libs')
 .libPaths('/tmp/libs')
 BiocManager::valid()
-BiocManager::install(c("AnnotationHub","XML", "AnnotationHubData", "LRBaseDbi"), ask=FALSE, force=TRUE)
+BiocManager::install(c("AnnotationHub","XML", "AnnotationHubData", "LRBaseDbi", "GenomeInfoDbData"), ask=FALSE, force=TRUE)
 
 library("AnnotationHubData")
 input = commandArgs(trailingOnly=TRUE)[1]

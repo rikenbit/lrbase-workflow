@@ -5,10 +5,10 @@ RBBH: sample_sheet/114.csv
 PUTATIVE: sample_sheet/putative.csv
 
 # Latest version of STRING database
-VERSION_STRING: v12.0
+VERSION_STRING: v12.5
 
 # METADATA Version (Should be bumped in each BioC update)
-METADATA_VERSION: v011
+METADATA_VERSION: v012
 
 # Bioconductor Version (for next coming)
-BIOC_VERSION: "3.23"
+BIOC_VERSION: "3.24"
